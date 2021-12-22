@@ -11,7 +11,7 @@ make sg.rom
 cd ..
 copy SFES\sg.rom SFES.SFC
 del SFES\sg.rom
-del SFES\*.sob
+del SFES\BANK\*.sob
 del SFES\status.doc
 del SFES\lastasm.tmp
 pause

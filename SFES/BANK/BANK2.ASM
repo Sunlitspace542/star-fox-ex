@@ -1,0 +1,152 @@
+	include	INCLUDE\header.inc
+	include	INCLUDE\marioi.inc
+	include	INCLUDE\stratmac.inc
+	include	INCLUDE\stratlib.inc
+	include	INCLUDE\bgmacs.inc
+	include	EXT\blink.ext
+	include	EXT\check5.ext
+	include	INCLUDE\mapstructs.inc
+	include	INCLUDE\mapmacs.inc
+	include	INCLUDE\shmacs.inc
+	include	EXT\strings.ext
+	include	EXT\mario.ext
+	include	EXT\incbins.ext
+	include	EXT\mdata.ext
+
+	incpublics	EXT\mhofs.ext
+
+	include	EXT\sgdata.ext
+	include	EXT\dstrats.ext
+	include	EXT\d3strats.ext
+	include	EXT\pstrats.ext
+	include	EXT\pistrats.ext
+	include	EXT\pcstrats.ext
+	include	EXT\gb2strats.ext
+	include	EXT\gstrats.ext
+	include	EXT\gstrats2.ext
+	include	EXT\gbstrats.ext
+	include	EXT\gcstrats.ext
+	include	EXT\gistrats.ext
+	include	EXT\kstrats.ext
+	include	EXT\ga2strats.ext
+	include	EXT\gb3strats.ext
+	include	EXT\d2strats.ext
+	include	EXT\shapes.ext
+;	include	stratrou.ext
+	include	EXT\sgtabs.ext
+	include	EXT\gastrats.ext
+	include	maps\maplist.ext
+	include	EXT\fontdata.ext
+	include	EXT\paths.ext
+	include	EXT\expstrat.ext
+	include	EXT\shbanks.ext
+	include	EXT\mem.ext
+	include	INCLUDE\istrats.inc
+	include	EXT\mhofs.ext
+	include	EXT\menu.ext
+scr_offset	equ	(vchr_logback-vchr_physback)/16
+
+	extern	bgandpcr
+	extern	bgandccr
+	extern	dogccr
+	extern	bgml	
+	extern	bgmllen	
+	extern	bgmd	
+	extern	bgmdlen	
+	extern	bgm11	
+	extern	bgm11len
+
+;-------------------------------------------------------
+	bank	2
+	ifne	*-$28000
+	error	<X Routines bank must be start of bank 2>
+	endc
+
+	org	xroutines,$8000*2
+ramstart	incfile	ASM\ramstuff.asm
+xoffset	equ	*-ramstart
+
+	ifle	xlen-xoffset
+	error	<Extended code more than xlen>
+	FAIL
+	endc
+
+	org	$28000+xoffset,$8000*2+xoffset
+	minfo
+	incfile	ASM\trans.asm
+	minfo	trans
+	incfile	ASM\main.asm
+	minfo	main
+	incfile	ASM\windows.asm
+	minfo	windows
+	bankend	2
+	
+	bank	34
+	incfile	ASM\game.asm
+	minfo	game
+	incfile	ASM\endseq.asm
+	minfo	endseq
+	bankend	34
+
+;------------------------------------------------------------------
+	bank	3
+planetdmapos1	dw	228
+planetdmapos2	dw	100
+	minfo
+
+	incfile	ASM\sound.asm
+	minfo	sound
+	incfile	ASM\obj.asm
+	minfo	obj
+	incfile	ASM\planets.asm
+	minfo	planets
+	incfile	ASM\planets2.asm
+	minfo	planets
+	incfile	ASM\sprites.asm
+	minfo	sprites
+	incfile	ASM\world.asm
+	minfo	world
+	bankend	3
+
+	bank	33
+	incfile	ASM\bgs.asm
+	minfo	bgs
+	bankend	33
+
+	bank	30
+	incfile	ASM\continue.asm
+	minfo	<continue>
+	bankend	30
+	
+	org	$1f8000+$3db0,$8000*$1f+$3db0
+;	bank	31
+	minfo
+
+	incfile	ASM\bootnmi.asm
+	minfo	bootnmi
+	incfile	ASM\nmi.asm
+	minfo	nmi
+	incfile	ASM\draw.asm
+	minfo	draw
+
+	incfile	ASM\stratrou.asm
+	minfo	<stratrou>
+	inccru	bgf1pcr,data\f-1.pcr
+	bankend	31
+
+	bank	32
+	incfile	ASM\coltabs.asm
+	minfo	coltabs
+	incfile	ASM\cont.asm
+	minfo	cont
+	incfile	ASM\debug.asm
+	minfo	<debug>
+	incfile	ASM\pal.asm
+	bankend	32
+;------------------------------------------------------------------
+
+	include	INCLUDE\tail.inc
+
+
+
+

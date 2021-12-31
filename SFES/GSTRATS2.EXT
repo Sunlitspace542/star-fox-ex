@@ -1,0 +1,11 @@
+	global	PBODY_ISTRAT
+	global	setship2
+	global	CALCBGSCROLL_L
+	global	CALCTEAMDAMAGE_L
+	global	playercoll_istrat
+	global	checkview_l
+	global	assault1_Istrat
+	global	assault2_istrat
+	global	assault3_istrat
+	global	clearallobj
+	global	PLWbrk_Istrat

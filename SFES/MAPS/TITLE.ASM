@@ -7,6 +7,9 @@ TITLE
 
 timeovercont
 	start_65816
+	lda	#76								;;;;;TOTAL SHIP COUNT
+	dec	a
+	sta	totalshipcountvar
 	a16
 	stz	lastplayz
 	stz	pviewposz

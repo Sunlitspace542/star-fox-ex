@@ -23,13 +23,13 @@
 */SFES/*.doc
 */SFES/*.TMP
 */SFES/*.tmp
-*/SFES/*.txt
-*.TXT
 *.CSV
 *.csv
 *.CSV#
 *.csv#
 *.SWP
+./SYMBOLS.TXT
+./EQUATES.TXT
 BLDDAT.ASM
 
 # VSCode stuff
@@ -38,8 +38,8 @@ BLDDAT.ASM
 # Files generated during assembly
 *.CCR
 *.PCR
-SF/DATA/COL/*.PAC
-SF/DATA/COL/ALLCOLS.COL
+SF/DATA/GFX/*.PAC
+SF/DATA/GFX/ALLCOLS.COL
 
 # Object files
 *.sob

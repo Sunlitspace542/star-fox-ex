@@ -28,8 +28,6 @@
 *.CSV#
 *.csv#
 *.SWP
-./SYMBOLS.TXT
-./EQUATES.TXT
 BLDDAT.ASM
 
 # VSCode stuff
@@ -48,3 +46,6 @@ SF/DATA/GFX/ALLCOLS.COL
 # Linker Address Maps
 *.map
 *.MAP
+EQUATES.TXT
+SFES/DATA/GFX/ALLCOLS.PAC
+SYMBOLS.TXT

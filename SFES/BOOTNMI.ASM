@@ -747,18 +747,18 @@ restart	ai16
 ;	savemem
 	lda	randompalette
 	pha
-	savemem
-	lda	temprand1
-	pha
 ;	savemem
-	lda	temprand2
-	pha
+;	lda	temprand1
+;	pha
 ;	savemem
-	lda	temprand3
-	pha
+;	lda	temprand2
+;	pha
 ;	savemem
-	lda	temprand4
-	pha
+;	lda	temprand3
+;	pha
+;	savemem
+;	lda	temprand4
+;	pha
 ;	savemem
 	lda	allatonce
 	pha
@@ -822,6 +822,10 @@ restart	ai16
 	savemem
 	lda	randomlevels
 	pha
+	lda	rand	; save rand or RNG dies
+	pha
+	lda	rand+1
+	pha
 	
 	
 	
@@ -832,6 +836,10 @@ restart	ai16
 
 
 	a8
+	pla
+	sta	rand+1
+	pla
+	sta	rand
 	pla
 	sta	randomlevels
 	pla
@@ -875,14 +883,14 @@ restart	ai16
 	pla
 	sta	allatonce
 	pla
-	;sta	rand+3
-	pla
-	;sta	rand+2 ; BODGE: new rng code uses a 16 bit seed, not a 32 bit one
-	pla
-	sta	rand+1
-	pla
-	sta	rand
-	pla
+;	sta	rand+3
+;	pla
+;	sta	rand+2
+;	pla
+;	sta	rand+1
+;	pla
+;	sta	rand
+;	pla	; BODGE: rand has to be saved properly, i just get new temprand values now
 	sta	randompalette
 	pla
 	sta	colortrip
@@ -1115,7 +1123,17 @@ restart	ai16
 	
 	pla
 	sta	machinetype
-	
+
+; get new temprand values
+	jsl	random_l
+	sta	temprand1
+	jsl	random_l
+	sta	temprand2
+	jsl	random_l
+	sta	temprand3
+	jsl	random_l
+	sta	temprand4
+
 	a16
 	lda #$7F7F
 	sta	resetval

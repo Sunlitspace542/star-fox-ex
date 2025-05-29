@@ -43,6 +43,18 @@ Additions:
 
 ---------
 
+1.11.02b (yet another hotfix):
+Fixes:
+-Fixed the restart routine killing RNG (e.g. restart runs when you get a game over)
+
+Changes:
+-N/A
+
+Additions:
+-N/A
+
+---------
+
 1.11.02a (hotfix):
 Fixes:
 -Fixed clearing a stage on route 6 sending you to route 5 on the map

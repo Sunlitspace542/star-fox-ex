@@ -44,9 +44,13 @@ ren sfes.sfc "Star Fox EX %VER%.sfc"
 
 copy "Star Fox EX %VER%.sfc" ".\built-roms\Star Fox EX %VER%\Star Fox EX %VER%.sfc"
 
+copy "sfes_alt.sfc" ".\built-roms\Star Fox EX %VER%\Star Fox EX %VER% Classic Mugshots.sfc"
+
 del *.sfc
 
-copy .\release-data\*.* ".\releases\Star Fox EX %VER%\"
+rem copy .\release-data\*.* ".\releases\Star Fox EX %VER%\"
+rem copy ".\release-data\Cover, Box Art, Labels, and Branding\*.*" ".\releases\Star Fox EX %VER%\Cover, Box Art, Labels, and Branding"
+xcopy .\release-data\ ".\releases\Star Fox EX %VER%\" /s /e
 
 7za a -y -r -mx=9 ".\releases\Star Fox EX %VER%.7z" ".\releases\Star Fox EX %VER%\*.*"
 

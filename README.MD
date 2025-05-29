@@ -1,3 +1,6 @@
 
 # Star Fox EX
-space furry game go brrr  
+Source tree for Star Fox EX.
+  
+[Bug Tracker](https://trello.com/b/x7XIFS5L/star-fox-ex-bug-tracker)
+  

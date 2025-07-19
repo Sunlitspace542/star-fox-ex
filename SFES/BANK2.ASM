@@ -143,8 +143,7 @@ planetdmapos2	dw	100
 	incfile	cont.asm
 	minfo	cont
 
-	incfile	bootnmi.asm
-	minfo	bootnmi
+
 	incfile	draw.asm
 	minfo	draw
 	incfile	fontdata.asm
@@ -155,6 +154,9 @@ planetdmapos2	dw	100
 	bank	16
 	incfile	nmi.asm
 	minfo	nmi
+
+	incfile	bootnmi.asm
+	minfo	bootnmi
 
 	incfile	bgs.asm
 	minfo	bgs

@@ -1009,6 +1009,7 @@ analoguent	equ	11	; Analogue NT
 	zalc	rumble_cmd,1	; command byte
 	zalc	rumble_time,1	; time (in frames, 0-255) to rumble
 	zalc	rumble_index,1	; index into rumble_table for sequenced rumbles (0-255)
+	zalc	donotrumble,1	; voltage safety check byte
 	ENDC
 
 ;-------------

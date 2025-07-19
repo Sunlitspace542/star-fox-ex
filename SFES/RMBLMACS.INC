@@ -6,6 +6,9 @@ queue_rumble	MACRO	[left,right,time]
 	printerror	<%m: A must be in 8-bit mode!>
 	endc
 
+; DO NOT RUMBLE IF MULTITAP OR 2 PLAYER ACTIVATED
+	lda	donotrumble
+	bne	.\@to_skip_rumble
 ; Each nybble controls the strength of each motor.
 ; <--RIGHT--> <---LEFT-->
 ; R3 R2 R1 R0 L3 L2 L1 L0
@@ -15,6 +18,7 @@ queue_rumble	MACRO	[left,right,time]
 
 	lda	#{time}
 	sta	rumble_time
+.\@to_skip_rumble
 	ENDM
 	
 ; Same as above, but correct DBR for strat/path interpreter
@@ -48,6 +52,10 @@ s_queue_rumble_table	MACRO	[table]
 	ifne	longa
 	printerror	<%m: A must be in 8-bit mode!>
 	endc
+; DO NOT RUMBLE IF MULTITAP OR 2 PLAYER ACTIVATED
+	lda	donotrumble
+	bne	.\@to_skip_rumble
+
 	phx
 	lda #1
 	sta rumble_index
@@ -65,6 +73,7 @@ s_queue_rumble_table	MACRO	[table]
 	sta rumble_table,x
 .done\@
 	plx
+.\@to_skip_rumble
 	ENDM
 
 ; Terminate rumble sequence

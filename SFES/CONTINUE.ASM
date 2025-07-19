@@ -2194,7 +2194,7 @@ a10
 a11
 	turnonoff	scopemode
 	lda	scopemode
-	beq	doneright
+	lbeq	doneright
 	stz	mousemode
 	stz	multitapmode
 	jmp	doneright
@@ -2204,6 +2204,14 @@ a12
 
 
 a13
+; block multitap on any platforms hardware can be detected as
+	lda	machinetype
+	cmp	#hardwaree
+	lbeq	doneright
+;	cmp	#mister
+;	lbeq	doneright
+	cmp	#sd2snes
+	lbeq	doneright
 	turnonoff	multitapmode
 	lda	multitapmode
 	beq	.ok
@@ -2407,7 +2415,7 @@ b101
 b111
 	turnonoff	scopemode
 	lda	scopemode
-	beq	doneleft
+	lbeq	doneleft
 	stz	mousemode
 	stz	multitapmode
 	stz	playertwocpuactivated
@@ -2421,6 +2429,14 @@ b121
 	jmp	doneleft
 
 b131
+; block multitap on any platforms hardware can be detected as
+	lda	machinetype
+	cmp	#hardwaree
+	lbeq	doneleft
+;	cmp	#mister
+;	lbeq	doneleft
+	cmp	#sd2snes
+	lbeq	doneleft
 	turnonoff	multitapmode
 	lda	multitapmode
 	beq	.ok321

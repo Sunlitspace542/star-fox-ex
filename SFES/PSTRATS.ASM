@@ -125,6 +125,9 @@ pwingcol
 	s_brl		no_pwingcol
 .wirewcol
 	trigse		$14
+	IFNE	RUMBLE
+	s_queue_rumble	1,1,2
+	ENDC
 no_pwingcol
 
 
@@ -153,9 +156,15 @@ pcolB_Istrat
 	s_jmp_objptrBAD		y,.b8snd
 	s_jmp_alvarLESS.w	B,y,al_AP,#8,.b8snd
 	TRIGSE			$04
+	IFNE	RUMBLE
+	s_queue_rumble	8,8,10
+	ENDC
 	bra			.dsn
 .b8snd
 	TRIGSE			$19
+	IFNE	RUMBLE
+	s_queue_rumble	8,8,10
+	ENDC
 .dsn
 
 	s_chk_objptr		y,.bady
@@ -306,9 +315,15 @@ pcolLW_Istrat
 	s_jmp_objptrBAD		y,.b8snd
 	s_jmp_alvarLESS.w	B,y,al_AP,#8,.b8snd
 	TRIGSE			$04
+	IFNE	RUMBLE
+	s_queue_rumble	8,0,10
+	ENDC
 	bra			.dsn
 .b8snd
 	TRIGSE			$07
+	IFNE	RUMBLE
+	s_queue_rumble	8,0,10
+	ENDC
 .dsn
 
 
@@ -432,9 +447,15 @@ pcolRW_Istrat
 	s_jmp_objptrBAD		y,.b8snd
 	s_jmp_alvarLESS.w	B,y,al_AP,#8,.b8snd
 	TRIGSE			$04
+	IFNE	RUMBLE
+	s_queue_rumble	0,8,10
+	ENDC
 	bra			.dsn
 .b8snd
 	TRIGSE			$08
+	IFNE	RUMBLE
+	s_queue_rumble	0,8,10
+	ENDC
 .dsn
 
 	s_chk_objptr		y,.bady
@@ -494,6 +515,9 @@ PRWbrk_Istrat
 	s_start_strat
 	s_jmp_varAND	B,pshipflags3,#psf3_nocollisions,.donee	
 	TRIGSE		se_wingdestructright
+	IFNE	RUMBLE
+	s_queue_rumble	0,15,5
+	ENDC
 	s_set_alvar		B,x,al_HP,#-1
 	s_set_alvar		B,x,al_AP,#0
 	s_and_var		B,pshipflags,#~psf_Rwingcoll
@@ -3324,6 +3348,9 @@ playermove_srou
 	lbne	.npsi
 	s_jmp_varAND		B,pshipflags2,#psf2_boosting,.boost
 	trigse			$32
+	IFNE	RUMBLE
+	s_queue_rumble	4,4,10
+	ENDC
 .boost
 
 	s_or_var		B,pshipflags2,#psf2_boosting
@@ -3446,6 +3473,9 @@ playermove_srou
 
 	s_jmp_varAND	B,pshipflags2,#psf2_braking,.nosfxbrake
 	trigse			$33
+	IFNE	RUMBLE
+	s_queue_rumble	1,1,5
+	ENDC
 .nosfxbrake
 	a8
 	lda	doboostmeter
@@ -4191,6 +4221,9 @@ playerfire_srou
 
 
 	trigse			$31
+	IFNE	RUMBLE
+	s_queue_rumble	2,2,5
+	ENDC
 
 	s_weapon_pos		#0,#0,#80>>weapon_scale
 	s_weapon_rot		#0,#0
@@ -4455,6 +4488,9 @@ playerdead_Istrat
 
 	s_and_var		B,gameflags2,#~gf2_ingame
 	trigse			se_playerdown
+	IFNE	RUMBLE
+	s_queue_rumble	5,5,20
+	ENDC
 	s_or_var		B,gameflags2,#gf2_ingame
 	s_or_var		B,pshipflags2,#psf2_playerHP0
 	s_set_alsflag		x,colldisable
@@ -4508,6 +4544,9 @@ playerdead_Istrat
 	s_or_var		B,pshipflags2,#psf2_playerHP0
 	s_and_var		B,gameflags2,#~gf2_ingame
 	trigse			se_playerdown
+	IFNE	RUMBLE
+	s_queue_rumble	5,5,20
+	ENDC
 	s_or_var		B,gameflags2,#gf2_ingame
 	lda	nobgm
 	bne	.nsnd
@@ -4657,6 +4696,9 @@ pexplode_Istrat
 .badobj1
 	s_and_var		B,gameflags2,#~gf2_ingame
 	trigse			3
+	IFNE	RUMBLE
+	s_queue_rumble	5,5,20
+	ENDC
 	s_or_var		B,gameflags2,#gf2_ingame
 	s_or_var		B,gameflags,#GF_PLAYERDEAD
 

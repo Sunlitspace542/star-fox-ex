@@ -1315,6 +1315,9 @@ irqbit3	lda	noirqbit3
 	cmp	#((2)*255)/100		;2% chance of a flash
 	bcs	.skipt
 	dmacgram	0,5*16,thundercol,32
+	IFNE	RUMBLE
+	queue_rumble	4,4,3
+	ENDC
 .skipt
 	lda	colortrip
 	bne	.nopal

@@ -324,7 +324,10 @@ dofireplease
 	s_weapon_rot		#0,#0
 	s_fire_weapon		x,ELASER,npfy
 ;	ENDR
-	trigse			se_laser		
+	trigse			se_laser
+	IFNE	RUMBLE
+	s_queue_rumble	1,1,1
+	ENDC
 	jmp		npfy
 
 .1
@@ -572,6 +575,9 @@ dubfl
 	s_fire_weapon		x,ELASER,npfy
 	
 	trigse			$34
+	IFNE	RUMBLE
+	s_queue_rumble	2,2,1
+	ENDC
 	jmp			npfy
 ;------------------------------------------------------------------
 beamb
@@ -583,6 +589,9 @@ beamb
 	s_fire_weapon		x,PLAYERBEAM,npfy
 	
 	trigse			$36
+	IFNE	RUMBLE
+	s_queue_rumble	3,3,3
+	ENDC
 	jmp			npfy
 ;------------------------------------------------------------------	
 w12
@@ -2406,6 +2415,24 @@ init_strats_l
 	jsl		playerstraight_strat	
 	jsl		changeviewmode_l
 .npst3
+
+;--------SAFETY CHECK FOR RUMBLE-------
+
+; if ((multitapmode || playertwoactivated) == 1) {
+; donotrumble = 1;
+; } else {
+; donotrumble = 0;
+; }
+
+	lda	multitapmode
+	ora	playertwoactivated
+	sta	donotrumble
+	beq	.safetorumble
+	bne	.donevoltagecheck
+
+.safetorumble
+	stz	donotrumble
+.donevoltagecheck
 
 ;-----------NEW CROSSHAIR STUFF-----------
 
@@ -5419,6 +5446,10 @@ removenuke_Istrat
 	s_set_var	B,specialdelay,#1
 	s_jmp		remove_Istrat
 
+	IFNE	RUMBLE
+bombtable
+	db	$11,$11,$22,$33,$44,$55,$55,$55,$55,$55,$55,$55,$55,$55,$44,$33,$22,$11,$11,$19
+	ENDC
 
 nukeexp_Istrat
 	s_start_strat
@@ -5433,6 +5464,10 @@ nukeexp_Istrat
 	s_end_strat
 nukeexp_strat
 	s_start_strat
+
+	IFNE	RUMBLE
+	s_queue_rumble_table	bombtable	; sequenced rumble effects have priority
+	ENDC
 
 	a16
 	lda	nogodgun

@@ -2319,6 +2319,9 @@ PLWbrk_Istrat
 	s_start_strat
 	s_jmp_varAND	B,pshipflags3,#psf3_nocollisions,.donee	
 	TRIGSE			se_wingdestructleft
+	IFNE	RUMBLE
+	s_queue_rumble	15,0,5
+	ENDC
 	s_set_alvar		B,x,al_HP,#-1
 	s_set_alvar		B,x,al_AP,#0
 	s_and_var		B,pshipflags,#~psf_Lwingcoll
@@ -2360,6 +2363,9 @@ playercoll_Istrat
 
 	s_jmpNOT_varAND		B,pshipflags2,#psf2_wireship,.normcoll
 	TRIGSE			$14
+	IFNE	RUMBLE
+	s_queue_rumble	1,1,2
+	ENDC
 	s_set_objtobealvar	y,x,al_collobjptr
 	s_jmp_alvarNE.w		B,y,al_hp,#hardHP,.ncoll
 .normcoll
@@ -2406,6 +2412,9 @@ playercoll_Istrat
 	s_set_strat			x,relflatmiss_strat
 	s_set_lifecnt		x,#30
 	trigse			$14
+	IFNE	RUMBLE
+	s_queue_rumble	1,1,2
+	ENDC
 	plx
 	s_jmp			.ncoll
 .nlaser

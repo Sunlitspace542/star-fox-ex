@@ -148,8 +148,8 @@ initgame_l
 	stz	sdpck3
 
 	a8
-	lda	#1
-	sta	shieldon
+;	lda	#1
+;	sta	shieldon
 	stz	showtype
 	stz	msg_count1
 	stz	msg_count2

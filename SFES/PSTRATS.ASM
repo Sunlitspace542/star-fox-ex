@@ -4668,8 +4668,8 @@ pexplode_Istrat
 	lda	lives
 	bmi	.settime
 	beq	.settime
-	lda	#1
-	sta	gameover
+;	lda	#1
+;	sta	gameover
 	s_set_var		B,timeuntilfade,#20
 	s_bra			.end
 .settime

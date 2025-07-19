@@ -46,23 +46,174 @@ nmihan
 	jmp	.nmi	;$0108	NMI
 	nop		;$010b
 .irq	ai16		;$010c	irq
-	pha
-	lda.l	m_sfr
-	bmi	.qexit
-	phb
-	disable
+	pha	; Push A to stack
+	lda.l	m_sfr	; Load MARIO chip status flag register into A
+	bpl	.irqq
+.qexit	pla ; Pull A from stack
+	rti ; Return from interrupt
+.irqq
+	phb ; Push data bank to stack
+	disable ; disable interrupts
+	phx ; Push X to stack
+	phy ; Push Y to stack
+	ai8 ; set A/X/Y to 8 bit
+	IFNE	FASTROM ; Start conditional: if FASTROM !=0 (=1)
+	lda	#$80 ; load $80 into A (Bank 80 for FastROM)
+	pha ; Push A to stack
+	plb ; Pull data bank from stack
+	ELSEIF ; if FASTROM =0
+	lda	#0 ; Load #0 into stack (Bank 0 for SlowROM)
+	pha ; Push A to stack
+	plb ; Pull data bank from stack
+	ENDC ; End conditional
+
+	IFNE	RUMBLE
+; Randy's rumble controller fix for hardware
+; HACK: Force re-read of controller bits to get timing right for rumble handler
+
+	lda	slhvr				; Latch Raster Position
+	lda	stat78r				; Update H/V Counters
+	lda	opvctr				; Get Low 8Bits VPos
+	xba
+	lda	opvctr				; Get High 8Bits VPos
+	xba
+	cmp	#40
+	bcc	.to_skip_rumble
+	cmp	#220
+	bcc	.readjoy
+.to_skip_rumble
+	brl	.skip_rumble
+
+.readjoy
+	lda	#$01
+	sta	JOYSER0				; Reset Data Counter
+	nop
+	nop
+	stz	JOYSER0
+	nop
+	nop
+
+	ldy	#16-1				; Read 16 Controller Bits
+.readjoy2
+	lda	JOYSER0				; Controller I
+	dey
+	bpl	.readjoy2
+
+	ldx	#$40
+
+; Handle rumble controller commands
+
+; Send magic number 01110010 (rumble sentry)
+; send a bit, clock controller port 1
+	stz	WRIO				; %0
+	bit	JOYSER0
+
+	stx	WRIO				; %1
+	bit	JOYSER0
+
+;							; %1
+	bit	JOYSER0
+
+;							; %1
+	bit	JOYSER0
+
+	stz	WRIO				; %0
+	bit	JOYSER0
+
+;							; %0
+	bit	JOYSER0
+
+	stx	WRIO				; %1
+	bit	JOYSER0
+
+	stz	WRIO				; %0
+	bit	JOYSER0
+.rumblehan_recheck
+; Handle sequenced rumbles
+	lda	rumble_index
+	beq	.notable	; If rumble_index == 0, handle timed rumbles
 	phx
-	phy
-	ai8
-	IFNE	FASTROM
-	lda	#$80
-	pha
-	plb
-	ELSEIF
-	lda	#0
-	pha
-	plb
-	ENDC
+	ldx	rumble_index
+	dex
+	lda.l	rumble_table,x
+	inx
+	inx
+	stx	rumble_index
+	plx
+	cmp #0
+	beq	.rumblehan_turnoffmotors
+	cmp #$19	; So I don't have to pull X twice - Kando
+	bne	.rumblehan_donerumblecmd2	; If you hit a $19, end it all. Otherwise, run it.
+	stz	rumble_index
+	bra	.rumblehan_turnoffmotors
+
+.notable
+; Check rumble timer
+; Only send a nonzero rumble command if the timer is nonzero
+	lda	rumble_time
+	beq	.rumblehan_turnoffmotors	; if 0, turn off motors!
+	lda	rumble_cmd		; get rumble cmd bits
+	bra	.rumblehan_donerumblecmd
+	
+.rumblehan_donerumblecmd2
+	cmp #$91	; Is the current table value == $91?
+	bne	.rumblehan_donerumblecmd
+	pha	; Yes! Loop rumble sequence.
+	lda #1
+	sta	rumble_index
+	pla
+	bra .rumblehan_recheck
+
+.rumblehan_turnoffmotors
+	lda	#0	; 0 = no rumble!
+.rumblehan_donerumblecmd
+
+; send rumble command bits out to controller port 1
+; read in a bit, send it, clock controller port 1
+
+	lsr	a				; .7 -> .6 / .0 -> .C
+	sta	WRIO
+	bit	JOYSER0
+
+	rol	a				; .6 / .C -> .0
+	sta	WRIO
+	bit	JOYSER0
+
+	asl	a				; .5
+	sta	WRIO
+	bit	JOYSER0
+
+	asl	a				; .4
+	sta	WRIO
+	bit	JOYSER0
+
+	asl	a				; .3
+	sta	WRIO
+	bit	JOYSER0
+
+	asl	a				; .2
+	sta	WRIO
+	bit	JOYSER0
+
+	asl	a				; .1
+	sta	WRIO
+	bit	JOYSER0
+
+	asl	a				; .0
+	sta	WRIO
+	bit	JOYSER0
+
+	lda	#$ff				; Restore WRIO
+	sta	WRIO
+
+; Check rumble timer
+	lda	rumble_time
+	beq	.rumblehan_dontdectime	; If 0, don't decrement or we'll overflow!!
+	dec	rumble_time
+.rumblehan_dontdectime
+	ENDC	;RUMBLE
+
+.skip_rumble
 	IFNE	MSU1
 	lda msufadeflag	; check fade flag
 	beq .nofade	; if zero, don't fade
@@ -73,7 +224,8 @@ nmihan
 	sta curmsuvolume	; store new volume
 	sta msu_volume	; set msu-1 volume
 .nofade
-	ENDC
+	ENDC	;MSU1
+
 	nastyon
 	jsl	irqcode_l
 	a8
@@ -81,8 +233,6 @@ nmihan
 	lda	timeupr
 	bra	.exit
 	longa
-.qexit	pla
-	rti
 .brk
 .nmi
 	ai16

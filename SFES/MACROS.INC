@@ -6045,22 +6045,22 @@ databank	MACRO
 	ENDM
 
 ;-------------------------------------------------------------------
-sdebug	MACRO
-	IFNE	debuginfo2
-	a8
-	stz	gameover
-	ENDC
-	ENDM
-edebug	MACRO
-	IFNE	debuginfo2
-	a8
-	lda	gameover
-	cmp	#0
-	beq	.ok\@
-	blink
-.ok\@
-	ENDC
-	ENDM
+; sdebug	MACRO
+; 	IFNE	debuginfo2
+; 	a8
+; 	stz	gameover
+; 	ENDC
+; 	ENDM
+; edebug	MACRO
+; 	IFNE	debuginfo2
+; 	a8
+; 	lda	gameover
+; 	cmp	#0
+; 	beq	.ok\@
+; 	blink
+; .ok\@
+; 	ENDC
+; 	ENDM
 
 ;-------------------------------------------------------------------
 incsnd	MACRO			;INCBINS A FILE AND 'SPLITS' IT!

@@ -68,6 +68,11 @@ nmihan
 	ENDC ; End conditional
 
 	IFNE	RUMBLE
+; DO NOT RUMBLE IF MULTITAP OR 2 PLAYER ACTIVATED
+	lda	multitapmode
+	bne	.to_skip_rumble
+	lda	twoplayer
+	bne	.to_skip_rumble
 ; Randy's rumble controller fix for hardware
 ; HACK: Force re-read of controller bits to get timing right for rumble handler
 

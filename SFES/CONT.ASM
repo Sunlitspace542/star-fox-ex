@@ -196,6 +196,9 @@ contcancel	a8
 	testjoypad	start
 	lbeq	.self
 .autoexit
+	IFNE	RUMBLE
+	s_queue_rumble	4,4,6
+	ENDC
 	trigse	$10
 conttraining
 
@@ -210,6 +213,9 @@ conttraining
 
 	testjoypad	select
 	beq	.nosel
+	IFNE	RUMBLE
+	s_queue_rumble	2,2,4
+	ENDC
 	lda.l	contexit
 	eor	#1
 	sta.l	contexit
@@ -219,6 +225,9 @@ conttraining
 	beq	.noup
 	testjoypad	up
 	beq	.noup
+	IFNE	RUMBLE
+	s_queue_rumble	2,2,4
+	ENDC
 	lda	#0
 	sta.l	contexit
 	trigse	011h
@@ -227,6 +236,9 @@ conttraining
 	bne	.nodown
 	testjoypad	down
 	beq	.nodown
+	IFNE	RUMBLE
+	s_queue_rumble	2,2,4
+	ENDC
 	lda	#1
 	sta.l	contexit
 	trigse	011h
@@ -245,6 +257,9 @@ conttraining
 	
 	testjoypad start
 	lbeq	.lp
+	IFNE	RUMBLE
+	s_queue_rumble	4,4,6
+	ENDC
 .xit
 	a8
 
@@ -302,6 +317,9 @@ conttraining
 .tstst	
 	testjoypad start
 	beq	.lp3
+	IFNE	RUMBLE
+	s_queue_rumble	4,4,6
+	ENDC
 .fade
 	a8
 	startbgm $f1

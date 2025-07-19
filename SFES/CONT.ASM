@@ -111,6 +111,9 @@ contcancel	a8
 	a8
 	testjoypad	select
 	beq	.nosel
+	IFNE	RUMBLE
+	s_queue_rumble	2,2,4
+	ENDC
 	lda	c_type
 	inc	a
 	and	#3

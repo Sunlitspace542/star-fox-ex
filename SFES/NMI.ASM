@@ -205,9 +205,9 @@ nmihan
 	beq	.rumblehan_dontdectime	; If 0, don't decrement or we'll underflow!!
 	dec	rumble_time
 .rumblehan_dontdectime
+.skip_rumble
 	ENDC	;RUMBLE
 
-.skip_rumble
 	IFNE	MSU1
 	lda msufadeflag	; check fade flag
 	beq .nofade	; if zero, don't fade

@@ -71,6 +71,7 @@ nmihan
 ; Randy's rumble controller fix for hardware
 ; HACK: Force re-read of controller bits to get timing right for rumble handler
 
+; This part is to make sure that you don't overrun blanking
 	lda	slhvr				; Latch Raster Position
 	lda	stat78r				; Update H/V Counters
 	lda	opvctr				; Get Low 8Bits VPos
@@ -84,6 +85,8 @@ nmihan
 .to_skip_rumble
 	brl	.skip_rumble
 
+; This part does the equivalent of the auto-read of the controllers,
+; which is what the rumble hardware is looking for
 .readjoy
 	lda	#$01
 	sta	JOYSER0				; Reset Data Counter
@@ -93,9 +96,16 @@ nmihan
 	nop
 	nop
 
-	ldy	#16-1				; Read 16 Controller Bits
+;	ldy	#16-1				; Read 16 Controller Bits
+;.readjoy2
+;	lda	JOYSER0				; Controller I
+;	dey
+;	bpl	.readjoy2
+
+	ldy	#8-1				; Read 16 Controller Bits
 .readjoy2
-	lda	JOYSER0				; Controller I
+	bit	JOYSER0				; Controller I
+	bit	JOYSER0
 	dey
 	bpl	.readjoy2
 

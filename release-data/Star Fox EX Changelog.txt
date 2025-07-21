@@ -11,6 +11,7 @@ Fixes:
 -Fixed players 2-5 not playing the shield hit sound if the shield power up is equipped
 -Fixed Pepper Skip causing the level skip code not to exit the stage
 -Fixed incorrectly colored face on FCTA ship model
+-Added rumble support
 
 IMPORTANT NOTES:
 - If you get ANY CRASHES in the MSU-1 version, please report them ASAP to #bug-reports in the Discord server!!

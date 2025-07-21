@@ -171,6 +171,9 @@ playerpening2_strat
 playeropeningboost2_init
 	s_set_strat		x,playeropeningboost2_strat
 	s_set_vartobeobj	boostobj,x
+	IFNE	RUMBLE
+	s_queue_rumble_table		partyboost2
+	ENDC
 	boost_sprite
 	trigse			$32
 	s_and_var		B,pshipflags3,#~psf3_enginesnd

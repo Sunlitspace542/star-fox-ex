@@ -71,8 +71,6 @@ nmihan
 ; Randy's rumble controller fix for hardware
 ; HACK: Force re-read of controller bits to get timing right for rumble handler
 
-	lda	donotrumble
-	bne	.to_skip_rumble
 	lda	slhvr				; Latch Raster Position
 	lda	stat78r				; Update H/V Counters
 	lda	opvctr				; Get Low 8Bits VPos

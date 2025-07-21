@@ -52,8 +52,6 @@ black_holelen	equ	*-black_hole
 	include	MSU1\MSUDRV.ASM ; MSU-1 music driver
 	ENDC
 
-	public	bgandpcr
-	inccru	bgandpcr,data\and.pcr
 	inccru	bgfinalspaceccr,data\finals.ccr
 	inccru	bgfinalspacepcr,data\finals.pcr
 	inccru	bgtbosmenuccr,data\tbosmenu.ccr

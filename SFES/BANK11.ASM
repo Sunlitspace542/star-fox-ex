@@ -32,6 +32,8 @@ hyperspacerumbletab2
 	incfile	pstrats.asm
 	incfile	pistrats.asm
 
+	public	bgandpcr
+	inccru	bgandpcr,data\and.pcr
 	public	bgmarpcr
 	inccru	bgmarpcr,data\mar.pcr
 	public	bgmarccr

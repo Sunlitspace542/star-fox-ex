@@ -24,6 +24,11 @@
 	include	MSU1\msudrv.ext
 
 	bank	23
+	IFNE	RUMBLE
+	; used by PISTRATS
+hyperspacerumbletab2
+	db	$FF,$7F,$91
+	ENDC
 	incfile	pstrats.asm
 	incfile	pistrats.asm
 
@@ -35,6 +40,11 @@
 	bankend	23
 
 	bank	24
+	IFNE	RUMBLE
+	; used by PCSTRATS
+hyperspacerumbletab
+	db	$FF,$7F,$91
+	ENDC
 	incfile	pcstrats.asm
 	incfile	gb2strats.asm
 	incfile	strings.asm

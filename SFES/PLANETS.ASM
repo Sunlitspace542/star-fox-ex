@@ -1636,7 +1636,7 @@ planetseq_l
 	lda	stage					;
 	lbne	.skipit					;
 ;	bra	.skipit		;uncomment for proof that this next section is somewhat working
-	ai16
+	a8
 	lda	actualroute
 	cmp	#0
 	beq	.0rr
@@ -1651,52 +1651,58 @@ planetseq_l
 	cmp	#5
 	beq	.5rr
 .0rr
+	a16
+	lda	#level2_1&$7fff	; 1-1 and 2-1 were backwards
+	sta	mapptr
+	a8
+	lda	#level2_1>>16
+	sta	mapbank
+	ai16
+	jmp	.skipit
+.1rr
+	a16
 	lda	#level1_1&$7fff
 	sta	mapptr
 	a8
 	lda	#level1_1>>16
 	sta	mapbank
-	a16
-	jmp	.skipit
-.1rr
-	lda	#level2_1&$7fff
-	sta	mapptr
-	a8
-	lda	#level2_1>>16
-	sta	mapbank
-	a16
+	ai16
 	jmp	.skipit
 .2rr
+	a16
 	lda	#level3_1&$7fff
 	sta	mapptr
 	a8
 	lda	#level3_1>>16
 	sta	mapbank
-	a16
+	ai16
 	jmp	.skipit
 .3rr
+	a16
 	lda	#level4_1&$7fff
 	sta	mapptr
 	a8
 	lda	#level4_1>>16
 	sta	mapbank
-	a16
+	ai16
 	jmp	.skipit
 .4rr
+	a16
 	lda	#level_blackhole&$7fff
 	sta	mapptr
 	a8
 	lda	#level_blackhole>>16
 	sta	mapbank
-	a16
+	ai16
 	jmp	.skipit
 .5rr
+	a16
 	lda	#level_special&$7fff
 	sta	mapptr
 	a8
 	lda	#level_special>>16
 	sta	mapbank
-	a16
+	ai16
 	jmp	.skipit	
 .skipit
 	stz	stopcounting

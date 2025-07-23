@@ -695,7 +695,7 @@ ptwosf2_playerHP0		equ	128
 	alc	yval,2
 	alc	gamevwpos,1
 	alc	planetdead,2
-	alc	coldataval,1
+;	alc	coldataval,1	; unused work ram
 	alc	fadedir,1
 	alc	fade,1
 	alc	hdmabg2hofs1,2
@@ -705,7 +705,7 @@ ptwosf2_playerHP0		equ	128
 	alc	transbmp1,1
 	alc	bossmode,1
 	alc	gamemode,2
-	alc	depthnum,1
+;	alc	depthnum,1	; unused work ram
 	alc	outvx,2
 	alc	outvy,2
 	alc	outvz,2

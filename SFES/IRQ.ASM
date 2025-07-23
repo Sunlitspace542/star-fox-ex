@@ -1,6 +1,7 @@
 
 	incpublics	irq.ext
 
+	IFNE	RUMBLE
 ; Clocks JOYSER0 16 times for rumble
 clkjoyser016x_l
 ; 8 cycles to long jump here
@@ -8,6 +9,7 @@ clkjoyser016x_l
 	bit	JOYSER0 ;  4 cycles/instruction
 	ENDR
 	rtl ; 6 cyles to long return to nmihan
+	ENDC
 
 NOBGTRANS	=	0
 

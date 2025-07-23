@@ -1022,7 +1022,7 @@ analoguent	equ	11	; Analogue NT
 	alc	palcnt,2
 	alc	fadepal,1
 	IFNE	RUMBLE
-	alc	rumble_table,40	; cache for sequenced rumble commands (unfortunately it must be done this way)
+	alc	rumble_table,rmblseqlen	; cache for sequenced rumble commands (unfortunately it must be done this way)
 	ENDC
 
 ; stratrou

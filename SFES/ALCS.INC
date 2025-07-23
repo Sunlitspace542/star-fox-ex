@@ -1039,7 +1039,7 @@ analoguent	equ	11	; Analogue NT
 	alc	levelfeatures,2
 	alc	enemy_firing,2
 	alc	currshape,2
-	alc	keeppstrat,1
+;	alc	keeppstrat,1
 
 ;	xalc	xhdma_tables,xhdma_max			;5000 bytes saved
 

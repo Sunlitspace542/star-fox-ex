@@ -25,7 +25,13 @@ level2_1
 
 	meters_on	trans
 
-	setvar	keeppstrat,1
+
+;	setvar.b	keeppstrat,1
+	start_65816
+	lda	pshipflags3
+	ora	#psf3_keeppstrat
+	sta	pshipflags3
+	end_65816
 	mapif	chkeasteregg1,.hello20
 	setbg	2_1k
 	mapgoto	.done

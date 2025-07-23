@@ -5467,8 +5467,8 @@ removenuke_Istrat
 	s_jmp		remove_Istrat
 
 	IFNE	RUMBLE
-bombtable
-	db	$11,$11,$22,$33,$44,$55,$55,$55,$55,$55,$55,$55,$55,$55,$44,$33,$22,$11,$11,$19
+bombrumbletab
+	db	$11,$11,$22,$33,$44,$55,$55,$55,$55,$55,$55,$55,$55,$55,$44,$33,$22,$11,$11,rmblend
 	ENDC
 
 nukeexp_Istrat
@@ -5486,7 +5486,7 @@ nukeexp_strat
 	s_start_strat
 
 	IFNE	RUMBLE
-	s_queue_rumble_table	bombtable	; sequenced rumble effects have priority
+	s_queue_rumble_table	bombrumbletab	; sequenced rumble effects have priority
 	ENDC
 
 	a16

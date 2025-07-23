@@ -145,8 +145,8 @@ nmihan
 	stx	rumble_index
 	cmp #0
 	beq	.rumblehan_turnoffmotors
-	cmp #$19	; So I don't have to pull X twice - Kando
-	bne	.rumblehan_donerumblecmd2	; If you hit a $19, end it all. Otherwise, run it.
+	cmp #rmblend	; So I don't have to pull X twice - Kando
+	bne	.rumblehan_donerumblecmd2	; If you hit a rmblend, end it all. Otherwise, run it.
 	stz	rumble_index
 	bra	.rumblehan_turnoffmotors
 
@@ -159,7 +159,7 @@ nmihan
 	bra	.rumblehan_donerumblecmd
 	
 .rumblehan_donerumblecmd2
-	cmp	#$91	; Is the current table value == $91?
+	cmp	#rmblloop	; Is the current table value == rmblloop?
 	bne	.rumblehan_donerumblecmd
 	lda	#1	; Yes! Loop rumble sequence.
 	sta	rumble_index

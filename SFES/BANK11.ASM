@@ -27,7 +27,7 @@
 	IFNE	RUMBLE
 	; used by PISTRATS
 hyperspacerumbletab2
-	db	$FF,$7F,$91
+	db	$FF,$7F,rmblloop
 	ENDC
 	incfile	pstrats.asm
 	incfile	pistrats.asm
@@ -45,7 +45,7 @@ hyperspacerumbletab2
 	IFNE	RUMBLE
 	; used by PCSTRATS
 hyperspacerumbletab
-	db	$FF,$7F,$91
+	db	$FF,$7F,rmblloop
 	ENDC
 	incfile	pcstrats.asm
 	incfile	gb2strats.asm

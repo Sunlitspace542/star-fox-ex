@@ -39,9 +39,14 @@ smolballz_col		colbox	playerLW_col,0,-20,0,rotxyz,playerB_boxsize+20,playerB_box
 corn_col		colbox	0,0,-150,0,rotxyz,40,50,40,HF1,0
 ;corn2_col		colbox	0,0,0,0,rotxyz,100,30,30,HF2,0
 
-kbase2_col	colbox	kbase2_col2,240,-115,0,rotx,50,330,50,HF1,0				;center
-kbase2_col2	colbox	0,-240,-115,0,rotx,50,330,50,HF1,0				;center
+; SUNLITNOTE i did this, the old colboxes are godawful, who the hell did this
+;kbase2_col	colbox	kbase2_col2,240,-115,0,rotx,50,330,50,HF1,0				;center
+;kbase2_col2	colbox	0,-240,-115,0,rotx,50,330,50,HF1,0				;center
 
+; new fastfx ones
+kbase2_col	colbox	kbase2_col2,249,-98,0,norot,80,100,80,HF1,0,0
+kbase2_col2	colbox	kbase2_col3,-206,-140,0,norot,89,137,89,HF1,0,0
+kbase2_col3	colbox	0,26,-45,0,norot,142,43,90,HF1,0,0
 
 skyboss_col	colbox	skyboss_col2,0,0,0,rotxyz,20,30,20,HF1,0				;center
 skyboss_col2	colbox	skyboss_col3,140,0,0,rotxyz,20,30,20,HF2,0		;right wing

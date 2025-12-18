@@ -298,6 +298,9 @@ circdelayexplode_strat
 	s_jmpNOT_alsflag		x,sflag1,.badobj
 	s_make_obj		#nullshape,.badobj
 	s_set_strat		y,BIGparticleexplode_Istrat
+	IFNE	RUMBLE
+	s_queue_rumble	12,12,20
+	ENDC
 	s_copy_pos		y,x
 	s_set_alsflag		y,relexplode
 .badobj

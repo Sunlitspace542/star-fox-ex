@@ -2432,7 +2432,7 @@ init_strats_l
 	jsl		playerstraight_strat	
 	jsl		changeviewmode_l
 .npst3
-
+	IFNE	RUMBLE
 ;--------SAFETY CHECK FOR RUMBLE-------
 
 ; if ((multitapmode || playertwoactivated) == 1) {
@@ -2450,6 +2450,7 @@ init_strats_l
 .safetorumble
 	stz	donotrumble
 .donevoltagecheck
+	ENDC
 
 ;-----------NEW CROSSHAIR STUFF-----------
 
@@ -3955,6 +3956,9 @@ chkfastend
 	sec
 	rtl
 .knock2
+;	msufade ;(basically)
+	lda	#1
+	sta	msufadeflag
 	plp
 	clc
 	rtl

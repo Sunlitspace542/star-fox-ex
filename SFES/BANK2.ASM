@@ -142,7 +142,7 @@ planetdmapos2	dw	100
 	minfo
 	incfile	cont.asm
 	minfo	cont
-
+	incfile	contchk.asm
 
 	incfile	draw.asm
 	minfo	draw

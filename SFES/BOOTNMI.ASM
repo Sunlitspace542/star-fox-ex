@@ -357,7 +357,8 @@ continueboot
 	jsl	startsfx_l
 
 	jsr	initialise_ram
-	
+	jsl	check_connectcont_l	; Check for illegal controllers
+
 	pla
 	sta	machinetype
 	ai16
@@ -831,6 +832,7 @@ restart	ai16
 	
 ;-----------------------------------
 	jsr	initialise_ram			;clear all values
+	jsl	check_connectcont_l	; Check for illegal controllers
 ;-----------------------------------
 
 

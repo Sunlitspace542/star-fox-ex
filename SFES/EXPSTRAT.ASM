@@ -298,6 +298,7 @@ circdelayexplode_strat
 	s_jmpNOT_alsflag		x,sflag1,.badobj
 	s_make_obj		#nullshape,.badobj
 	s_set_strat		y,BIGparticleexplode_Istrat
+	; SUNLITTODO linktron explosion rumble sucks, find out why
 	IFNE	RUMBLE
 	s_queue_rumble_table	kandobossrumbletab	; sequenced rumble effects have priority
 	ENDC

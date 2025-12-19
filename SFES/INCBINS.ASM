@@ -166,6 +166,7 @@ facedata2	inccolfile	data\newface2.cgx,0,620		;size / 32
 	elseif
 facedata2	inccolfile	data\face2.cgx,0,620		;size / 32	
 	ENDC
+	inccru	bgrmblctrlccr,data\rmblctrl.ccr
 	bankend	51
 
 firstsndbnk	=	52

@@ -299,7 +299,7 @@ circdelayexplode_strat
 	s_make_obj		#nullshape,.badobj
 	s_set_strat		y,BIGparticleexplode_Istrat
 	IFNE	RUMBLE
-	s_queue_rumble	12,12,20
+	s_queue_rumble_table	kandobossrumbletab	; sequenced rumble effects have priority
 	ENDC
 	s_copy_pos		y,x
 	s_set_alsflag		y,relexplode
@@ -310,6 +310,11 @@ circdelayexplode_strat
 .nd
 	s_add_playerZ		x
 	s_end_strat
+
+	IFNE	RUMBLE
+kandobossrumbletab
+	db	$11,$11,$22,$33,$44,$55,$55,$55,$55,$55,$55,$55,$55,$55,$44,$33,$22,$11,$11,rmblend
+	ENDC
 ;*******************************************************************************
 circdelayexplode2_Istrat	
 	s_start_strat

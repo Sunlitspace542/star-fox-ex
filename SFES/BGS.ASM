@@ -1039,7 +1039,13 @@ bg_cred_1	init_bg	mode2
 	space	night
 
 bg_cont_1	init_bg	mode1
-	bg2chr	cont
+	lda donotrumble
+	bne	normcontbg
+	bg2chr	rmblctrl	; SNES RUMBLE PAD
+	bra	donecontbg
+normcontbg
+	bg2chr	cont		; SNES CONTROL PAD
+donecontbg
 	bg2scr	cont
 
 	palette	2ep

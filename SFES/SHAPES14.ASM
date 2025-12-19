@@ -204,95 +204,112 @@ QUADWING_EBSP
 	ifne	DO_HDR
 
 MONIKRUISER
-	ShapeHdr	MONIKRUISER_P,0,MONIKRUISER_F,0,0,0,0,0,playerB_col,38,17,50,53,id_0_c,0,<MONIKRUISER>
+	ShapeHdr	MONIKRUISER_P,0,MONIKRUISER_F,0,0,0,0,0,playerB_col,58,12,83,83,id_0_c,0,<MONIKRUISER>
 	elseif
 MONIKRUISER_P
-	PointsXb	1
-	pb	-4,8,3	;0
 	Pointsb	2
-	pb	0,10,0	;2
-	pb	0,-14,0	;3
+	pb	0,-4,6	;0
+	pb	0,-7,-3	;1
 	PointsXb	1
-	pb	-16,-2,-4	;4
+	pb	-14,-2,6	;2
+	Pointsb	2
+	pb	0,7,16	;4
+	pb	0,-12,22	;5
+	PointsXb	3
+	pb	-30,-2,6	;6
+	pb	-31,6,-5	;8
+	pb	19,2,34	;10
+	Pointsb	2
+	pb	0,7,49	;12
+	pb	0,-11,49	;13
+	PointsXb	1
+	pb	-58,-11,-47	;14
 	Pointsb	1
-	pb	0,12,16	;6
-	PointsXb	1
-	pb	14,-4,-16	;7
-	Pointsb	3
-	pb	-19,0,11	;9
-	pb	20,-1,11	;10
-	pb	0,-17,16	;11
-	PointsXb	1
-	pb	24,0,24	;12
-	Pointsb	1
-	pb	0,0,50	;14
-	PointsXb	1
-	pb	-38,8,-36	;15
+	pb	0,1,83	;16
 
 	EndPoints
 MONIKRUISER_F
-	Vizis	20
-	Viz	12,14,11,-55,102,51	;0
-	Viz	11,14,13,55,102,51	;1
-	Viz	12,6,14,-43,-113,40	;2
-	Viz	6,13,14,43,-113,40	;3
-	Viz	16,10,5,-47,118,-5	;4
-	Viz	15,4,9,57,113,4	;5
-	Viz	1,16,5,87,52,-76	;6
-	Viz	0,4,15,-87,52,-76	;7
-	Viz	10,16,1,-44,-113,38	;8
-	Viz	9,0,15,42,-114,36	;9
-	Viz	12,11,3,-77,99,-19	;10
-	Viz	3,11,13,77,99,-19	;11
-	Viz	12,2,6,-60,-111,-14	;12
-	Viz	2,13,6,60,-111,-14	;13
-	Viz	12,3,7,-69,107,-7	;14
-	Viz	3,13,8,69,107,-7	;15
-	Viz	12,7,2,-70,-102,-28	;16
-	Viz	2,8,13,70,-102,-28	;17
-	Viz	3,8,7,0,108,-67	;18
-	Viz	2,7,8,0,-96,-84	;19
+	Vizis	26
+	Viz	10,12,16,-47,-116,21	;0
+	Viz	12,11,16,47,-116,21	;1
+	Viz	10,16,13,-85,89,31	;2
+	Viz	13,16,11,85,89,31	;3
+	Viz	7,15,9,-106,-52,47	;4
+	Viz	6,8,14,106,-52,47	;5
+	Viz	3,9,15,79,-63,-77	;6
+	Viz	2,14,8,-79,-63,-77	;7
+	Viz	3,15,7,0,125,21	;8
+	Viz	2,6,14,0,125,21	;9
+	Viz	10,13,5,-74,103,4	;10
+	Viz	5,13,11,74,103,4	;11
+	Viz	10,4,12,-32,-123,0	;12
+	Viz	4,11,12,32,-123,0	;13
+	Viz	9,3,7,0,-103,75	;14
+	Viz	8,6,2,0,-103,75	;15
+	Viz	10,5,3,-75,103,1	;16
+	Viz	5,11,2,75,103,1	;17
+	Viz	10,3,4,-54,-112,-26	;18
+	Viz	4,2,11,54,-112,-26	;19
+	Viz	2,1,5,55,112,-22	;20
+	Viz	3,5,1,-55,112,-22	;21
+	Viz	4,3,0,12,-85,-94	;22
+	Viz	2,4,0,-12,-85,-94	;23
+	Viz	3,1,0,17,-119,-40	;24
+	Viz	2,0,1,-17,-119,-40	;25
 	BSPInit	MONIKRUISER_EBSP
-	BSP	17,MONIKRUISER_f1,.bsp2
-	BSP	16,MONIKRUISER_f3,.bsp4
-	BSPE	MONIKRUISER_f5
-.bsp4	BSPE	MONIKRUISER_f6
-.bsp2	BSPE	MONIKRUISER_f7
+	BSP	8,MONIKRUISER_f1,.bsp2
+	BSP	18,MONIKRUISER_f3,.bsp4
+	BSP	15,MONIKRUISER_f5,.bsp6
+	BSPE	MONIKRUISER_f7
+.bsp6	BSPE	MONIKRUISER_f8
+.bsp4	BSPE	MONIKRUISER_f9
+.bsp2	BSPE	MONIKRUISER_f10
 
 MONIKRUISER_f1	Faces
-	Face3	7,17,70,-102,-28,2,8,13
+	Face3	7,8,0,125,21,3,15,7
 	FendQ
 MONIKRUISER_f3	Faces
-	Face3	7,16,-70,-102,-28,12,7,2
+	Face3	7,18,-54,-112,-26,10,3,4
 	FendQ
 MONIKRUISER_f5	Faces
-	Face3	0,10,-77,99,-19,12,11,3
-	Face3	0,11,77,99,-19,3,11,13
-	Face3	7,14,-69,107,-7,12,3,7
-	Face3	7,15,69,107,-7,3,13,8
-	Face3	0,2,-43,-113,40,12,6,14
-	Face3	0,3,43,-113,40,6,13,14
-	Face3	0,12,-60,-111,-14,12,2,6
-	Face3	0,13,60,-111,-14,2,13,6
-	Face3	10,0,-55,102,51,12,14,11
-	Face3	10,1,55,102,51,11,14,13
-	Face3	0,18,0,108,-67,3,8,7
-	Face3	43,19,0,-96,-84,2,7,8
-	FendQ
-MONIKRUISER_f6	Faces
-	Face3	7,4,-47,118,-5,16,10,5
-	Face3	7,6,87,52,-76,1,16,5
-	Face3	7,8,-44,-113,38,10,16,1
+	Face3	43,15,0,-103,75,8,6,2
 	FendQ
 MONIKRUISER_f7	Faces
-	Face3	7,5,57,113,4,15,4,9
-	Face3	7,7,-87,52,-76,0,4,15
-	Face3	7,9,42,-114,36,9,0,15
+	Face3	7,5,106,-52,47,6,8,14
+	Face3	7,7,-79,-63,-77,2,14,8
+	FendQ
+MONIKRUISER_f8	Faces
+	Face3	0,12,-32,-123,0,10,4,12
+	Face3	0,13,32,-123,0,4,11,12
+	Face3	7,19,54,-112,-26,4,2,11
+	Face3	43,22,12,-85,-94,4,3,0
+	Face3	43,23,-12,-85,-94,2,4,0
+	FendQ
+MONIKRUISER_f9	Faces
+	Face3	7,4,-106,-52,47,7,15,9
+	Face3	7,6,79,-63,-77,3,9,15
+	Face3	43,14,0,-103,75,9,3,7
+	FendQ
+MONIKRUISER_f10	Faces
+	Face3	7,9,0,125,21,2,6,14
+	Face3	10,3,85,89,31,13,16,11
+	Face3	10,24,17,-119,-40,3,1,0
+	Face3	10,25,-17,-119,-40,2,0,1
+	Face3	0,11,74,103,4,5,13,11
+	Face3	0,0,-47,-116,21,10,12,16
+	Face3	0,1,47,-116,21,12,11,16
+	Face3	10,2,-85,89,31,10,16,13
+	Face3	0,10,-74,103,4,10,13,5
+	Face3	7,16,-75,103,1,10,5,3
+	Face3	7,17,75,103,1,5,11,2
+	Face3	0,20,55,112,-22,2,1,5
+	Face3	0,21,-55,112,-22,3,5,1
 	FendQ
 MONIKRUISER_EBSP
 	EndShape
 
 	endc
+
 
 
 	end_shapes

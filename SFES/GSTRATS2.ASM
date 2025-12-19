@@ -715,82 +715,82 @@ shiplistshape
 .s
 	dw	myship_4					;0
 	dw	wired						;1
-	dw	nullshape
-	dw	my_up
-	dw	nullshape					
+	dw	nullshape					;2
+	dw	my_up						;3
+	dw	nullshape					;4
 	dw	Bmyship_4					;5
-	dw	myzoom_4
-	dw	xzship
-	dw	skyb
-	dw	bullfrog					
+	dw	myzoom_4					;6
+	dw	xzship						;7
+	dw	skyb						;8
+	dw	bullfrog					;9
 	dw	morw						;10
-	dw	delta
-	dw	catpaw
-	dw	skyclaw
-	dw	cfighter					
+	dw	delta						;11
+	dw	catpaw						;12
+	dw	skyclaw						;13
+	dw	cfighter					;14
 	dw	arwingcx					;15
-	dw	clrunner
-	dw	arwingc
-	dw	tadcol
-	dw	grtfox						
+	dw	clrunner					;16
+	dw	arwingc						;17
+	dw	tadcol						;18
+	dw	grtfox						;19
 	dw	wolfen						;20
-	dw	blackro
-	dw	wolfen64
-	dw	arwing64
-	dw	plane1						
+	dw	blackro						;21
+	dw	wolfen64					;22
+	dw	arwing64					;23
+	dw	plane1						;24
 	dw	my_demoS					;25
-	dw	old_type2
-	dw	ryousan
-	dw	a_wing
-	dw	b_wing						
+	dw	old_type2					;26
+	dw	ryousan						;27
+	dw	a_wing						;28
+	dw	b_wing						;29
 	dw	c_wing						;30
-	dw	c_robo
+	dw	c_robo						;31
 .dfx
-	dw	dfx
-	dw	fcta
-	dw	sjpa						
+	dw	dfx							;32
+	dw	fcta						;33
+	dw	sjpa						;34
 .djpa
 	dw	djpa						;35
 .cobra
-	dw	cobramk3
-	dw	wiredsp
-	dw	bmyship_4
-	dw	myship2
+	dw	cobramk3					;36
+	dw	wiredsp						;37
+	dw	bmyship_4					;38
+	dw	myship2						;39
 	dw	wolf						;40
-	dw	wolf_1
-	dw	sf2missile
-	dw	drwingp
-	dw	yellowbirdp
+	dw	wolf_1						;41
+	dw	sf2missile					;42
+	dw	drwingp						;43
+	dw	yellowbirdp					;44
 	dw	smallballzp					;45
-	dw	guard_0p
-	dw	EISEI_0p
-	dw	TAIGUNp
-	dw	tekikanp
+	dw	guard_0p					;46
+	dw	EISEI_0p					;47
+	dw	TAIGUNp						;48
+	dw	tekikanp					;49
 	dw	ninja_enemyp				;50
-	dw	petecube
-	dw	androsscubee
-	dw	ray_bluep
+	dw	petecube					;51
+	dw	androsscubee				;52
+	dw	ray_bluep					;53
 	dw	ray_bredp					;54
-	dw	ray_0p
-	dw	wire_manp
+	dw	ray_0p						;55
+	dw	wire_manp					;56
 .cockpit
-	dw	cockpit2
-	dw	f_fishp				
+	dw	cockpit2					;57
+	dw	f_fishp						;58
 	dw	tadpolep					;59
-	dw	whale1
-	dw	my_birdp
-	dw	shark1
-	dw	zaco_1p				
+	dw	whale1						;60
+	dw	my_birdp					;61
+	dw	shark1						;62
+	dw	zaco_1p						;63
 	dw	zaco_5p						;64
-	dw	zaco_6p
-	dw	zaco_8pl
-	dw	zaco_ap
-	dw	zaco_bp				
+	dw	zaco_6p						;65
+	dw	zaco_8pl					;66
+	dw	zaco_ap						;67
+	dw	zaco_bp						;68
 	dw	helip						;69
-	dw	ikap
-	dw	f_dragonp
-	dw	air_1p
-	dw	car_10p				
+	dw	ikap						;70
+	dw	f_dragonp					;71
+	dw	air_1p						;72
+	dw	car_10p						;73
 	dw	phazer						;74
 	dw	boss_d_ap					;75
 	dw	icarus						;76
@@ -2168,18 +2168,24 @@ checkview_l
 .noout
 	a16
 	lda	curr_ship	; index into shiplistshape table
-	cmp	#7	;skyb
-	bmi	.maybe
-	cmp	#77	;slippy1
-	bmi	.maybe
-	cmp	#78	;falco1
-	bpl	.maybe
-	cmp	#79	;peppy1
-	bmi	.maybe
+	cmp	#7	;xzship
+	beq	.maybe25
+	cmp	#15	;arwingcx
+	beq	.maybe25
+	cmp	#17	;arwingc (assault)
+	beq	.maybe25
 	cmp #24 ;plane1
-	bmi	.maybe25
+	beq	.maybe25
 	cmp #40	;wolf
-	bpl	.maybe25
+	beq	.maybe25
+	cmp	#77	;slippy1
+	beq	.maybe
+	cmp	#78	;falco1
+	beq	.maybe
+	cmp	#79	;peppy1
+	beq	.maybe
+	cmp #83 ;monikruiser
+	beq	.maybe252
 	bra	.normdist
 .noimdone3pointer
 	jmp	.noimdone3
@@ -2196,6 +2202,12 @@ checkview_l
 	s_set_var    W,viewdist,#300
 	s_set_var    W,outviewdist,#300
 	s_set_var    W,outdist,#300
+	bra	.noimdone3
+.maybe252 ; SUNLITNOTE I did this, blame monika or something
+	a8
+	s_set_var    W,viewdist,#190
+	s_set_var    W,outviewdist,#190
+	s_set_var    W,outdist,#190
 	bra	.noimdone3
 .maybe
 	a8

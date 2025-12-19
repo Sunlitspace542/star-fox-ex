@@ -3957,9 +3957,11 @@ chkfastend
 	sec
 	rtl
 .knock2
+	IFNE	MSU1
 ;	msufade ;(basically)
 	lda	#1
 	sta	msufadeflag
+	ENDC
 	plp
 	clc
 	rtl

@@ -708,9 +708,8 @@ xhairrealtot	equ	(.s2-.s1)/2
 
 
 
-
+; SUNLITNOTE 12/19/25 - i had to renumber this, any issues complain to me
 ;-----------------SHIP LIST-------------------------------
-
 shiplistshape
 .s
 	dw	myship_4					;0
@@ -2169,6 +2168,8 @@ checkview_l
 	a16
 	lda	curr_ship	; index into shiplistshape table
 	cmp	#7	;xzship
+	beq	.maybe25
+	cmp	#8	;skyb
 	beq	.maybe25
 	cmp	#15	;arwingcx
 	beq	.maybe25

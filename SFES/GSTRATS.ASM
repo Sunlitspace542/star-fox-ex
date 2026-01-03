@@ -2435,7 +2435,7 @@ init_strats_l
 	IFNE	RUMBLE
 ;--------SAFETY CHECK FOR RUMBLE-------
 
-; if (((multitapmode || playertwoactivated) == 1) && (donotrumble != 0)) {
+; if (((multitapmode || playertwoactivated || mousemode) == 1) && (donotrumble != 0)) {
 ; donotrumble = 1;
 ; } else {
 ; donotrumble = 0;
@@ -2444,6 +2444,7 @@ init_strats_l
 	bne	.donevoltagecheck	; SUNLITNOTE fix so boot safety program result preserved
 	lda	multitapmode
 	ora	playertwoactivated
+	ora	mousemode
 	sta	donotrumble
 	beq	.safetorumble
 	bne	.donevoltagecheck

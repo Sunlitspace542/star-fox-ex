@@ -41,6 +41,7 @@
 	include	paths.ext
 	include	mem.ext
 	include	endseq.ext
+	include	BLINK.EXT
 
 ;------------------------------------
 ; Write MSU-1 Tracklist
@@ -85,6 +86,8 @@ Do_HDR	=	0
 
 start	jmp.l	startboot
 
+break_vn
+	jml doblink1	; If CPU derails, show pink BLINK
 
 cop_ve
 abort_ve
@@ -92,7 +95,7 @@ nmi_ve
 irq_ve
 cop_vn
 reset_vn
-break_vn
+;break_vn
 abort_vn
 	rti
 

@@ -214,8 +214,8 @@ TestA
 
 	LDA #%10000000
 	STA $2115
-	Ai16
-	db $A9
+	ai16
+;	db $A9 ; wtf???
 .Blank
 	STA $2116
 	LDA #$1809

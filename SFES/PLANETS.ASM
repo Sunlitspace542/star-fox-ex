@@ -4614,6 +4614,7 @@ stagepaths
 	dw	.pathCRED-stagepaths		;level 10 (CREDITS TEST)
 	dw	.pathCRED2-stagepaths		;level 11 (NEW CREDITS TEST)
 	dw	.pathcomet-stagepaths		;level 12 (NEW CREDITS TEST)
+	dw	.pathspecial-stagepaths		;level 12 (NEW CREDITS TEST)
 	
 .path1	local
 	PATHSTART	4,20,0,2_1,88,1
@@ -4983,6 +4984,11 @@ stagepaths
 	
 .pathc75	local
 	PATHSTART	0,0,21,7_5,161,6
+	PATHEND
+	NOMOREPATHS	
+	
+.pathspecial	local
+	PATHSTART	0,0,21,fin,161,6
 	PATHEND
 	NOMOREPATHS	
 	

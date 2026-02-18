@@ -551,23 +551,34 @@ planetseq2_l
 .nosecondplanet3
 	testjoypad	TLEFT
 	beq	.end3
+
+	IFEQ	1
+	a8
 	lda #1
 	sta comet
 	lda	#255
 	sta	lightx
-	lda	#0
+	lda	#0			;comet
 	sta	lighty
 	stz	lightx+1
 	stz	lighty+1
+	ENDC
 
-;	lda	#1
-;	sta	firstdnld
-;	sta.l	oncewipe
-;	stz	whichroute
-;	stz	map2
-;	jsl	initialise2_l
-;	jml	planetseq3_l
-
+	IFEQ 	0
+	a8
+	lda	#1
+	sta	map3
+	stz	map2
+	a16
+	sta	firstdnld
+	sta.l	oncewipe			;map 3
+	lda 	#12
+	sta	whichroute
+	jsl	initialise2_l
+	jml	planetseq3_l
+	ENDC
+	
+	
 .end3
 	lda	secretgodmode
 	bne	.skipngp
@@ -737,6 +748,20 @@ planetseq2_l
 	jml	planetseq_l
 
 .nosecondplanet4
+	testjoypad	TLEFT
+	beq	.nosecondplanet55
+	a8
+	lda	#1
+	sta	map3
+	stz	map2
+	sta	firstdnld
+	sta.l	oncewipe			;map 3
+	lda 	#12
+	sta	whichroute
+	jsl	initialise2_l
+	jml	planetseq3_l
+
+.nosecondplanet55
 	TESTJOYPAD	START		; cheat
 	lbne	.cheatfinished		; cheat
 	TESTJOYPAD	UP

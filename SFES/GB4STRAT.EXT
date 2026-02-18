@@ -1,3 +1,6 @@
+	global	mbo_RT_istrat
+	global	mbo_LT_istrat
+	global	mbo_istrat
 	global	boxxiedriveby2_istrat
 	global	fire_porb
 	global	fire_orb

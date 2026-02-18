@@ -531,6 +531,7 @@ cfgr_ms1		equ	%00100000	; HighSpeed Multiply ON (MS1)
 	alc	stage,2
 	alc	whichroute,1
 	alc	map2,1
+	alc	map3,1
 	alc	currentplanet,2
 	alc	dmatemp,2
 	alc	mapmode,2

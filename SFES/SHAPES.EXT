@@ -1,4 +1,6 @@
 	extern	wiredsp
+	extern	l_mbo_1
+	extern	l_mbo_1a
 	extern	barker_l
 	extern	BOWSER
 	extern	BOWSERMAD

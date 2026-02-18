@@ -45,6 +45,7 @@ planetseq3_l
 
 	a8i16
 
+;	jsr	convertroute3
 	stz	stopcounting
 
 	stz	sectorkfade
@@ -74,13 +75,6 @@ planetseq3_l
 	stx	sdspt3
 	stz	nosetport3
 
-; unlock view change if it was locked during a level
-	lda	pshipflags3
-	bit	#psf3_noviewchange	; bit set?
-	beq	.noclearviewchange
-	and	#~psf3_noviewchange	; yes!
-	sta	pshipflags3	; clear it
-.noclearviewchange
 	disable
 
 
@@ -88,7 +82,7 @@ planetseq3_l
 
 ;	lda	#1
 ;	sta	stage
-;	lda	#1
+;	lda	#13
 ;	sta	whichroute
 
 	a16
@@ -305,8 +299,8 @@ planetseq3_l
 	jsl	read_joypad_ll3		; timed key read
 
 	lda	trig0			; check for stage select
-	bit	#pad_SELECT!PAD_LEFT!pad_RIGHT!pad_UP!pad_DOWN
-	lbeq	.nopress
+;	bit	#pad_SELECT!PAD_LEFT!pad_RIGHT!pad_UP!pad_DOWN
+	bra	.nopress
 .fadeoot
 ;	lda.l	mspr_pal
 ;	inc	a
@@ -387,14 +381,16 @@ planetseq3_l
 
 	testjoypad	TRIGHT
 	beq	.nosecondplanet3
+	a8
 	lda	#1
+	sta	map2
+	stz	map3
+	a16
 	sta	firstdnld
 	sta.l	oncewipe
 	lda	#4
 	sta	whichroute
 	jsl	initialise_l
-	lda	#1
-	sta	map2
 	jml	planetseq2_l
 
 .nosecondplanet3
@@ -474,10 +470,10 @@ planetseq3_l
 
 	IFEQ	0
 	jsl	read_joypadt_ll3		; cheat
-	TESTJOYPAD	DOWN
-	bne		.newroute
-	TESTJOYPAD	UP
-	bne		.newroute
+;	TESTJOYPAD	DOWN
+;	bne		.newroute
+;	TESTJOYPAD	UP
+;	bne		.newroute
 	bra		.nocheatdown
 .newroute3
 	inc	stage			; cheat
@@ -568,14 +564,15 @@ planetseq3_l
 	jsl	read_joypadt_ll3		; cheat
 	testjoypad	TRIGHT
 	beq	.nosecondplanet4
-	a8
 	lda	#1
+	sta	map2
+	stz	map3
 	sta	firstdnld
 	sta.l	oncewipe
-	stz	whichroute
-	stz	map2
-	jsl	initialise2_l
-	jml	planetseq_l
+	lda	#4
+	sta	whichroute
+	jsl	initialise_l
+	jml	planetseq2_l
 
 .nosecondplanet4
 	TESTJOYPAD	START		; cheat
@@ -1240,6 +1237,8 @@ planetseq3_l
 ;------------------------------------------
 ; initialise game
 
+;	jsr	convertroute3
+
 	jsr	waitdma2242
 
 .leaveplanets
@@ -1526,32 +1525,19 @@ copylight3
 
 ;-----------------------------------------------------
 spinplanets3
-; spin the planets around at their appropiate rates
 	php
 	ai16
 
-	ldx	#28
+	ldx	#0
 .nxtone
 	lda	roty1,x
 	clc
-	adc	#6*256
+	adc.l	.speeds,x
 	sta	roty1,x
 	inx
-	inx				;36
-	cpx	#36
+	inx
+	cpx	#maxplanetspheres
 	bne	.nxtone
-
-	ldx	#42
-.nxtone2
-	lda	roty1,x
-	clc
-	adc	#6*256
-	sta	roty1,x
-	inx
-	inx				;36
-	cpx	#56
-	bne	.nxtone2
-
 
 	plp
 	rts
@@ -2962,8 +2948,9 @@ setup_planets_ll3
 
 ;Enable key pad reading + hdma tables (includes inidisp)
 
-	decvramnotrans	0,(p_bg2_cgx+1024/2),bgmacbethccr,7*k
-	decbg2vramnotrans	0,p_bg2_scr,bgmacbethpcr,8*k,32
+
+	decvramnotrans	0,(p_bg2_cgx+1024/2),bgmap2ccr,7*k
+	decbg2vramnotrans	0,p_bg2_scr,bgmap2pcr,8*k,32
 	jsr	clearscreen3
 	jsl	p_init_sprites_ll3
 
@@ -3253,6 +3240,25 @@ modechange_ll
 .continue
 	plp
 	rtl
+
+;------------------------------------
+
+convertroute3
+	php
+	a8
+	lda	whichroute
+	
+	beq	.swap1
+	cmp	#5
+	bne	.ok
+	lda	#4
+	bra	.ok
+.swap1	lda	#4
+.ok	sta	whichroute
+	plp
+	rts
+
+
 ;------------------------------------
 
 pepperspeaking3
@@ -3365,147 +3371,17 @@ cesx	=	224-40
 
 
 planetsprs3 ;dpsphere - 3d texture / dpspr - 2d texture 		;for zooming/general pepper stuff
-	dpsphere	playerplanet 			;5-1/6-1
-	dpsphere		planetg 			;5-2
-	dpsphere		test1 				;7-2 
-	dpsphere		bplanet 			;6-2
-	dpspr	nstars 						;5-3
-	dpspr	nasteroid 					;6-3
-	dpsphere		bigships ;6
-	dpsphere		cluster ;7
-	dpsphere		bigmeteo 			;broken
-	dpsphere		test2 			;7-3
-	dpsphere		cplanet1 			;6-4
-	dpsphere	fplanet 				;5-5/6-6	Venom
-	dpsphere		bigmeteo ;12
-	dpsphere		lplanet 			;5-4
-	dpsphere		test3 ;14	7-4
-	dpsphere	cplanet2 				;6-5 Purple Venom
-	dpsphere		ring2 ;16	unused
-;zoomin-planets
-	dpsphere	playerplanet ;17	Corneria - Capitol
-	dpsphere	planetg	;18		;5-2
-	dpspr	nstars	;19	5-3
-	dpsphere	lplanet	;20		;5-4
-	dpsphere	fplanet	;21	5-5
-	dpsphere	bplanet	;22	6-2 Fortuna - Pebble Beach
-	dpspr	nasteroid	;23	6-3 Space Rocks
-	dpsphere	cplanet1	;24	;6-4
-	dpsphere	cplanet2	;25 6-5
-	dpsphere	fplanet	;26 6-6
-	dpsphere	test1	;27	;7-2
-	dpsphere	test2	;28 7-3
-	dpsphere	test3	;29 7-4
-	dpspr	cometicon	;30 Comet
+	dpspr	space2 			;5-1/6-1
 
 planetpos3		  ; L 02/R 1a - U 05/D 16 planet position on map screen	(1 is highest y, 17 is lowest Y)
 	fuzzzcuntplanet	$04,$0b	; 0 X-1
-	fuzzzcuntplanet	$0b,$09	; 1 5-2
-	fuzzzcuntplanet	$09,$0F	; 2 7-2
-	fuzzzcuntplanet	$03,$11	; 3 6-2
-	fuzzzcuntplanet	$0f,$04	; 4 5-3
-	fuzzzcuntplanet	$07,$15	; 5 6-3
-	fuzzzcuntplanet	$02,$1f	; -
-	fuzzzcuntplanet	$02,$1f	; -			
-	fuzzzcuntplanet	$10,$1f	; 
-	fuzzzcuntplanet	$0F,$0f	; 9  7-3			
-	fuzzzcuntplanet	$0e,$15	; 10 6-4
-	fuzzzcuntplanet	$1a,$0a	; 11 5-5/6-6/7-?
-	fuzzzcuntplanet	$13,$1f	; 12 
-	fuzzzcuntplanet	$16,$04	; 13 5-4
-	fuzzzcuntplanet	$13,$0a	; 14 7-4
-	fuzzzcuntplanet	$17,$11	; 15 6-5
-	fuzzzcuntplanet	$02,$1f	; -
-
-	fuzzzcuntplanet	$04,$0b	; <17> (origami)
-	fuzzzcuntplanet	$0b,$09	; <18> (origami)
-	fuzzzcuntplanet	$0f,$04	; <19> (origami)
-	fuzzzcuntplanet	$16,$04	; <20> (origami)
-	fuzzzcuntplanet	$1a,$0a	; <21> (origami)
-	
-	fuzzzcuntplanet	$03,$11	; <22> (origami)
-	fuzzzcuntplanet	$07,$15	; <23> (origami)
-	fuzzzcuntplanet	$0e,$15	; <24> (origami)
-	fuzzzcuntplanet	$17,$11	; <25> (origami)
-	fuzzzcuntplanet	$1a,$0a	; <26> (origami)
-	
-	fuzzzcuntplanet	$09,$0f	; <27> (origami)
-	fuzzzcuntplanet	$0f,$0f	; <28> (origami)
-	fuzzzcuntplanet	$13,$0a	; <29> (origami)
-	fuzzzcuntplanet	$0f,$0a	; <29> (origami)
 
 	
 startplanetpos3				; ship placement before stage
 	fuzzzcuntplan2	$04,$0b	; 0 X-1
-	fuzzzcuntplan2	$0b,$09	; 1 5-2
-	fuzzzcuntplan2	$09,$0F	; 2 7-2
-	fuzzzcuntplan2	$03,$11	; 3 6-2
-	fuzzzcuntplan2	$0f,$04	; 4 5-3
-	fuzzzcuntplan2	$07,$15	; 5 6-3
-	fuzzzcuntplan2	$02,$1f	; -
-	fuzzzcuntplan2	$02,$1f	; -			
-	fuzzzcuntplan2	$10,$1f	; 
-	fuzzzcuntplan2	$0F,$0f	; 9  7-3			
-	fuzzzcuntplan2	$0e,$15	; 10 6-4
-	fuzzzcuntplan2	$1a,$0a	; 11 5-5/6-6/7-?
-	fuzzzcuntplan2	$13,$1f	; 12 
-	fuzzzcuntplan2	$16,$04	; 13 5-4
-	fuzzzcuntplan2	$13,$0a	; 14 7-4
-	fuzzzcuntplan2	$17,$11	; 15 6-5
-	fuzzzcuntplan2	$02,$1f	; -
-
-	fuzzzcuntplan2	$04,$0b	; <17> (origami)
-	fuzzzcuntplan2	$0b,$09	; <18> (origami)
-	fuzzzcuntplan2	$0f,$04	; <19> (origami)
-	fuzzzcuntplan2	$16,$04	; <20> (origami)
-	fuzzzcuntplan2	$1a,$0a	; <21> (origami)
-	
-	fuzzzcuntplan2	$03,$12	; <22> (origami)
-	fuzzzcuntplan2	$07,$15	; <23> (origami)
-	fuzzzcuntplan2	$0e,$15	; <24> (origami)
-	fuzzzcuntplan2	$17,$11	; <25> (origami)
-	fuzzzcuntplan2	$1a,$0a	; <26> (origami)
-	
-	fuzzzcuntplan2	$09,$0f	; <27> (origami)
-	fuzzzcuntplan2	$0f,$0f	; <28> (origami)
-	fuzzzcuntplan2	$13,$0a	; <29> (origami)
-	fuzzzcuntplan2	$0f,$0a	; <29> (origami)
 
 endplanetpos3				; ship placement after stage
 	fuzzzcuntplan2	$03,$0b	; 0 X-1
-	fuzzzcuntplan2	$0b,$09	; 1 5-2
-	fuzzzcuntplan2	$09,$0F	; 2 7-2
-	fuzzzcuntplan2	$03,$11	; 3 6-2
-	fuzzzcuntplan2	$0f,$04	; 4 5-3
-	fuzzzcuntplan2	$07,$15	; 5 6-3
-	fuzzzcuntplan2	$02,$1f	; -
-	fuzzzcuntplan2	$02,$1f	; -			
-	fuzzzcuntplan2	$10,$1f	; 
-	fuzzzcuntplan2	$0F,$0f	; 9  7-3			
-	fuzzzcuntplan2	$0e,$15	; 10 6-4
-	fuzzzcuntplan2	$1a,$0a	; 11 5-5/6-6/7-?
-	fuzzzcuntplan2	$13,$1f	; 12 
-	fuzzzcuntplan2	$16,$04	; 13 5-4
-	fuzzzcuntplan2	$13,$0a	; 14 7-4
-	fuzzzcuntplan2	$17,$11	; 15 6-5
-	fuzzzcuntplan2	$02,$1f	; -
-
-	fuzzzcuntplan2	$04,$0b	; <17> (origami)
-	fuzzzcuntplan2	$0b,$09	; <18> (origami)
-	fuzzzcuntplan2	$0f,$04	; <19> (origami)
-	fuzzzcuntplan2	$16,$04	; <20> (origami)
-	fuzzzcuntplan2	$1a,$0a	; <21> (origami)
-	
-	fuzzzcuntplan2	$03,$12	; <22> (origami)
-	fuzzzcuntplan2	$07,$15	; <23> (origami)
-	fuzzzcuntplan2	$0e,$15	; <24> (origami)
-	fuzzzcuntplan2	$17,$11	; <25> (origami)
-	fuzzzcuntplan2	$1a,$0a	; <26> (origami)
-	
-	fuzzzcuntplan2	$09,$0f	; <27> (origami)
-	fuzzzcuntplan2	$0f,$0f	; <28> (origami)
-	fuzzzcuntplan2	$13,$0a	; <29> (origami)
-	fuzzzcuntplan2	$0f,$0a	; <29> (origami)
 	
 
 planselpal3

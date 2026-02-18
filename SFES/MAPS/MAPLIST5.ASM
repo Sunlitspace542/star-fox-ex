@@ -21,4 +21,6 @@ incmap	MACRO
 	INCMAP	level2_3
 	INCMAP	level2_4
 
+	INCMAP	levelfin
+
 creditsmap	incmap	credits

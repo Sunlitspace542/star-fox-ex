@@ -4842,3 +4842,415 @@ playerfourcoltwo_Istrat
 	s_end_strat
 
 
+
+
+;--------------------------------------------------
+;--------------------------------------------------
+;----------------random's midlevel boss----------------------
+;--------------------------------------------------
+;--------------------------------------------------
+
+mbo_istrat
+	s_start_strat
+	s_set_alptrs	x,mbo_strat,mbocol_istrat,mboexp_istrat	;looping strat, collision strat, explosion strat
+	s_setnoremove_behind	x
+	s_set_colltype	x,ENEMY1				;collision type
+	s_set_colltype	x,ENEMY2				;collision type
+	s_set_colltype	x,ENEMYWEAP				;collsiion type
+	s_or_var	B,strat_valid,#brflag		;disable barrel roll continuance
+	s_set_aldata	x,#80,#20				;hp + ap
+	s_set_bossmaxHP	#80					;set the max hp
+	s_add_bossHP		x,al_hp		;update HP on hp bar
+	s_set_alvar		B,x,al_roty,#deg180			;rotation foward facing
+	s_set_alvar		B,x,al_rotx,#0			;no rotation
+	s_set_alvar		B,x,al_rotz,#0			;no rotation
+	s_add_playerz	x
+	s_clr_alsflag		x,nohitaffect
+	s_set_alsflag	x,relexplode
+	s_clr_alsflag	x,collide
+	s_set_alsflag	x,colldisable
+	s_set_alvar		B,x,al_sbyte1,#80		;timer for state 0
+	s_init_anim		x,#0
+
+
+mbo_strat
+	s_start_strat
+
+;---------------------------------------		State 0 - move into starting position
+	s_set_objtobeplayer	y
+	s_jmp_ifnotstate	x,0,.not0
+	s_jmp_zdistless		x,y,#1000,.noinc
+	s_sub_alvar			W,x,al_worldz,#30
+.noinc
+	s_decbne_alvar		B,x,al_sbyte1,.not0		;when timer is running, skip this part
+	s_set_alvar			B,x,al_sbyte1,#60
+	s_set_alvar		B,x,al_sbyte2,#0
+	s_next_state		x						;timer done, next state
+
+.not0
+
+
+	s_jmp_ifnotstate	x,1,.not1
+
+
+	s_jmp_notdelay	6,.nofire	
+	jsr firerockets
+.nofire
+
+
+
+.not1
+
+	s_set_find	0
+.lop
+	s_find_obj			y,x,#l_mbo_1a,.nohelpers	
+	bra	.ok
+.nohelpers
+	s_set_alsflag	x,collide
+	s_clr_alsflag	x,colldisable	
+.ok
+
+
+
+
+	s_add_playerz	x
+	s_add_bossHP	x,al_hp
+
+	s_end_strat
+	
+	
+;--------------------------------------------------
+;--------------------------------------------------
+;----------------random's finale left side turret----------------------
+;--------------------------------------------------
+;--------------------------------------------------
+
+mbo_LT_istrat
+	s_start_strat
+	s_set_alptrs	x,mbo_LT_strat,hitflash_istrat,bigexplode_istrat	;looping strat, collision strat, explosion strat
+	s_setnoremove_behind	x
+	s_set_colltype	x,ENEMY1				;collision type
+	s_set_colltype	x,ENEMY2				;collision type
+	s_set_colltype	x,ENEMYWEAP				;collsiion type
+	s_or_var	B,strat_valid,#brflag		;disable barrel roll continuance
+	s_set_aldata	x,#60,#20				;hp + ap
+	s_set_alvar		B,x,al_roty,#0			;rotation foward facing
+	s_set_alvar		B,x,al_rotx,#0			;no rotation
+	s_set_alvar		B,x,al_rotz,#0			;no rotation
+	s_add_playerz	x
+	s_set_alsflag	x,relexplode
+	s_clr_alsflag		x,nohitaffect
+	s_clr_alsflag	x,collide
+	s_set_alsflag	x,colldisable
+	s_set_alvar		B,x,al_sbyte1,#65		;timer for state 0
+	s_init_anim		x,#0
+	s_set_alsflag	x,invisible
+
+mbo_LT_strat
+	s_start_strat
+
+;---------------------------------------		State 0 - move into starting position
+	s_set_objtobeplayer	y
+
+	s_jmp_ifnotstate	x,0,.not0
+	s_jmp_zdistless		x,y,#1100,.noinc
+	s_sub_alvar			W,x,al_worldz,#30
+.noinc
+	s_decbne_alvar		B,x,al_sbyte1,.not0		;when timer is running, skip this part
+	s_set_alvar			B,x,al_sbyte1,#30
+	s_clr_alsflag	x,invisible
+	s_next_state		x						;timer done, next state
+.not0
+
+	s_jmp_ifnotstate	x,1,.not1				;state 1
+	s_sub_alvar		W,x,al_worldx,#10
+	s_sub_alvar			W,x,al_worldz,#10
+	s_jmp_NOTalsflag	x,invisible,.turninvis
+	s_clr_alsflag	x,invisible
+	bra	.don
+.turninvis
+	s_set_alsflag	x,invisible
+.don
+	s_decbne_alvar		B,x,al_sbyte1,.not1
+	s_set_alvar			B,x,al_sbyte1,#30
+	s_next_state		x	
+.not1
+
+	s_jmp_ifnotstate	x,2,.not2				;state 2
+
+	s_add_alvar		B,x,al_roty,#(deg180/30)
+
+	s_jmp_NOTalsflag	x,invisible,.turninvis2
+	s_clr_alsflag	x,invisible
+	bra	.don2
+.turninvis2
+	s_set_alsflag	x,invisible
+.don2
+	s_decbne_alvar		B,x,al_sbyte1,.not2
+	s_clr_alsflag		x,invisible
+	s_set_alvar			B,x,al_sbyte1,#15
+	s_clr_alsflag	x,colldisable
+	s_set_alsflag	x,collide
+	jsr	spawnarock2
+	s_next_state		x	
+
+.not2
+
+	s_jmp_ifnotstate	x,3,.not3				;state 3
+	
+;	s_achase_alvar	B,x,al_roty,#deg180,3
+	s_sub_alvar	B,x,al_rotz,#(256/20)
+;	s_add_alvar	W,x,al_worldx,#(100/15)
+	s_decbne_alvar	B,x,al_sbyte1,.not3
+	s_set_alvar	B,x,al_sbyte1,#50
+	s_set_objtobeplayer	y
+	s_next_state		x
+.not3
+
+	s_jmp_ifnotstate	x,4,.not4
+	s_add_alvar	B,x,al_rotz,#(256/20)
+;	s_sub_alvar	W,x,al_worldx,#(100/50)	
+	s_decbne_alvar		B,x,al_sbyte1,.not4
+	s_set_alvar	B,x,al_sbyte1,#15
+	jsr	spawnarock2
+	s_set_objtobeplayer	y
+	s_set_state	x,#3
+.not4
+
+
+
+
+
+	s_add_playerz	x
+
+	s_end_strat
+	
+	
+	
+;--------------------------------------------------
+;--------------------------------------------------
+;----------------random's finale right side turret----------------------
+;--------------------------------------------------
+;--------------------------------------------------
+
+mbo_RT_istrat
+	s_start_strat
+	s_set_alptrs	x,mbo_RT_strat,hitflash_istrat,bigexplode_istrat	;looping strat, collision strat, explosion strat
+	s_setnoremove_behind	x
+	s_set_colltype	x,ENEMY1				;collision type
+	s_set_colltype	x,ENEMY2				;collision type
+	s_set_colltype	x,ENEMYWEAP				;collsiion type
+	s_or_var	B,strat_valid,#brflag		;disable barrel roll continuance
+	s_set_aldata	x,#60,#20				;hp + ap
+	s_set_alvar		B,x,al_roty,#0			;rotation foward facing
+	s_set_alvar		B,x,al_rotx,#0			;no rotation
+	s_set_alvar		B,x,al_rotz,#0			;no rotation
+	s_add_playerz	x
+	s_clr_alsflag		x,nohitaffect
+	s_set_alsflag	x,relexplode
+	s_clr_alsflag	x,collide
+	s_set_alsflag	x,colldisable
+	s_set_alvar		B,x,al_sbyte1,#65		;timer for state 0
+	s_init_anim		x,#0
+	s_set_alsflag	x,invisible
+
+mbo_RT_strat
+	s_start_strat
+
+;---------------------------------------		State 0 - move into starting position
+	s_set_objtobeplayer	y
+
+	s_jmp_ifnotstate	x,0,.not0
+	s_jmp_zdistless		x,y,#1100,.noinc
+	s_sub_alvar			W,x,al_worldz,#30
+.noinc
+	s_decbne_alvar		B,x,al_sbyte1,.not0		;when timer is running, skip this part
+	s_set_alvar			B,x,al_sbyte1,#30
+	s_set_alsflag	x,invisible
+	s_next_state		x						;timer done, next state
+.not0
+
+
+
+
+
+	s_jmp_ifnotstate	x,1,.not1
+	s_add_alvar		W,x,al_worldx,#10
+	s_sub_alvar			W,x,al_worldz,#10
+	s_jmp_NOTalsflag	x,invisible,.turninvis
+	s_clr_alsflag	x,invisible
+	bra	.don
+.turninvis
+	s_set_alsflag	x,invisible
+.don
+	s_decbne_alvar		B,x,al_sbyte1,.not1
+	s_set_alvar			B,x,al_sbyte1,#30
+	s_next_state		x	
+.not1
+
+	s_jmp_ifnotstate	x,2,.not2
+
+	s_sub_alvar		B,x,al_roty,#(deg180/30)
+
+	s_jmp_NOTalsflag	x,invisible,.turninvis2
+	s_clr_alsflag	x,invisible
+	bra	.don2
+.turninvis2
+	s_set_alsflag	x,invisible
+.don2
+	s_decbne_alvar		B,x,al_sbyte1,.not2
+	s_clr_alsflag		x,invisible
+	s_set_alvar			B,x,al_sbyte1,#15
+	s_clr_alsflag	x,colldisable
+	s_set_alsflag	x,collide
+	jsr	spawnarock2
+	s_next_state		x	
+
+.not2
+
+	s_jmp_ifnotstate	x,3,.not3				;state 3
+	
+	s_add_alvar	B,x,al_rotz,#(256/20)
+;	s_sub_alvar	W,x,al_worldx,#(100/15)
+	s_decbne_alvar	B,x,al_sbyte1,.not3
+	s_set_alvar	B,x,al_sbyte1,#50
+	s_set_objtobeplayer	y
+	s_next_state		x
+.not3
+
+	s_jmp_ifnotstate	x,4,.not4
+	s_sub_alvar	B,x,al_rotz,#(256/20)
+;	s_add_alvar	W,x,al_worldx,#(100/50)	
+	s_decbne_alvar		B,x,al_sbyte1,.not4
+	s_set_alvar	B,x,al_sbyte1,#15
+	jsr	spawnarock2
+	s_set_objtobeplayer	y
+	s_set_state	x,#3		
+.not4
+
+
+	s_add_playerz	x
+
+	s_end_strat
+	
+	
+
+;spawn a rock, obviously
+
+spawnarock
+	s_make_obj	#asteroid1,.donespawn
+	s_sprite_obj	y,#0
+	s_copy_pos	y,x
+	s_copy_rots	y,x
+	s_sub_alvar	W,y,al_worldz,#100
+	s_set_aldata	y,#60,#18				;hp + ap
+	s_set_colltype	y,ENEMY1
+	s_set_colltype	y,ENEMY2
+	s_set_colltype	y,ENEMYWEAP
+	s_set_alsflag	y,invisible
+	s_set_alvar	B,y,al_sbyte1,#15
+	s_add_playerz	y
+	s_set_strat	y,rockit_strat
+.donespawn
+	rts
+	
+spawnarock2
+	s_make_obj	#asteroid1,.donespawn
+	s_set_aldata	y,#60,#18				;hp + ap
+	s_sprite_obj	y,#0
+	s_copy_pos	y,x
+	s_copy_rots	y,x
+	s_sub_alvar	W,y,al_worldz,#100
+	s_set_colltype	y,ENEMY1
+	s_set_colltype	y,ENEMY2
+	s_set_colltype	y,ENEMYWEAP
+	s_set_alvar	B,y,al_sbyte1,#15
+	s_add_playerz	y
+	s_set_strat	y,rockit2_strat
+.donespawn
+	rts
+	
+	
+	
+rockit_strat
+	s_start_strat
+
+	s_jmp_ifnotstate	x,0,.not0
+	s_jmp_NOTalsflag	x,invisible,.turninvis2
+	s_clr_alsflag	x,invisible
+	bra	.don2
+.turninvis2
+	s_set_alsflag	x,invisible
+.don2	
+	s_decbne_alvar	B,x,al_sbyte1,.not0
+	
+	s_clr_alsflag	x,invisible
+	s_set_objtobeplayer	y
+	s_copy_alvar2var	W,y,targetx,al_worldx
+	s_copy_alvar2var	W,y,targety,al_worldy
+	s_next_state	x
+	
+.not0
+
+	s_jmp_ifnotstate	x,1,.not1
+	s_sub_alvar	W,x,al_worldz,#30
+	s_achase_alvar	W,x,al_worldx,targetx2,3
+	s_achase_alvar	W,x,al_worldy,targety2,3
+.not1
+	
+	s_add_playerz	x
+	s_end_strat
+	
+	
+	
+	
+rockit2_strat
+	s_start_strat
+
+	s_jmp_ifnotstate	x,0,.not0
+	s_jmp_NOTalsflag	x,invisible,.turninvis2
+	s_clr_alsflag	x,invisible
+	bra	.don2
+.turninvis2
+	s_set_alsflag	x,invisible
+.don2	
+	s_decbne_alvar	B,x,al_sbyte1,.not0
+	
+	s_clr_alsflag	x,invisible
+	s_set_objtobeplayer	y
+	s_copy_alvar2var	W,y,targetx2,al_worldx
+	s_copy_alvar2var	W,y,targety2,al_worldy
+	s_next_state	x
+	
+.not0
+
+	s_jmp_ifnotstate	x,1,.not1
+	s_sub_alvar	W,x,al_worldz,#30
+	s_achase_alvar	W,x,al_worldx,targetx2,3
+	s_achase_alvar	W,x,al_worldy,targety2,3
+.not1
+	
+	s_add_playerz	x
+	s_end_strat
+	
+	
+mbocol_istrat
+	s_start_strat
+;	s_set_alvar			B,x,al_sbyte4,#5		;delay between getting hit
+	s_jmp_alsflag	x,nohitaffect,.player
+	trigse		168
+	lda.w	al_hp,x		;load the hp
+	sec					;clear carry flag
+	sbc	#2				;subtract 2 hp
+	sta.w	al_hp,x		;store it
+	lbmi	mboexp_istrat
+	lbeq	mboexp_istrat
+	s_set_alsflag		x,hitflash	;flash head
+;	s_set_alsflag		x,colldisable
+.player
+	s_jmpto_strat	x
+	s_end_strat
+	
+	
+mboexp_istrat
+	jml qbossexplode_istrat

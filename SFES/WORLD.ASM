@@ -73,7 +73,16 @@ update_objects_l
 	lda	mapcnt
 	sec
 	sbc	lastzchange
+	tay
+	lda	allrange_flag ;chuck, for ar map. map wont show objects properly without this, idk how it works
+	beq	.ignore
+	tya
+	bra	newobjs_l
+	jmp	.cont
+.ignore
+	tya
 	bmi	newobjs_l
+.cont
 	sta	mapcnt
 	rtl
 newobjs_l
@@ -163,7 +172,7 @@ mapjmp	dw	mapobjdo&WM	;0
 	dw	mapsendmessage&WM	;130
 	dw	mapCspecial&WM		;132
 	dw	mapnormobj&WM		;134
-	dw	notneededyet&WM		;136
+	dw	mapsetid&WM		;136
 	dw	mapwait2do&WM		;138
 	dw	mapsetpathdo&WM		;140
 	dw	mapsendmessage2&WM	;142
@@ -1502,6 +1511,15 @@ mapqobjdo
 	ply
 	sta.w	al_worldz,y
 
+	lda allrange_flag	;chuck
+	beq	.noar
+	lda	mq_z,x				;chuck, for all-range mode this is set so that the z position is irrelevant to the ship
+	sexa
+	asl	a
+	asl	a
+	sta.w	al_worldz,y
+.noar
+
 	lda	map_ctrl,x
 	and	#255
 	cmp	#ctrlmapqobj2
@@ -1673,6 +1691,15 @@ mapobj8do
 	ply
 	sta.w	al_worldz,y
 
+	lda allrange_flag	;chuck
+	beq	.noar
+	lda	m8_z,x				;chuck, for all-range mode this is set so that the z position is irrelevant to the ship
+	sexa
+	asl	a
+	asl	a
+	sta.w	al_worldz,y
+.noar
+
 	lda	m8_shape,x
 	sta.w	al_shape,y
 	lda	m8_strat,x
@@ -1778,6 +1805,12 @@ mapobjdo
 	clc
 	adc	mobj_z,x
 	sta.w	al_worldz,y
+
+	lda allrange_flag	;chuck
+	beq	.noar
+	lda	mobj_z,x				;chuck
+	sta.w	al_worldz,y
+.noar
 
 	lda	mobj_shape,x
 	phx
@@ -1899,6 +1932,12 @@ mapdobjdo
 	adc	md_z,x
 	sta.w	al_worldz,y
 
+	lda allrange_flag	;chuck
+	beq	.noar
+	lda	md_z,x				;chuck
+	sta.w	al_worldz,y
+.noar
+
 	lda	md_strat,x
 	phx
 	and	#255
@@ -2016,6 +2055,12 @@ mapobjzrotdo
 	adc	mz_z,x
 	sta.w	al_worldz,y
 
+	lda allrange_flag	;chuck
+	beq	.noar
+	lda	mz_z,x				;chuck
+	sta.w	al_worldz,y
+.noar
+
 	lda	mz_shape,x
 	phx
 	and	#255
@@ -2131,6 +2176,19 @@ mapdebdo	blink
 mapnopdo	inx
 	jmp	newobjex
 
+	longa
+	longi
+mapsetid tyx					;chuck
+	ifobjinvalid	.dekinai
+	ldy	lastmapobj
+	lda	mapbase&WM+1,x
+	sta.w	al_id,y
+.dekinai
+	inx
+	inx
+	inx
+	jmp newobjex
+
 
 ;--------------------------------------------------------------
 ; mapnormobj:
@@ -2218,6 +2276,12 @@ mapnormobj
 	clc
 	adc	mm_z,x
 	sta.w	al_worldz,y
+
+	lda allrange_flag	;chuck
+	beq	.noar
+	lda	mm_z,x				;chuck
+	sta.w	al_worldz,y
+.noar
 
 	a8
 	lda	craymode

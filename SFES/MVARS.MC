@@ -357,6 +357,15 @@ mmaxvistab	=	255
 	malc	m_particlesON,2
 	malc	m_defaultID,2
 
+	malc	m_allrange_flag,2
+	zmalc	m_shipx,2
+	zmalc	m_shipz,2
+	zmalc	m_velx,2
+	zmalc	m_velz,2
+	malc	m_objx,32
+	malc	m_objz,32
+	zmalc	m_numobjs,2
+
 ;	malc	m_debugchars,8*16	; always last!
 
 ; 0000 vars	    512		4

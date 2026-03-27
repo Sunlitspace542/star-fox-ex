@@ -41,6 +41,27 @@ if_lava	equ	128
 
 ;---------------------------------------------------------------
 
+bg_allrange_1	init_bg	mode2
+	bg2chr	stp
+	bg2scr	stp
+	palette	2d
+	gamepal	blue
+	set_bg
+	set_zdepthtable	stage1
+	info	hon,von,zon,ground
+	hofmode	arhof ;chuck, should use a separate map
+	pstrat	playeronplanetAR,a,ab ;chuck
+	shadowheight 0
+	bg2Yscroll	232
+	bgm	11
+	lda	#1
+	sta.l	m_meters
+	sta.l	m_allrange_flag
+	IFNE	MSU1
+	msuplay	scramble,repeat
+	ENDC
+	armode	night
+
 bg_hole_1	init_bg	mode2
 	bg2chr	bhole
 	bg2scr	bhole
@@ -1946,6 +1967,7 @@ bglists	dw	0
 	defbg	gameover2
 	defbg	special
 	defbg	training
+	defbg	allrange
 
 	dw	0,0	; terminate list
 

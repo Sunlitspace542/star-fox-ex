@@ -12,6 +12,7 @@
 	global	MTUNNELGRAD
 	global	MWIBBLETUNNEL
 	global	MNOGRAD
+	global	MALLRANGE
 ;---------------------------------
 
 

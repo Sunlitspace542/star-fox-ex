@@ -67,7 +67,7 @@ ctrlmapjmpvareq	equ	128
 ctrlsendmessage	equ	130
 ctrlmapcspecial	equ	132
 ctrlnobj		equ	134
-ctrlmqnobj		equ	136
+ctrlsetid		equ	136
 ctrlmapwait2		equ	138
 ctrlmapsetpath		equ	140
 ctrlsendmessage2	equ	142
@@ -117,7 +117,116 @@ coursedef	macro
 ;	dw	(\6)&WM
 ;	db	(\6)>>16
 ;	endm
+;----------------------------------------------------------------------------
+s_bpl_absdiff		MACRO a,b,[value to cmp],label;chuck, moved this function here cos it wouldnt build unless this is called, before the ar_ functions. Im guessing mapmacs is being compiled before stratmacs but idk how to change that
+	lda	\1
+	sec
+	sbc \2
+	bpl	.pl\@
+	nega		;negate a if minus
+.pl\@
+	cmp \3
+	lbcs	\4
+	ENDM
+;--------------------------------------------------
 
+ar_cspec	MACRO	frame,x,y,z,shape,strategy ;chuck
+	start_65816
+
+	a8
+	ldx	#\1
+	lda deadpool,x
+	bne .endproc\@
+
+	a16
+	ldx	allst
+	beq	.endproc\@
+.loop\@
+	lda	al_id,x
+	sec
+	sbc	#\1
+	beq	.endproc\@
+	ldy	_next,x
+	tyx
+	bne	.loop\@
+
+	i16
+	lda.l	m_numobjs
+	tax
+	lda	#\2>>7
+	sta.l m_objx,x
+	lda	#\4>>7
+	sta.l m_objz,x
+	txa
+	inc a
+	inc a
+	sta.l	m_numobjs
+
+	a16
+	s_bpl_absdiff	spawnposz,#\4,#4000,.endproc\@
+	s_bpl_absdiff	spawnposx,#\2,#4000,.endproc\@
+
+	end_65816
+	cspecial	0,\2,\3,\4,\5,\6
+	db	ctrlsetid
+	dw	(\1)
+	mapgoto .endmac\@
+.endproc\@
+	end_65816
+.endmac\@
+	ENDM
+
+ar_mapobj	MACRO	frame,x,y,z,shape,strategy,path
+	start_65816
+
+	a8
+	ldx	#\1
+	lda deadpool,x
+	bne .endproc\@
+
+	a16
+	ldx	allst
+	beq	.endproc\@
+.loop\@
+	lda	al_id,x
+	sec
+	sbc	#\1
+	beq	.endproc\@
+	ldy	_next,x
+	tyx
+	bne	.loop\@
+
+	a16
+	s_bpl_absdiff	spawnposz,#\4,#2200,.endproc\@
+	s_bpl_absdiff	spawnposx,#\2,#2200,.endproc\@
+	end_65816
+
+	mapobj	0,\2,\3,\4,\5,\6
+	db	ctrlsetid
+	dw	(\1)
+	IFEQ	NARG-7
+	mapsetpath	\7
+	ENDC
+	mapgoto .endmac\@
+.endproc\@
+	end_65816
+.endmac\@
+	ENDM
+
+ar_static	MACRO	frame,x,y,z,shape,strategy
+	start_65816
+
+	a16
+	s_bpl_absdiff	spawnposz,#\4,#2200,.endproc\@
+	s_bpl_absdiff	spawnposx,#\2,#2200,.endproc\@
+	end_65816
+
+	mapnobj	\1,\2,\3,\4,\5,\6
+	mapgoto .endmac\@
+.endproc\@
+	end_65816
+.endmac\@
+	ENDM
 
 mapdobj	macro	frame,x,y,z,shape,strategy
 
@@ -787,6 +896,50 @@ mapfadetoground macro
 	db	ctrlfadetoground
 	endm
 
+;----------------------------------------------------------------~
+mapclear	MACRO 			;chuck
+	start_65816
+
+	i16
+	phx
+	ldx	allst
+
+	;jsl	mapclear_l
+
+	beq	.end
+
+.loop	ldy	_next,x
+	lda #0
+	sta.l	m_numobjs
+	a8
+	lda_sflags	x,playerobj
+	and	#asf_playerobj
+	bne	.next
+	test_alcollflags	x,acf_weapon
+	bne	.next
+	test_alcollflags	x,acf_colltype1 ;dont delete lasers/boost
+	bne	.next
+	test_alcollflags	x,acf_colltype3 ;dont delete enemy2
+	bne	.next
+	test_alcollflags	x,acf_colltype5 ;dont delete friends
+	bne	.next
+
+	phy
+	jsl	removedeadal_l
+	ply
+.next	tyx
+	bne	.loop
+.end
+	a16
+	lda ar_maploops
+	inc a
+	sta ar_maploops
+	plx
+	end_65816
+
+	ENDM
+
+
 
 ;-----------------------------------------------------------------
 
@@ -1303,6 +1456,53 @@ mapwaitbosstarkus	MACRO	[nosound]
 	end_65816
 
 	ENDM
+
+;-------------------------------------------------------------
+
+ar_mapmsg MACRO [numframes,msgnum,dlog] ;chuck
+	start_65816
+	a16
+	lda ar_dialogue
+	cmp #\3
+	bne .ignore\@
+	lda ar_maploops
+	cmp #\1
+	bmi .ignore\@
+	a8
+	lda msg_num
+	cmp #\2
+	bne .ignore\@
+	lda msg_num
+	inc a
+	sta msg_num
+	end_65816
+	mapmsg \2
+	mapgoto	.endmsg\@
+.ignore\@
+	end_65816
+.endmsg\@
+	ENDM
+
+;-------------------------------------------------------------
+ar_setdlog MACRO [x,z,dlog] ;chuck
+	start_65816
+	a16
+	s_bpl_absdiff	player_posz,#\2,#2000,.ignore\@
+	s_bpl_absdiff	player_posx,#\1,#2000,.ignore\@
+	lda #\3
+	dec a
+	cmp ar_dialogue
+	bne	.ignore\@
+
+	lda #0
+	sta ar_maploops
+	lda #\3
+	sta ar_dialogue
+
+.ignore\@
+	end_65816
+	ENDM
+
 ;------------------------------------------------------------------
 
 mapmsg	MACRO	[messagenumber]
@@ -1972,6 +2172,25 @@ nessie	MACRO
 	setalvar	roty,\5
 	setalvar	sword1+1,\6	; time until tail appears
 	mapwait	\1
+	ENDM
+
+ar_pathobj	MACRO	frame,x,y,z,shape,strategy,hp,ap
+defaulthpap	=	0
+	IFEQ		\7-10
+	IFEQ		\8-10
+defaulthpap	=	1
+	ENDC
+	ENDC
+
+	IFEQ	defaulthpap
+	ar_mapobj	\1,\2,\3,\4,\5,path_istrat,\6
+	setalvar	hp,\7
+	setalvar	ap,\8
+	ELSEIF
+	ar_mapobj	\1,\2,\3,\4,\5,pathdha_istrat,\6
+	ENDC
+
+
 	ENDM
 
 

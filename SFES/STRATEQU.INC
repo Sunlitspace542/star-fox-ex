@@ -633,6 +633,27 @@ planet_macro		MACRO
 
 		ENDM
 
+;-----------------------------------------------------------------------------
+armode_viewCY		equ	-50		-105		-60
+armode_minX		equ	-500
+armode_maxX		equ	500
+armode_MminX		equ	-500
+armode_MmaxX		equ	500
+armode_minY		equ	-210-25
+armode_maxY		equ	-20
+armode_MmaxY		equ	0
+armode_flymode		equ	pfm_diefall!pfm_dieYrot!pfm_shadows!pfm_wobble
+armode_pmovelimitAND	equ	0 ;pml_Bbottom!pml_Btop ;chuck causes crash in armode if keep hitting floor
+armode_missboundflags	equ	mb_bottom
+armode_gameflagsON	equ	gf_viewrot
+armode_gameflagsOFF	equ	0
+
+armode_macro		MACRO
+	s_and_var	B,pshipflags2,#~psf2_nospark
+	s_and_var		B,pstratflags,#~(pstf_inseq!pstf_notdie)
+	s_set_alsflag		x,shadow
+	s_and_var		B,pshipflags3,#~psf3_intunnel
+		ENDM
 
 ;-----------------------------------------------------------------------------
 exitbase_viewCY		equ	-50		-105		-60

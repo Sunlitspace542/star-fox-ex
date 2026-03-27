@@ -170,6 +170,7 @@ initgame_l
 	stz	sdpck3
 	stz	prttraining
 
+	jsl clr_deadpool_l 					;chuck, format dead alien list
 	jsl	kill_list_l						;format alien list
 	jsl	initmem_l
 

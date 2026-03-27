@@ -1008,6 +1008,7 @@ explode_Icont
 
 
 .end
+	s_add_to_deadpool ;chuck, keeps enemies dead in ar mode
 	s_set_alvar2rnd		x,al_rotx
 	s_set_alvar2rnd		x,al_roty
 	s_set_alvar		B,x,al_count1,#12	; poly count
@@ -1273,7 +1274,7 @@ pillarexplode_Istrat
 	s_set_var	W,x1,#0
 	s_set_var	W,y1,#0
 
-	
+	s_add_to_deadpool
 	lda	#8
 .makeexp
 	sta	z1

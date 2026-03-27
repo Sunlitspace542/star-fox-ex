@@ -92,6 +92,7 @@
 	global	bg_gameover
 	global	bg_gameover2
 	global	bg_training
+	global	bg_allrange
 	global	bglists
 	global	dec_chr_l,dec_l
 	global	bg_special

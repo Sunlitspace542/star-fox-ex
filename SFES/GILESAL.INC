@@ -25,4 +25,5 @@
 	defal	openal,1
 	defal	sbyte5,1
 	defal	sbyte6,1
+	defal	id,2 ;chuck
 

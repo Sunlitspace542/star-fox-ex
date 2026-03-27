@@ -137,6 +137,7 @@ zigzag_hof	equ	18
 laced_hof	equ	20
 osc_hof	equ	22
 water2_hof	equ	24
+arhof_hof	equ	26
 	alc	hposjmp,2
 	xalc	bholescaleval,2
 

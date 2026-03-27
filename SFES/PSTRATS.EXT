@@ -15,6 +15,7 @@
 	global	PCOLBEXP_ISTRAT
 	global	PLWING_ISTRAT
 	global	PRWING_ISTRAT
+	global	PLAYERONPLANETAR_ISTRAT ;chuck
 
 	global	set_playerInTraining_l
 	global	SET_PLAYERINSPACE_L

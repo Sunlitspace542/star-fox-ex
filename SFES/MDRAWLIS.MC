@@ -205,6 +205,14 @@ mshowview
 	
 	mcall	mdrawbossHP
 	nop
+	lm	r0,[m_allrange_flag]
+	lob
+	beq	.skip
+	nop
+	mcall	mminimap
+	nop
+	mcall	mminiplayer
+	nop
 ;	mcall	mmand
 ;	nop
 .skip
@@ -936,10 +944,234 @@ rzrad	equr	6
 	mpop	pc
 	mnop		; return to caller
 
+mmapx	=	174	;158 ;chuck, for mini-map
+mmapy	=	142	;126
+mmapsize =	48	;64
+mmidx	=	198
+mmidy	=	166
+mdivisor 	=	4096
+mmapxend	=	222
+
+rx		equr	r1
+ry		equr	r2
+roff	equr	r3
+rdlptr	equr	r9
+
+mminiplayer
+	mpush	r11
+
+	lm	r0,[m_shipx]
+	div2
+	div2
+	div2
+	div2
+	mult	#3
+	move	roff,#mmidx
+	adc		roff
+	move	r5,#mmapxend
+	moves	rx,r0
+	cmp	r5
+	bmi	.nowrapx
+	nop
+	move	r5,#mmapsize
+	with	rx
+	sbc	r5
+.nowrapx
+
+	lm	r0,[m_shipz]
+	mneg	r0
+	div2
+	div2
+	div2
+	div2
+	mult	#3
+	move	roff,#mmidy
+	adc		roff
+	move	r5,#mmapy
+	moves	ry,r0
+	cmp	r5
+	bpl	.nowrapy
+	nop
+	move	r5,#mmapsize
+	with	ry
+	adc	r5
+.nowrapy
+
+	mcache
+	iwt r8,#4
+	lms	r0,[m_viewroty]
+	div2
+	div2
+	div2
+	div2
+	div2
+	inc r0
+	move r12,r0
+
+	iwt	r7,#%1010010010100100
+	move	r13,r15
+	with r7
+	ror
+	loop
+	nop
+
+	dec rx
+	dec ry
+
+	from r7			; x--
+	and r8			; ---
+	beq .nop1		; ---
+	nop
+	plot
+	dec rx
+.nop1
+	iwt r8,#2
+	inc rx
+	from r7			; xx-
+	and r8			; ---
+	beq .nop2		; ---
+	nop
+	plot
+	dec rx
+.nop2
+	inc rx
+	iwt r8,#1
+	from r7			; xxx
+	and r8			; ---
+	beq .nop3		; ---
+	nop
+	plot
+	dec rx
+.nop3
+	dec rx
+	dec rx
+	inc ry
+
+	iwt r8,#8
+	from r7		 	; xxx
+	and r8			; x--
+	beq .nop8		; ---
+	nop
+	plot
+	dec rx
+.nop8
+	inc rx
+	plot
+
+	iwt r8,#128
+	from r7
+	and r8
+	beq .nop4
+	nop
+	plot
+	dec rx
+.nop4
+	dec rx
+	dec rx
+	inc ry
+
+	iwt r8,#16
+	from r7
+	and r8
+	beq .nop5
+	nop
+	plot
+	dec	rx
+.nop5
+	inc rx
+	iwt r8,#32
+	from r7
+	and r8
+	beq .nop6
+	nop
+	plot
+	dec rx
+.nop6
+	inc rx
+	iwt r8,#64
+	from r7
+	and r8
+	beq .nop7
+	nop
+	plot
+.nop7
+	mpop	pc
+	nop
+
+mminimap
+	mpush	r11
+
+	move	r1,#mmapx
+	move	r2,#mmapy
+	move	r3,#mmapsize
+	move	r4,#mmapsize
+	move	r0,#$d
+	mcall	mdrawbox
+	nop
+
+	miwt	r7,m_objz
+	miwt	r8,m_objx
+	lm	r0,[m_numobjs]
+	moves	r12,r0
+	beq .zero
+;	with r12
+;	div2
+
+	mcache
+	move	r13,r15
+
+	ldb	[r8]
+	div2
+	div2
+	div2
+	div2
+	mult #3
+	move	roff,#mmidx
+	adc		roff
+	move	r5,#mmapxend
+	moves	rx,r0
+	cmp	r5
+	bmi	.nowrapx
+	nop
+	move	r5,#mmapsize
+	with	rx
+	sbc	r5
+.nowrapx
+
+	ldb	[r7]
+	mneg	r0
+	div2
+	div2
+	div2
+	div2
+	mult #3
+	move	roff,#mmidy
+	adc		roff
+	move	r5,#mmapy
+	moves	ry,r0
+	cmp	r5
+	bpl	.nowrapy
+	nop
+	move	r5,#mmapsize
+	with	ry
+	adc	r5
+.nowrapy
+	inc r7
+	inc r7
+	inc	r8
+	inc	r8
+	dec	r12
+	loop
+	plot
+
+.zero
+	mpop	pc
+	nop
 
 boostx	=	22*8
 boosty	=	22*8
 boostheight =	8
+boostymod = 5*8+4
 
 	ifeq	0
 mboostmeter
@@ -950,6 +1182,14 @@ mboostmeter
 	move	r2,#boosty
 	move	r3,#40
 	move	r4,#boostheight
+	move	r5,#boostymod
+
+	lm		r0,[m_allrange_flag] ;chuck
+	lob
+	beq 	.norm
+	with	r2
+	sub		r5
+.norm
 
 	move	r0,#$d
 	mcall	mdrawbox
@@ -978,6 +1218,13 @@ mboostmeter
 	move	r1,#boostx+2
 	move	r2,#boosty+2
 	move	r4,#boostheight-4
+
+	lm		r0,[m_allrange_flag]
+	lob
+	beq 	.norm2
+	with	r2
+	sub		r5
+.norm2
 
 	move	r0,#6
 	mcall	mdrawsolidbox

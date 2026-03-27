@@ -47,6 +47,9 @@ getview_l
 	lda	outvy
 	sec
 	sbc	player_turnrot
+	sec
+	sbc	player_turnrotX ;chuck, for camera turn and turnaround strat
+
 	sta	viewrotyw
 	lda	outvz
 	sec

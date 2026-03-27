@@ -32,6 +32,42 @@ mnograd
 	stop
 	nop
 
+mallrange ;chuck
+	ibt	r1,#1 ;crashes if r1 = 0 (rotplanet below adds r5 = 0 and that fixes it somehow, idk)
+
+	lms	r6,[m_scrollxoff]					; write scroll x offset to r6
+	miwt	r9,(bg_scrollbuffer+112*3)&WM 	;set r9 to be halfway through the scroll buffer (x3 for colour)
+	miwt	r10,(bg_scrollbuffer+111*3+2)&WM ;set r9 to be halfway through the scroll buffer - 1
+	miwt	r12,112 						;loop 112 times
+	mcache									;complicated, best to read up online
+	move	r13,r15							;start loop (set callback register to come back to here or something)
+
+.lp	from	r1
+
+	add	r6									;r0 = x_plot_position + r6
+	stb	[r9]								;
+	inc	r9									;this is storing the rgb of each pixel
+	stb	[r9]								;but idk what the swap is for
+	inc	r9									;
+	swap									;r9 goes from halfway to the buffer end and
+	stb	[r9]								;r10 goes from halfway to 0,
+	inc	r9									;over the course of the whole loop
+	swap
+
+	dec	r10
+	swap
+	stb	[r10]
+	dec	r10
+	stb	[r10]
+	dec	r10
+	stb	[r10]
+
+	loop
+	nop
+
+	stop
+	nop
+
 mrotplanet
 	ibt	r1,#0
 	ibt	r2,#0

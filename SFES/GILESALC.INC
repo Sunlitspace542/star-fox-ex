@@ -208,6 +208,11 @@ ktest5		equ 32
 	alc	viewfloatY,2
 
 	alc	playervelZ,2
+	alc	playervelX,2
+	alc	player_turnrotX,2 ;chuck
+	alc	spawnposx,2
+	alc	spawnposz,2
+	alc	pviewvelx,2
 	alc	playerdieYrotspeed,2
 
 	alc	player_Zrotfloatptr,2

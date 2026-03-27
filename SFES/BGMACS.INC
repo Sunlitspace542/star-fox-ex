@@ -395,6 +395,20 @@ sethdma	macro
 
 ;------------------------------------------------------------------------
 
+armode	macro	[depth]
+	stz	inatunnel
+	stz	gamemode
+	stz	lastrot
+	stz	lastrot+1
+	setdepth	{depth}		;night
+	sethdma
+	waittrans
+	flashscr
+	rtl
+	endm
+
+;------------------------------------------------------------------------
+
 planet	macro	[depth]
 	stz	inatunnel
 	stz	gamemode

@@ -63,6 +63,10 @@
 	global	m_polys_clip3d
 	endc
 
+	global	m_allrange_flag ;chuck
+	global	m_shipx,m_shipz,m_velx,m_velz,m_viewroty
+	global	m_objx,m_objz,m_numobjs
+
 
 	global	testk
 	global	testk2

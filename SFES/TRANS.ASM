@@ -792,6 +792,7 @@ do_hpositions
 	dw	laced&WM
 	dw	osc&WM
 	dw	water2hofs&WM
+	dw  allrangemode&WM
 
 	longa
 bhole	;lda	viewposx
@@ -901,6 +902,18 @@ tunnelgrad	lda	viewposx
 	a8
 	lda	#mtunnelgrad>>16
 	ldx	#mtunnelgrad&WM
+	jsl	runmario_l
+	rts
+
+	longa
+allrangemode	lda	viewposx ;chuck
+	sta.l	m_viewposx
+	ldx	playpt
+	lda	al_worldx,x
+	sta.l	m_y1
+	a8
+	lda	#mallrange>>16
+	ldx	#mallrange&WM
 	jsl	runmario_l
 	rts
 

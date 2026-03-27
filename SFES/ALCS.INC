@@ -60,6 +60,9 @@ alcon	=	1
 	zalc	vcmap,2
 	zalc	textpt,3
 	zalc	tempaddrl,3
+	zalc	allrange_flag,1 ;chuck
+	alc 	ar_maploops,2
+	alc 	ar_dialogue,1
 
 ;	alc	godnuke,1
 	
@@ -125,7 +128,7 @@ alcon	=	1
 xlen	=	25*1024+350
 	xalc	xroutines,xlen
 
-
+	alc deadpool,256 ;chuck
 	alc	helpshots,1
 
 	alc	doingend,1

@@ -520,7 +520,7 @@ PRWbrk_Istrat
 	s_set_alvar		B,y,al_collcount,#framesperAP
 	s_jsl			makesmlexpobj_srou
 	s_set_alvar		W,y,al_vz,pviewvelz
-	s_set_alvar		W,y,al_vx,pviewvelx
+	s_set_alvar		W,y,al_vx,pviewvelx ;chuck
 .donee
 	s_jmpto_strat		
 
@@ -554,11 +554,11 @@ playercred_Istrat
 
 	s_set_var		W,lastplayZ,#0
 	s_set_var		W,viewposz,#0
-	s_set_var		B,allrange_flag,#0
+	s_set_var		B,allrange_flag,#0 ;chuck
 
 
 	s_set_var		W,player_turnrot,#0
-	s_set_var		W,player_turnrotX,#0
+	s_set_var		W,player_turnrotX,#0 ;chuck
 
 	s_AND_var		B,gameflags,#~gf_noZremove
 	s_set_pos		x,#0,#0,#0
@@ -885,7 +885,7 @@ playeroncont_strat
 	s_end_strat
 
 ;*****************************************************************************
-set_playerOnPlanetAR_l
+set_playerOnPlanetAR_l ;chuck
 	a8i16
 	s_set_objtobeplayer	x
 	s_set_strat		x,playerOnPlanetAR_Istrat
@@ -901,10 +901,9 @@ playeronplanetAR_Istrat
 
 playeronplanetAR_strat
 	s_start_strat
-	jsr		do_playerAR
+	jsr		do_player
 	s_copy_alvar2var	W,x,pviewposx,al_worldx
 	a16
-
 
 ; view Y pos = 75% player Y		; 62
 	lda	al_worldy,x
@@ -1865,7 +1864,7 @@ playerturn180_strat
 	s_start_strat	
 	
 	s_copy_alvar2var	W,x,pviewvelz,al_vz
-	s_copy_alvar2var	W,x,pviewvelx,al_vx
+	s_copy_alvar2var	W,x,pviewvelx,al_vx ;chuck
 
 
 	s_add_var		B,player_Ztilt,#deg45/15
@@ -2648,7 +2647,7 @@ playernull_Istrat
 	s_add_alvar		W,x,al_worldz,pviewvelZ
 	s_add_var		W,pviewposz,pviewvelZ
 
-	s_set_var	W,pviewvelx,#medpspeed
+	s_set_var	W,pviewvelx,#medpspeed ;chuck
 	s_add_alvar	W,x,al_worldx,pviewvelx
 	s_add_var		W,pviewposx,pviewvelX
 	s_end_strat
@@ -2749,7 +2748,7 @@ viewmove_srou
 
 ;*****************************************************************************
 
-viewmove_srou_AR
+viewmove_srou_AR ;chuck
 	lda	#%00000100
 	sta	playersndflag
 
@@ -2910,7 +2909,7 @@ playermove_init
 	s_set_var		B,specialdelay,#1
 
 	s_set_var		W,pviewposz,#0
-	s_set_var		W,pviewposx,#0
+	s_set_var		W,pviewposx,#0 ;chuck
 ;	s_set_var		B,playerdieYrotspeed,#128
 
 	s_and_var	B,strat_valid,#~brflag		;enable barrel roll continuance
@@ -2940,11 +2939,11 @@ playermove_init
 makeallmedpspeed
 	s_set_speed		x,#medpspeed
 	s_set_var		W,pviewvelz,#medpspeed
-	s_set_var		W,pviewvelx,#0
+	s_set_var		W,pviewvelx,#0 ;chuck
 	s_set_var		B,player_medspeed,#medpspeed
 	s_set_var		B,player_tospeed,#medpspeed
 	s_set_var		W,playervelZ,#medpspeed
-	s_set_var		W,playervelX,#medpspeed
+	s_set_var		W,playervelX,#medpspeed ;chuck
 	rts
 
 ;********************************************************************************************
@@ -3273,8 +3272,8 @@ playermove_srou
 	s_test_var		B,pshipflags,#psf_noctrl!psf_noYctrl
 	s_bne			.zerovrot
 
-	lda allrange_flag
-	s_beq .onrails
+	lda allrange_flag ;chuck
+	s_beq .noturn
 	s_jmpNOT_varAND		B,pshipflags2,#psf2_turn180,.noturn
 	s_test_var		B,pmovelimitAND,#pml_Btop
 	s_bne			.nvxmaxt
@@ -3301,13 +3300,13 @@ playermove_srou
 .rot
 
 
-;	s_jmp_keyup		jup,.nvxmax
-;	s_add_var		W,outvx,#-256*1
-;.nvxmax
-;	s_jmp_alvarmore		W,x,al_worldy,minpmoveY,.nvxmin
-;	s_jmp_keyup		jdown,.nvxmin
-;	s_sub_var		W,outvx,#-256*1
-;.nvxmin
+	s_jmp_keyup		jup,.nvxmax ;chuck uncommented for all-range. Probably gonna break something
+	s_add_var		W,outvx,#-256*1
+.nvxmax
+	s_jmp_alvarmore		W,x,al_worldy,minpmoveY,.nvxmin
+	s_jmp_keyup		jdown,.nvxmin
+	s_sub_var		W,outvx,#-256*1
+.nvxmin
 
 
 
@@ -3448,10 +3447,9 @@ playermove_srou
 	jmp			.no_pctrl
 .ctrl
 
-	s_jmp_varEQ	B,allrange_flag,#0,.normboostspr
+	s_jmp_varEQ	B,allrange_flag,#0,.normboostspr ;chuck
 	s_jmp_varAND		B,pshipflags2,#psf2_braking,.normboostspr
-	lda boostcnt
-	beq .normboostspr
+	s_jmp_varEQ B,boostcnt,#0,.normboostspr
 	boost_sprite
 .normboostspr
 
@@ -3875,7 +3873,7 @@ playermove_srou
 
 	s_jmp_keyup		jup,.nhu
 
-	 	s_jmp_varNE 	B,allrange_flag,#1,.ignoreu
+	 	s_jmp_varNE 	B,allrange_flag,#1,.ignoreu ;chuck
  	s_jmp_varAND	B,pshipflags2,#psf2_turn180,.ignoreu
 	s_jmp_alvarmoreeq	W,x,al_worldy,maxpmoveY,.nhu;
 	s_bra	.ignoreu
@@ -4067,7 +4065,7 @@ playermove_srou
 
 
 	lda	mousemode
-	bne	.nocenterx
+	s_bne	.nocenterx
 
 	s_jmp_varNOTZERO	B,psvar_byte1,.tcont ;chuck, all-range only
 	s_jmp_varAND		B,pshipflags2,#psf2_turn180,.turn
@@ -4596,7 +4594,7 @@ playerdead_Istrat
 	sta	hudrot+1
 
 ;------------------------------------
-	s_jmpNOT_varAND		B,pshipflags2,#psf2_turn180,.noturn
+	s_jmpNOT_varAND		B,pshipflags2,#psf2_turn180,.noturn ;chuck
 	lda					c_type
 	eor					#2
 	sta					c_type
@@ -4818,7 +4816,7 @@ playerdead_strat
 .npdc
 
 
-	s_jmp_varZERO	B,allrange_flag,.normdeath
+	s_jmp_varZERO	B,allrange_flag,.normdeath ;chuck
 	s_add_alvar		W,x,al_worldy,#2
 	s_bra	.ardeath
 .normdeath
@@ -4941,19 +4939,12 @@ do_player_Yvel125
 	jsr		checkarrows_srou
 	rts
 
-do_playerAR
-	jsr		playermove_srou
-	s_gen_3dvecs	x,al_roty,al_rotx,al_vel
-	;jsr		framescalevecs ;chuck this is what caused that drifting nonsense
-	s_add_vecs2pos	x
-	jsr		playerfire_srou
-	jsr		checkarrowsAR_srou
-	rts
-
 do_player
 	jsr		playermove_srou
 	s_gen_3dvecs	x,al_roty,al_rotx,al_speed
+	s_jmp_varEQ B,allrange_flag,#0,.noscale ;chuck, this is what caused that drifting nonsense
 	jsl	framescalevecs
+.noscale
 	s_add_vecs2pos	x
 	jsr		playerfire_srou
 	jsr		checkarrows_srou
@@ -5039,6 +5030,12 @@ checkarrows_srou
 	a8
 	s_jmp_varAND	B,pstratflags,#pstf_inseq,.noarrows
 
+	s_jmp_varEQ B,allrange_flag,#0,.noturnt ;chuck
+	s_jmpNOT_varAND		B,pshipflags2,#psf2_turn180,.noturnt
+	s_jmp_keyup			jup,.topoff
+	s_jmpNOT_varAND		B,pmovelimitAND,#pml_Bbottom,.topok
+.noturnt
+
 	s_jmp_keyup		jdown,.topoff
 	s_jmpNOT_varAND	B,pmovelimitAND,#pml_Btop,.topok
 .topoff	s_AND_var		B,arrows,#~sprar_up
@@ -5061,39 +5058,6 @@ checkarrows_srou
 
 
 .noarrows	stz	arrows
-	rts
-
-;*****************************************************************************
-checkarrowsAR_srou
-	a8
-	s_jmp_varAND	B,pstratflags,#pstf_inseq,.noarrows
-
-	s_jmpNOT_varAND		B,pshipflags2,#psf2_turn180,.noturnt
-	s_jmp_keyup			jup,.topoff
-	s_jmpNOT_varAND		B,pmovelimitAND,#pml_Bbottom,.topok
-.noturnt
-	s_jmp_keyup		jdown,.topoff
-	s_jmpNOT_varAND	B,pmovelimitAND,#pml_Btop,.topok
-.topoff	s_AND_var	B,arrows,#~sprar_up
-.topok
-	s_jmpNOT_varAND		B,pshipflags2,#psf2_turn180,.noturnb
-	s_jmp_keyup			jdown,.botoff
-	s_jmpNOT_varAND		B,pmovelimitAND,#pml_Btop,.botok
-.noturnb
-	s_jmp_keyup		jup,.botoff
-	s_jmpNOT_varAND	B,pmovelimitAND,#pml_Bbottom,.botok
-.botoff	s_AND_var	B,arrows,#~sprar_down
-.botok
-	s_jmp_keyup		jleft,.leftoff
-	s_jmpNOT_varAND	B,pmovelimitAND,#pml_lwleft,.leftok
-.leftoff	s_AND_var		B,arrows,#~sprar_left
-.leftok
-	s_jmp_keyup		jright,.rightoff
-	s_jmpNOT_varAND	B,pmovelimitAND,#pml_rwright,.rightok
-.rightoff	s_AND_var		B,arrows,#~sprar_right
-.rightok
-
-
 	rts
 
 ;*****************************************************************************

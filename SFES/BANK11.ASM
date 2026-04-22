@@ -24,13 +24,9 @@
 	include	MSU1\msudrv.ext
 
 	bank	23
-	incfile	pstrats.asm
-	incfile	pistrats.asm
 
-	public	bgmarpcr
-	inccru	bgmarpcr,data\mar.pcr
-	public	bgmarccr
-	inccru	bgmarccr,data\mar.ccr
+	incfile	pistrats.asm
+	incfile	pstrats.asm
 
 	bankend	23
 

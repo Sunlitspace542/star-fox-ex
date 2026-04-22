@@ -158,6 +158,11 @@ spacepalette	inccolfile	data\gfx\space.col,0,32
 
 	inccru	allcolscru,data\gfx\allcols.pac
 
+	public	bgmarpcr
+	inccru	bgmarpcr,data\mar.pcr
+	public	bgmarccr
+	inccru	bgmarccr,data\mar.ccr
+
 	bankend	47
 
 	bank	51

@@ -142,7 +142,9 @@ planetdmapos2	dw	100
 	minfo
 	incfile	cont.asm
 	minfo	cont
+	IFNE	RUMBLE
 	incfile	contchk.asm
+	ENDC
 
 	incfile	draw.asm
 	minfo	draw

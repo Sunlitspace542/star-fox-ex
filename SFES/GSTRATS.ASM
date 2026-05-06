@@ -2435,7 +2435,7 @@ init_strats_l
 	IFNE	RUMBLE
 ;--------SAFETY CHECK FOR RUMBLE-------
 
-; if (((multitapmode || playertwoactivated || mousemode) == 1) && (donotrumble != 0)) {
+; if (((multitapmode || playertwoactivated || mousemode || nttmode || scopemode) == 1) && (donotrumble != 0)) {
 ; donotrumble = 1;
 ; } else {
 ; donotrumble = 0;
@@ -2445,6 +2445,8 @@ init_strats_l
 	lda	multitapmode
 	ora	playertwoactivated
 	ora	mousemode
+	ora nttmode
+	ora scopemode
 	sta	donotrumble
 	beq	.safetorumble
 	bne	.donevoltagecheck

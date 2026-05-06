@@ -1641,18 +1641,20 @@ getcont0	a8
 	lda	#0
 	xba
 	tax
+	lda	joy1l
+	and	#$F0	; mask out controller ID bits (e.g. NTT data pad)
 	jmp	(.conttab,x)
 .conttab	dw	typea&WM
 	dw	typeb&WM
 	dw	typec&WM
 	dw	typed&WM
-typea	lda	joy1l
+typea	;lda	joy1l
 	sta	contl0
 	lda	joy1h
 	sta	cont0
 	rts
 
-typeb	lda	joy1l
+typeb	;lda	joy1l
 	sta	contl0
 	lda	joy1h
 	and	#%11000000
@@ -1672,7 +1674,7 @@ typeb	lda	joy1l
 	sta	cont0
 	rts
 
-typec	lda	joy1l
+typec	;lda	joy1l
 	sta	contl0
 	lda	joy1h
 	and	#%00001100
@@ -1690,7 +1692,7 @@ typec	lda	joy1l
 	sta	cont0
 	rts
 
-typed	lda	joy1l
+typed	;lda	joy1l
 	sta	contl0
 	lda	joy1h
 	and	#%00001100

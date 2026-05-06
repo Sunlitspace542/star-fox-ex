@@ -1039,6 +1039,7 @@ bg_cred_1	init_bg	mode2
 	space	night
 
 bg_cont_1	init_bg	mode1
+	IFNE	rumble
 	lda donotrumble
 	bne	normcontbg
 	bg2chr	rmblctrl	; SNES RUMBLE PAD
@@ -1047,6 +1048,10 @@ normcontbg
 	bg2chr	cont		; SNES CONTROL PAD
 donecontbg
 	bg2scr	cont
+	ELSEIF
+	bg2chr	cont
+	bg2scr	cont
+	ENDC
 
 	palette	2ep
 	set_bg

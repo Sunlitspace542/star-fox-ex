@@ -70,7 +70,10 @@ nmihan
 	IFNE	RUMBLE
 ; Randy's rumble controller fix for hardware
 ; HACK: Force re-read of controller bits to get timing right for rumble handler
-
+	lda	donotrumble
+	beq	.continue
+	brl	.skip_rumble
+.continue
 ; This part is to make sure that you don't overrun blanking
 	lda	slhvr				; Latch Raster Position
 	lda	stat78r				; Update H/V Counters

@@ -12,8 +12,8 @@ initialise_l
 	sta	frog
 	sta	bunny
 	sta	cock
-	sta	pepper
-	sta	andorf
+;	sta	pepper
+;	sta	andorf
 ;	stz	bgmtest
 	stz	singdoub
 	stz	bossmode
@@ -153,6 +153,8 @@ initgame_l
 	stz	showtype
 	stz	msg_count1
 	stz	msg_count2
+	stz	msg_count12
+	stz	msg_count22
 	stz	restartcol
 	stz	onecredspr
 	stz	doneacircle

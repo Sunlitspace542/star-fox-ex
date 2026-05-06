@@ -3986,8 +3986,10 @@ send_message_l
 	tay
 	a8
 
-;	lda.w	friends_hp-1,y
-;	beq	.finished2
+	cpy	#friend_frog+1
+	bcs	.nometer			; no friends outside team should have meter
+	lda.w	friends_hp-1,y
+	beq	.finished2
 
 	lda	friends_meter
 	inc	a
@@ -4007,6 +4009,9 @@ send_message_l
 	sta	friends_sound
 	inx
 	stx	friends_msg
+
+	stz	msg_count12	; SUNLITNOTE this keeps sfx from face2 from overriding face1
+	stz	msg_count22
 
 	lda	#50
 	sta	msg_count1
@@ -4041,8 +4046,10 @@ send_message2_l
 	tay
 	a8
 
-;	lda.w	friends_hp-1,y
-;	beq	.finished2
+	cpy	#friend_frog+1
+	bcs	.nometer			; no friends outside team should have meter
+	lda.w	friends_hp-1,y
+	beq	.finished2
 
 	lda	friends_meter
 	inc	a
@@ -4062,6 +4069,9 @@ send_message2_l
 	sta	friends_sound
 	inx
 	stx	friends_msg
+
+	stz	msg_count12	; SUNLITNOTE this keeps sfx from face2 from overriding face1
+	stz	msg_count22
 
 	lda	#50
 	sta	msg_count1
@@ -4096,13 +4106,13 @@ send_messagex_l
 ;	lda.w	friends_hp-1,y
 ;	beq	.finished2
 
-	lda	friends_meter
-	inc	a
-	bne	.nometer
-	lda.w	friends_hp-1,y
-	ora	#128
-	sta	friends_meter
-	bra	.meteron
+;	lda	friends_meter	; SUNLITNOTE second face file should not have meter
+;	inc	a
+;	bne	.nometer
+;	lda.w	friends_hp-1,y
+;	ora	#128
+;	sta	friends_meter
+;	bra	.meteron
 	
 .nometer	stz	friends_meter
 .meteron
@@ -4114,6 +4124,9 @@ send_messagex_l
 	sta	friends_sound
 	inx
 	stx	friends_msg2
+
+	stz	msg_count1	; SUNLITNOTE this keeps sfx from face1 from overriding face2
+	stz	msg_count2
 
 	lda	#50
 	sta	msg_count12
@@ -4151,13 +4164,13 @@ send_messagex2_l
 ;	lda.w	friends_hp-1,y
 ;	beq	.finished2
 
-	lda	friends_meter
-	inc	a
-	bne	.nometer
-	lda.w	friends_hp-1,y
-	ora	#128
-	sta	friends_meter
-	bra	.meteron
+;	lda	friends_meter	; SUNLITNOTE second face file should not have meter
+;	inc	a
+;	bne	.nometer
+;	lda.w	friends_hp-1,y
+;	ora	#128
+;	sta	friends_meter
+;	bra	.meteron
 	
 .nometer	stz	friends_meter
 .meteron
@@ -4169,6 +4182,9 @@ send_messagex2_l
 	sta	friends_sound
 	inx
 	stx	friends_msg2
+
+	stz	msg_count1	; SUNLITNOTE this keeps sfx from face1 from overriding face2
+	stz	msg_count2
 
 	lda	#50
 	sta	msg_count12

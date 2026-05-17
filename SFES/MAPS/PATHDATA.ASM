@@ -9720,45 +9720,23 @@ save
 
 	P_FRIEND		rabbit
 	
-	P_START65816
-	lda	teamon
-	cmp	#1
-	beq	.nono
-	P_END65816
-	P_SETSTRAT	friendassist_Istrat
-	
-.nono
-	P_END65816
-	P_IGOTO		pflyawayplease
-	P_END
-
-;	P_IGOTO		pe_falcon.fit_start_0
+	P_IGOTO		pe_falcon.friendassist_start_0
 
 ;---------------------------------------------------------------------------
 
 	START_PATH	e_frog
 
 	P_FRIEND		frog
-
-	P_START65816
-	lda	teamon
-	cmp	#1
-	beq	.nono
-	P_END65816
-	P_SETSTRAT	friendassist_Istrat
 	
-.nono
-	P_END65816
-	P_IGOTO		pflyawayplease
-	P_END
-	
-;	P_IGOTO		pe_falcon.fit_start_0
+	P_IGOTO		pe_falcon.friendassist_start_0
 
 ;---------------------------------------------------------------------------
 	START_PATH	e_falcon
 	
 	P_FRIEND		falcon
-	
+
+.friendassist_start_0	LOCAL
+
 	P_START65816
 	lda	teamon
 	cmp	#1

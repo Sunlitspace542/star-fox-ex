@@ -357,16 +357,22 @@ planetseq2_l
 	pha
 	enable
 	bgm2	newmap
-	IFNE	MSU1
-	msuplay_alt	map2,repeat
-	ENDC
 	pla
 	cmp	#14
 	beq	.blackholebgm
 	cmp	#10
 	bne	.normbgm
-.blackholebgm	startbgm	$f
+.blackholebgm
+	startbgm	$f
+	;IFNE	MSU1
+	;msuplay_alt	blackholemap,repeat
+	;bra	.donenormbgm
+	;ENDC
 .normbgm
+	IFNE	MSU1
+	msuplay_alt	map2,repeat
+	ENDC
+.donenormbgm
 
 	lda	#-1
 .nxtfad	pha

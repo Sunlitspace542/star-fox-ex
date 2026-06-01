@@ -67,7 +67,7 @@ ctrlmapjmpvareq	equ	128
 ctrlsendmessage	equ	130
 ctrlmapcspecial	equ	132
 ctrlnobj		equ	134
-ctrlsetid		equ	136
+ctrlsetid		equ	136 ;chuck
 ctrlmapwait2		equ	138
 ctrlmapsetpath		equ	140
 ctrlsendmessage2	equ	142
@@ -130,7 +130,7 @@ s_bpl_absdiff		MACRO a,b,[value to cmp],label;chuck, moved this function here co
 	ENDM
 ;--------------------------------------------------
 
-ar_cspec	MACRO	frame,x,y,z,shape,strategy ;chuck
+ar_cspec	MACRO	object,x,y,z,shape,strategy ;chuck
 	start_65816
 
 	a8
@@ -153,9 +153,9 @@ ar_cspec	MACRO	frame,x,y,z,shape,strategy ;chuck
 	i16
 	lda.l	m_numobjs
 	tax
-	lda	#\2>>7
+	lda	#\2>>8
 	sta.l m_objx,x
-	lda	#\4>>7
+	lda	#\4>>8
 	sta.l m_objz,x
 	txa
 	inc a
@@ -196,7 +196,6 @@ ar_mapobj	MACRO	frame,x,y,z,shape,strategy,path
 	tyx
 	bne	.loop\@
 
-	a16
 	s_bpl_absdiff	spawnposz,#\4,#2200,.endproc\@
 	s_bpl_absdiff	spawnposx,#\2,#2200,.endproc\@
 	end_65816
@@ -903,9 +902,6 @@ mapclear	MACRO 			;chuck
 	i16
 	phx
 	ldx	allst
-
-	;jsl	mapclear_l
-
 	beq	.end
 
 .loop	ldy	_next,x
@@ -2174,7 +2170,7 @@ nessie	MACRO
 	mapwait	\1
 	ENDM
 
-ar_pathobj	MACRO	frame,x,y,z,shape,strategy,hp,ap
+ar_pathobj	MACRO	frame,x,y,z,shape,strategy,hp,ap ;chuck
 defaulthpap	=	0
 	IFEQ		\7-10
 	IFEQ		\8-10

@@ -590,6 +590,11 @@ houdai5f_Istrat
 	s_initfog
 	s_set_alptrs	x,houdai5f_strat,hitflash_Istrat,smarkexplode_Istrat
 	s_set_aldata	x,#houdai5HP,#houdai5AP
+	lda	allrange_flag 	;chuck, for ar map
+	beq	.notar
+	s_setnoremove_behind	x
+	s_set_colltype	x,enemy2 ;chuck enemies and animated objects need enemy2 for ar mode
+.notar
 	s_init_anim		x,#0
 houdai5f_strat
 	s_start_strat

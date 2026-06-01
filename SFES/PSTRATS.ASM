@@ -558,7 +558,6 @@ playercred_Istrat
 
 
 	s_set_var		W,player_turnrot,#0
-	s_set_var		W,player_turnrotX,#0 ;chuck
 
 	s_AND_var		B,gameflags,#~gf_noZremove
 	s_set_pos		x,#0,#0,#0
@@ -582,7 +581,7 @@ playercred_Istrat
 	s_and_var		B,pshipflags3,#~psf3_enginesnd
 	s_set_speed		x,#medpspeed
 	s_set_var		W,pviewvelz,#medpspeed
-	s_set_var		W,pviewvelz,#0
+	s_set_var		W,pviewvelx,#0
 	s_set_var		B,player_medspeed,#medpspeed
 	s_set_var		B,player_tospeed,#medpspeed
 
@@ -681,8 +680,6 @@ set_playerInSpaceNoMove_l
 playerinspacenomove_Istrat
 	s_start_strat
 
-
-
 	s_playerfly_mode	bigspace
 	s_playerctrl	off
 	s_or_var	B,pshipflags,#psf_noctrl
@@ -694,6 +691,8 @@ playerinspacenomove_Istrat
 	
 playerinspacenomove_strat
 	s_start_strat
+;	lda #0
+;	sta.l	m_allrange_flag
 	jsr		viewmove_srou
 	s_end_strat
 ;----------------------------------------------------------------------
@@ -709,7 +708,6 @@ playerinspace_Istrat
 
 	s_playerctrl	on
 
-
 	s_playerfly_mode	bigspace
 	
 	s_set_alptrs	x,playerinspace_strat,playercoll_Istrat,playerdead_Istrat
@@ -717,6 +715,8 @@ playerinspace_Istrat
 
 playerinspace_strat
 	s_start_strat
+;	lda #0
+;	sta.l	m_allrange_flag
 	lda	#7
 	sta	curstrat
 	jsr		do_player_limitX
@@ -784,7 +784,6 @@ playerinspaceNoVC_Istrat
 
 	s_playerctrl2	on
 
-
 	s_playerfly_mode	bigspace
 
 	s_set_alptrs	x,playerinspaceNoVC_strat,playercoll_Istrat,playerdead_Istrat
@@ -792,6 +791,8 @@ playerinspaceNoVC_Istrat
 
 playerinspaceNoVC_strat
 	s_start_strat
+;	lda #0
+;	sta.l	m_allrange_flag
 	lda	#8
 	sta	curstrat	
 	jsr		do_player_limitX
@@ -855,6 +856,7 @@ playeroncont_Istrat
 	stz	superspeeddelay
 	s_playerctrl2		on
 	s_playerfly_mode	cont
+	s_set_var		B,allrange_flag,#0 ;chuck
 ;	lda	playertwoactivated
 ;	bne	.skipscene
 ;	jsl	doascene
@@ -866,6 +868,8 @@ playeroncont_strat
 	s_start_strat
 	jsr		do_player_limitX
 	a8
+;	lda #0
+;	sta.l	m_allrange_flag
 	lda	doublemode
 	beq	.no
 	jsr		do_player_limitX
@@ -893,7 +897,8 @@ set_playerOnPlanetAR_l ;chuck
 
 playeronplanetAR_Istrat
 	s_start_strat
-
+	lda	#17
+	sta	curstrat
 	s_playerctrl	on
 	s_playerfly_mode	armode
 	s_set_alptrs	x,playeronplanetAR_strat,playercoll_Istrat,playerdead_Istrat
@@ -945,6 +950,8 @@ playeronplanet_Istrat
 	          	
 playeronplanet_strat
 	s_start_strat
+;	lda #0
+;	sta.l	m_allrange_flag
 
 	jsr		do_player_Yvel125
 	a8
@@ -1988,6 +1995,8 @@ playerintocock_strat
 	beq	.15
 	cmp	#16
 	beq	.16
+	cmp	#17
+	beq	.17
 .1
 	s_jmp			playerintunnel_Istrat
 	bra	.done
@@ -2035,6 +2044,9 @@ playerintocock_strat
 	bra	.done
 .16
 	s_jmp			playeronlava_istrat
+	bra	.done
+.17
+	s_jmp			playeronplanetAR_Istrat
 ;	bra	.done
 	ENDC
 .done
@@ -2128,6 +2140,8 @@ playerintocock2_strat
 	beq	.15
 	cmp	#16
 	beq	.16
+	cmp	#17
+	beq	.17
 .1
 	s_jmp			playerintunnel_Istrat
 	bra	.done
@@ -2175,8 +2189,10 @@ playerintocock2_strat
 	bra	.done
 .16
 	s_jmp			playeronlava_Istrat
+	bra	.done
+.17
+	s_jmp			playeronplanetAR_Istrat
 ;	bra	.done
-	
 	
 .done
 	ENDC
@@ -2218,6 +2234,8 @@ playerintocock2_strat
 	beq	.15x
 	cmp	#16
 	beq	.16x
+	cmp	#16
+	beq	.17x
 .1x
 	s_jmp			playerintunnel_Istrat
 	bra	.donex
@@ -2262,8 +2280,13 @@ playerintocock2_strat
 	bra	.donex
 .15x
 	s_jmp			playerinnucleus_Istrat
+	bra	.donex
 .16x
 	s_jmp			playeronlava_Istrat
+	bra	.donex
+.17x
+	s_jmp			playeronplanetAR_Istrat
+	bra	.donex
 .donex
 	ENDC
 	RTL
@@ -2445,6 +2468,8 @@ playeroutofcock_strat
 	beq	.14
 	cmp	#15
 	beq	.15
+	cmp	#17
+	beq	.17
 .1
 	s_jmp			playerintunnel_Istrat
 	bra	.done
@@ -2489,6 +2514,9 @@ playeroutofcock_strat
 	bra	.done
 .15
 	s_jmp			playerinnucleus_Istrat
+	bra	.done
+.17
+	s_jmp			playeronplanetAR_Istrat
 .done
 	ENDC
 	
@@ -2531,6 +2559,8 @@ playeroutofcock_strat
 	beq	.14x
 	cmp	#15
 	beq	.15x
+	cmp	#17
+	beq	.17x
 .1x
 	s_jmp			playerintunnel_Istrat
 	bra	.donex
@@ -2575,6 +2605,9 @@ playeroutofcock_strat
 	bra	.donex
 .15x
 	s_jmp			playerinnucleus_Istrat
+	bra	.donex
+.17x
+	s_jmp			playeronplanetAR_Istrat
 .donex
 	ENDC
 	rtl
@@ -2765,23 +2798,23 @@ viewmove_srou_AR ;chuck
 
 	;s_jmp_varAND	B,pstratflags,#pstf_noviewmove,.end
 
-	lda.l	player_posx+1 ;chuck minimap
-	asl a
+	lda	player_posx+1 ;chuck minimap
+	;asl a ;uncomment these if using smaller map
 	sta.l	m_shipx
-	lda.l	player_posz+1
-	asl a
+	lda	player_posz+1
+	;asl a ;uncomment these if using smaller map
 	sta.l	m_shipz
 	lda.l	viewroty
 	sta.l	m_viewroty ; minimap player rotation
 
 	s_jmp_varAND	B,pstratflags,#pstf_novdistC,.novc
-	s_achase_var	W,outdist,viewdist,3
+	s_achase_var	W,outdist,viewdist,1
 .novc
 	s_copy_var2var	W,pviewposx,player_posx
 	s_copy_var2var	W,pviewposz,player_posz
 	s_copy_alvar2var	W,x,viewroty,al_roty
-	s_Fchase_var2alvar	W,x,pviewvelz,al_vz,1
-	s_Fchase_var2alvar	W,x,pviewvelx,al_vx,1
+	s_copy_alvar2var	W,x,pviewvelz,al_vz
+	s_copy_alvar2var	W,x,pviewvelx,al_vx
 	s_sub_var		W,pviewposz,pviewvelz
 	s_sub_var		W,pviewposx,pviewvelx
 
@@ -2835,6 +2868,7 @@ playermove_init_l
 	rtl
 playermove_init
 	a8
+
 	lda	#1
 	sta.l	m_particlesON
 	sta.l	m_particlesON+1
@@ -3027,9 +3061,9 @@ playermove_srou
 	cmp	#2
 	beq	.2
 	cmp	#3
-	beq	.3
+	lbeq	.3
 	cmp	#4
-	beq	.4
+	lbeq	.4
 	cmp	#5
 	lbeq	.5
 	cmp	#6
@@ -3052,6 +3086,10 @@ playermove_srou
 	lbeq	.14
 	cmp	#15
 	lbeq	.15
+	cmp	#16
+	lbeq	.16
+	cmp	#16
+	lbeq	.16
 .1
 	s_set_strat			x,playerintunnel_Istrat
 	jmp	.done
@@ -3072,10 +3110,10 @@ playermove_srou
 	jmp	.done
 .7
 	s_set_strat			x,playerinspace_Istrat
-	bra	.done
+	jmp	.done
 .8
 	s_set_strat			x,playerinspacenovc_Istrat
-	bra	.done
+	jmp	.done
 .9
 	s_set_strat			x,playeronplanet_Istrat
 	bra	.done
@@ -3096,6 +3134,12 @@ playermove_srou
 	bra	.done
 .15
 	s_set_strat			x,playerinnucleus_Istrat
+	bra	.done
+.16
+	s_set_strat			x,playeronlava_Istrat
+	bra	.done
+.17
+	s_set_strat			x,playeronplanetAR_Istrat
 .done
 	bra	.nothingtoseehere
 .decponerevive
@@ -4185,6 +4229,17 @@ playermove_srou
 
 
 .npsc
+
+; ## ALL-RANGE MODE TURNING ##
+	lda allrange_flag
+	beq	.nright
+	s_jmp_keyup		jleft,.nleft ; dpad left
+	s_add_var		W,player_turnrot,#2*256
+.nleft
+	s_jmp_keyup		jright,.nright ; dpad right
+	s_sub_var		W,player_turnrot,#2*256
+.nright
+; ####################
 ;----------------------------------------------------
 ; HUD rotation
 
@@ -4942,7 +4997,7 @@ do_player_Yvel125
 do_player
 	jsr		playermove_srou
 	s_gen_3dvecs	x,al_roty,al_rotx,al_speed
-	s_jmp_varEQ B,allrange_flag,#0,.noscale ;chuck, this is what caused that drifting nonsense
+	s_jmp_varEQ B,allrange_flag,#1,.noscale ;chuck, this is what caused that drifting nonsense
 	jsl	framescalevecs
 .noscale
 	s_add_vecs2pos	x

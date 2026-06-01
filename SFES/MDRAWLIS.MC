@@ -949,7 +949,6 @@ mmapy	=	142	;126
 mmapsize =	48	;64
 mmidx	=	198
 mmidy	=	166
-mdivisor 	=	4096
 mmapxend	=	222
 
 rx		equr	r1
@@ -961,6 +960,7 @@ mminiplayer
 	mpush	r11
 
 	lm	r0,[m_shipx]
+	lob
 	div2
 	div2
 	div2
@@ -979,6 +979,7 @@ mminiplayer
 .nowrapx
 
 	lm	r0,[m_shipz]
+	lob
 	mneg	r0
 	div2
 	div2
@@ -1112,10 +1113,12 @@ mminimap
 	miwt	r7,m_objz
 	miwt	r8,m_objx
 	lm	r0,[m_numobjs]
-	moves	r12,r0
+	;lob				;lob here causes crash/hang (?)
 	beq .zero
-;	with r12
-;	div2
+	lob
+	moves	r12,r0
+	with r12
+	div2
 
 	mcache
 	move	r13,r15
@@ -1219,7 +1222,7 @@ mboostmeter
 	move	r2,#boosty+2
 	move	r4,#boostheight-4
 
-	lm		r0,[m_allrange_flag]
+	lm		r0,[m_allrange_flag] ;chuck
 	lob
 	beq 	.norm2
 	with	r2

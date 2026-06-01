@@ -8757,6 +8757,22 @@ MYNARG	=	NARG
 
 	ENDM
 
+;*****************************************************************************
+s_add_to_deadpool	MACRO
+MYNARG	=	NARG
+	CHK_NARG	0
+
+	a16
+	lda al_id,x
+	phx
+	tax
+	a8
+	lda #1
+	sta deadpool,x
+	plx
+
+	ENDM
+
 
 
 

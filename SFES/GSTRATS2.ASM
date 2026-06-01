@@ -2520,14 +2520,25 @@ calcbgscroll_l
 
 	lda		outvy
 	sec
-	sbc		player_turnrot
-	asra	
-	asra	
-	asra	
-	asra	
+	sbc		player_turnrot ;chuck, if all-range then sub playerturnrotx but dont do the asra or the bg2Xscroll addition
+	ldx allrange_flag
+	beq .bgxscr
+	sec
+	sbc		player_turnrotX ;for turnaround start
+	asl	a
+	asl	a
+	;dec	a
+	bra		.bgxoff
+.bgxscr
 	asra
+	asra
+	asra
+	asra
+	asra
+
 	clc
 	adc		bg2Xscroll
+.bgxoff
 	sta.l		m_scrollxoff
 	a8
 
@@ -3142,7 +3153,14 @@ playerstraight_strat
 	s_start_strat
 	stz			arrows
 	s_set_var		B,viewtype,#viewtype_norm
-	s_set_var		W,plrotx,#0
+	s_jmp_varNOTZERO	B,psvar_byte1,.tcont ;chuck, all-range only
+
+	s_jmp_varAND		B,pshipflags2,#psf2_turn180,.turn
+	s_set_var	W,plrotx,#0
+	s_brl			.tcont
+.turn
+	s_set_var	W,plrotx,#deg180*256
+.tcont
 	s_set_var		W,plroty,#0
 	s_set_var		W,plrotz,#0
 ;	s_achase_var	W,outvx,#0,3
@@ -6919,6 +6937,7 @@ playerstart_init_l
 ;	lda	#pshipnum_norm
 ;	sta	curr_ship
 .keepthesame
+
 	jsl	select_ship_l
 	jsl	setship
 	rtl

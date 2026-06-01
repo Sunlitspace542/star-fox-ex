@@ -918,8 +918,8 @@ playeronplanetAR_strat
 	clc
 	adc	viewcy
 	sta	pviewposy
-	a8
 
+	a8
 	jsr		viewmove_srou_AR
 
 	s_end_strat
@@ -1908,17 +1908,17 @@ playerturnaround_strat
 	s_dec_var			B,psvar_byte1
 	s_jmp_varMORE		B,psvar_byte1,#15,.pitch ;21,.pitch ;31,.pitch
 
-	s_add_var		B,player_Zstratadd,#8 ;6 ;4
+	s_add_var			B,player_Zstratadd,#8 ;6 ;4
 	s_add_alvar			B,x,al_rotz,player_zstratadd
 
 .pitch
 	s_jmp_varAND		B,pshipflags2,#psf2_turn180,.updown
-	s_sub_var			W,plrotx,#2*512 ;684 ;284
+	s_sub_var			W,plrotx,#2*512
 	s_brl				.cam
 .updown
-	s_add_var			W,plrotx,#2*512 ;684 ;284
+	s_add_var			W,plrotx,#2*512
 .cam
-	s_add_var			W,player_turnrotX,#2*512 ;684 ;334 ;256
+	s_add_var			W,player_turnrotX,#2*512
 
 
 .fin
@@ -1953,7 +1953,6 @@ playerintocock_Istrat
 	jsr			makeallmedpspeed
 playerintocock_strat
 	s_start_strat
-
 
 	s_achase_alvar		W,x,al_worldx,#0,1
 	s_achase_alvar		W,x,al_worldy,#space_viewcy,1
@@ -2632,7 +2631,7 @@ cockshipout_strat
 
 
 	s_jmpNOT_varAND		B,pshipflags2,#psf2_playerHP0,.ndying
-	s_set_alvar		B,x,al_rotz,player_Zstratadd
+;	s_set_alvar		B,x,al_rotz,player_Zstratadd
 .ndying
 
 
@@ -2647,7 +2646,7 @@ cockshipout_strat
 	s_dec_lifecnt	x
 	s_add_playerZ	x
 	s_add_alvars	W,x,al_worldz,x,al_sword1
-;	s_jmp_alvarEQ	W,x,al_sword1,#176,.nadd	; 156
+	s_jmp_alvarEQ	W,x,al_sword1,#176,.nadd	; 156
 	s_add_alvar	W,x,al_sword1,#10
 .nadd	s_end_strat
 
@@ -4997,8 +4996,8 @@ do_player_Yvel125
 do_player
 	jsr		playermove_srou
 	s_gen_3dvecs	x,al_roty,al_rotx,al_speed
-	s_jmp_varEQ B,allrange_flag,#1,.noscale ;chuck, this is what caused that drifting nonsense
-	jsl	framescalevecs
+	s_jmp_varEQ B,allrange_flag,#1,.noscale
+	jsl	framescalevecs ;chuck, this is what caused that drifting nonsense
 .noscale
 	s_add_vecs2pos	x
 	jsr		playerfire_srou

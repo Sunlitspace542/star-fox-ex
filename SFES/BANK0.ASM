@@ -139,7 +139,7 @@ abort_vn
 					 ; (15) Battery + Super FX 2 (Yoshi's Island)
 					 ; (1A) Battery + Super FX 1 (Stunt Race FX)
 	db	$0b			; ROM Size (0A = 8mbit, 0B = 16mbit)
-	db	$06			; RAM Size (if 0, use exp RAM size above)
+	db	$00			; RAM Size (if 0, use exp RAM size above)
 	db	$01		; Destination Code (from below)
 	db	$33			; Fixed Value
 	db	$00			; Mask ROM Version

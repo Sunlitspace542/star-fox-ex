@@ -64,7 +64,7 @@ DATA\3-2.pcr DATA\CONT.pcr DATA\FOX.pcr DATA\SGSX.pcr DATA\VENOMA.pcr DATA\final
 #!! If you add/remove a font, make sure to add/remove the corresponding file.
 
 # Font files converted from BMP
-FONFILES= DATA\MOJI_0.FON DATA\MOJI_D.FON
+FONFILES= DATA\FONT\MOJI_0.FON DATA\FONT\MOJI_D.FON
 
 # Banks to assemble
 ALLFILES= bank0.sob bank1.sob bank2.sob \

@@ -96,10 +96,6 @@ yyy	mario	on
 
 
 mariocodelen	=	*-mariobegin
-
-
-	incfile	d2strats.asm
-
 	bankend	1
 
 

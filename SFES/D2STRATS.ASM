@@ -492,7 +492,7 @@ bossgs_istrat
 	lda	gameframe
 	bit	#1
 	beq	.setcoltab
-	s_set_coltab	x,#BLACK_C
+	s_set_coltab	x,#BLACK_C&WM
 	bra		.black
 .setcoltab	s_clr_coltab	x
 .black

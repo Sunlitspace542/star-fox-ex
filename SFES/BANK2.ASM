@@ -33,7 +33,7 @@
 	include	ga2strats.ext
 	include	gb3strats.ext
 	include	gb4strats.ext
-	include	d2strats.ext
+;	include	d2strats.ext
 	include	shapes.ext
 ;	include	stratrou.ext
 	include	sgtabs.ext
@@ -168,7 +168,8 @@ planetdmapos2	dw	100
 	incfile	coltabs.asm
 	minfo	coltabs
 	incfile	obj.asm
-	minfo	obj	
+	minfo	obj
+	incfile	d2strats.asm
 	bankend	34
 ;------------------------------------------------------------------
 

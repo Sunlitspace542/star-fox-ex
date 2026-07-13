@@ -578,17 +578,19 @@ mchar	macro
 
 mscalechars
 	INCBINFILE	data\font\moji_2.fon
+	INCBINFILE	data\font\moji_2a.fon ; A w/umlaut (couldn't make it all one file for some reason)
 
 msgtmp	macro
 	defs	1,"[1]\1"
 
 	;convert numbers, blanks, and special characters to tokens
 	; Sorry CoolK! - sl
+	; @ = A w/umlaut
 
-	REPT	15
-	irs	3,"-","0","1","2","3","4","5","6","7","8","9","!","?"," ","#"
+	REPT	16
+	irs	3,"-","0","1","2","3","4","5","6","7","8","9","!","?"," ","#","@"
 	run	" IFS 1,0,'%$3'"
-	irs	3,"[","\\","]","^","_","`","a","b","c","d","e","f","g","h","i"
+	irs	3,"[","\\","]","^","_","`","a","b","c","d","e","f","g","h","i","j"
 	defs	1,"%$3"
 	ENDC
 	ENDR
@@ -666,7 +668,7 @@ msg_PHONYMIKE
 msg_mrl314
 	mariomsg	<MRL314>
 msg_patch93
-	mariomsg	<JOSHUA SCHAEFERHUND>
+	mariomsg	<JOSHUA SCH@FERHUND>
 msg_presents
 	mariomsg	<PRESENTS>
 msg_developed

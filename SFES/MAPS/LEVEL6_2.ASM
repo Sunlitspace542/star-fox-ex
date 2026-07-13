@@ -36,8 +36,7 @@ level6_2
 
 	mapwait	200
 
-
-	
+	mapobj	3000,-300,0000,5000,yuurei2,hard225yr_Istrat
 
 	pathcspecial	1000,1000,-100,0000,boss_d_4,kamome,10,10
 	mapobj	3000,0000,0000,2000,nullshape,torpedo_Istrat	

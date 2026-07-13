@@ -3216,6 +3216,13 @@ hard_Istrat
 	s_set_strat		x,0
 	s_end_strat
 
+hard225yr_Istrat
+	s_start_strat
+	s_hardvars		x
+	s_set_alvar 	W,x,al_roty,#deg225
+	s_set_strat		x,0
+	s_end_strat
+
 ;*****************************************************************************
 hard180YRNZR_Istrat
 	s_start_strat
@@ -6351,8 +6358,8 @@ fire_playerbeam	; player's laser.
 	s_set_aldata		y,#1,#2	
 .done
 	s_set_alptrs		y,pbeam_Istrat,pelasercollide_Istrat,playerbeamdie_Istrat
-	s_set_speed		y,#66		40
-	s_set_lifecnt		y,#10		18
+	s_set_speed		y,#66		;40
+	s_set_lifecnt		y,#10		;18
 	s_set_colltype		y,laser
 	s_set_colltype		y,friend
 	jsr			gen_weapon

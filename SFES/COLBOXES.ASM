@@ -26,6 +26,8 @@ TplayerB_col	colbox	playerLW_col,0,0,playerB_z,norot,playerB_boxsize,playerB_box
 TplayerLW_col	colbox	playerRW_col,-TplayerW_x,playerW_y,playerW_z,rotz,playerW_boxsize,playerW_boxsize,playerW_boxsize,HF2,0
 TplayerRW_col	colbox	0,TplayerW_x,playerW_y,playerW_z,rotz,playerW_boxsize,playerW_boxsize,playerW_boxsize,HF3,0
 
+yuurei2_col	colbox	0,0,-21,-6,roty,25,30,42,HF1,0,2
+
 boxxie_col		colbox	playerLW_col,0,0,playerB_z,norot,playerB_boxsize+70,playerB_boxsize+70,(playerB_boxsize+40)*2,HF1,0
 
 bship_col			colbox	0,0,0,0,rotxyz,200,50,500,HF1,0

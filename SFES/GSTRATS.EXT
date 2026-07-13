@@ -27,6 +27,7 @@
 	global	nocoll_istrat,makesplash_srou_l
 	global	makefire_srou_l,makesmoke_srou_l
 	global	initgame_strats_l,hard_istrat
+	global	hard225yr_Istrat
 	global	float32_srou_l,float64_srou_l,float128_srou_l,float256_srou_l,rebelasercol_istrat,rebelasercolall_istrat
 	global	select_ship_l,remove_Istrat,dofireplease_l
 	global	changeviewmode_l

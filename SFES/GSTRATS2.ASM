@@ -592,6 +592,7 @@ shapeslist
 	dw	yoshiblue
 	dw	yoshired
 	dw	YSOLIDSPACEBAR
+	dw	yuurei2
 	dw	YWIRESPACEBAR
 	dw	zaco_0
 	dw	zaco_1

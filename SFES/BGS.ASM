@@ -1402,7 +1402,7 @@ bg_6_2_1	init_bg	mode2sp		;Fortuna - Pebble Beach
 	set_bg
 	set_zdepthtable	normal
 	pstrat	playeronwater,b,ab
-	info	hon,von,zon,nodots
+	info	hon,von,zon,snow
 	hofmode	rotate
 	waterfade
 ;	hofmode	rotate
@@ -1412,6 +1412,7 @@ bg_6_2_1	init_bg	mode2sp		;Fortuna - Pebble Beach
 	IFNE	MSU1
 	msuplay	level6_2,repeat
 	ENDC
+;	set_zdepthtable	mist
 	water	marine
 	
 bg_6_3_1	init_bg	mode2sp		;New Asteroid

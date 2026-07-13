@@ -1,9 +1,9 @@
 
 MSUTRACKREPORT = 0
 
-	include	bdays.inc
 	include	blddat.asm ; argsfxx y2k compliance fix
 	printf	"%$ASMTITLEDATE%n" ; argsfxx y2k compliance fix
+	include	bdays.inc
 ;---------------------------------------------------------------------
 ; listing mode equates
 

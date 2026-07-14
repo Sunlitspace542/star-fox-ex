@@ -99,7 +99,8 @@ abort_vn
 	incfile	sgtabs.asm
 	incfile	sgdata.asm
 	incfile	data\arctan.asm	
-
+	inccru	obj2ccr,data\obj-3.ccr ; CONT.ASM
+	public obj2ccr
 	bankend	0
 
 	org	$00ffb0,$7fb0

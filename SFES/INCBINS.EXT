@@ -181,7 +181,6 @@
 	global	bgti3pcr,bgti3ccr
 	global	bgcppcr
 	global	dogpcr
-	global	obj2ccr
 	global	pebble
 	global	pebblelen
 	global	kuruso

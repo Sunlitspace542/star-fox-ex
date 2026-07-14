@@ -170,9 +170,6 @@ facedata2	inccolfile	data\face2.cgx,0,620		;size / 32
 
 firstsndbnk	=	52
 musicsize	=	0
-
-	inccru	obj2ccr,data\obj-3.ccr
-
 	IFNE	MSU1
 	incsnd	sound0,MSU1\MSUSND0.BIN
 	ELSEIF
@@ -248,6 +245,11 @@ musicsize	=	0
 	incsnd	sp0rch,snd\sp0rch.bin
 	incsnd	hurricane,snd\hurr.bin
 	printf	:$*,"%n"
+
+	fopen	+BANKS.CSV
+	printf	"Sound data start,%xfirstsndbnk %n"
+	printf "Sound data size,%xmusicsize %n"
+	fclose	BANKS.CSV
 
 	ifgt	@-$200000
 	printf	"%N%N  MORE THAN 2 MEGA-BYTES OF ROM USED!! %N%N"

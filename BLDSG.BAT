@@ -9,13 +9,13 @@ cd sfes
 @echo on
 
 make clean
-make fastrom=0 hardware=0 newface=1
+make hardware=0 newface=1
 copy sfes.sfc ..\sfes.sfc
 
 del sfes.sfc
 del *.sob
 
-make sfes.sfc fastrom=0 hardware=0 newface=0
+make sfes.sfc hardware=0 newface=0
 copy sfes.sfc ..\sfes_alt.sfc
 
 make clean

@@ -57,6 +57,7 @@ totaltime	=	0
 	include	structs.inc
 	include	alcs.inc
 	include	MSU1\MSUREGS.INC
+	include	MREGS.INC
 
 	IFNE	MSU1
 	include	MSU1\MSUMACS.INC

@@ -74,7 +74,7 @@ ALLFILES= bank0.sob bank1.sob bank2.sob \
 
 # Recipe to assemble a .ASM file and create a linkable .SOB file
 .asm.sob:
-	@$(ASM) -sFASTROM=$(fastrom) -sHARDWARE=$(hardware) -snewmugshots=$(newface)  $(ASMFLAGS) $< -v$*.SOB
+	@$(ASM) -sHARDWARE=$(hardware) -snewmugshots=$(newface)  $(ASMFLAGS) $< -v$*.SOB
 
 # Recipes to crunch graphics
 .cgx.ccr:
@@ -255,7 +255,7 @@ distclean:
 
 SFES.SFC: $(ALLFILES)
 	@$(LINK) $(LOPTS) -o$@ @flist
-	@echo Built ROM, fastrom = $(fastrom) hardware = $(hardware) newface = $(newface)
+	@echo Built ROM, hardware = $(hardware) newface = $(newface)
 	@$(EXTEND) $@ $(EXTOPS)
 	@$(CHECK) $(COPTS) $@
 	@$(MAPDEC) SFES.MAP SYMBOLS.TXT

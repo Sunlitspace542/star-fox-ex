@@ -110,10 +110,9 @@ abort_vn
 	db	0,0,0,0,0,0,0		; Fixed Value
 	db	6			; Expansion RAM Size (5 = 32kbyte, 6 = 64kbyte)
 	db	0			; Special Version
-	IFNE	SUPERFX3
-	db	$52					; Cartridge Type (Sub-number)
-							; (52) Super FX 3 (The Ultimate DOOM) - the Super FX Version Code Register $303B also reports $52
-	ELSEIF
+	IFNE	RUMBLE
+	db	$'R'				; Cartridge Type (Sub-number)
+							; (52) Rumble controller support
 	db	$0					; (0) None
 	ENDC
 
@@ -126,16 +125,22 @@ abort_vn
 	IFNE	FASTROM 
 	; I would set the FastROM map flag but a lot of people still use older versions of SNES9x,
 	; so I'll leave this be for compatibility - SL
-	db	$20			; Map Mode (20 = SlowROM, 30 = FastROM) LoROM
+	db	$30			; Map Mode (20 = SlowROM, 30 = FastROM) LoROM
 	ELSEIF
 	db	$20			; Map Mode (20 = SlowROM, 30 = FastROM) LoROM
 	ENDC
 
+	IFNE	SUPERFX3
+	db	$17			; Cartridge Type
+	ELSEIF
 	db	$15			; Cartridge Type
-					 ; (13) Super FX 1 (StarFox 1)
-					 ; (14) Super FX 2 (DOOM) / Super FX 3 (The Ultimate DOOM)
-					 ; (15) Battery + Super FX 2 (Yoshi's Island)
-					 ; (1A) Battery + Super FX 1 (Stunt Race FX)
+	ENDC
+					; (13) MARIO Chip 1 / Super FX 1 (StarFox 1)
+					; (14) Super FX 2 (DOOM)
+					; (15) Battery + Super FX 2 (Yoshi's Island, StarFox 2)
+					; (17) Super FX 3 (The Ultimate DOOM)
+					; (18) Super FX 3 + Battery (presumably?)
+					; (1A) Battery + Super FX 1 (Stunt Race FX)
 	db	$0b			; ROM Size (0A = 8mbit, 0B = 16mbit)
 	db	$06			; RAM Size (if 0, use exp RAM size above)
 	db	$01		; Destination Code (from below)

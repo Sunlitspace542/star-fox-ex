@@ -58,9 +58,12 @@ timeovercont
 	end_65816
 	mapobj	0000,-130,-31,000,t_ex_1,estrat_istrat
 	mapobj	0000,41,130,00,t_ex_2,xstrat_istrat
-	IFNE	MSU1
-	mapmsgx2	154
-	ENDC
+;	IFNE	MSU1
+;	mapmsgx2	154
+;	ENDC
+;	IFNE	SUPERFX3
+;	mapmsgx2	153
+;	ENDC
 	start_65816
 
 	

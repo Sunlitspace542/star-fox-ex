@@ -9,7 +9,7 @@ cd sfes
 @echo on
 
 make clean
-make fastrom=0 hardware=0 newface=1
+make hardware=0 newface=1
 copy sfes.sfc ..\sfes.sfc
 
 make clean

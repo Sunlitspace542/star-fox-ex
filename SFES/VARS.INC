@@ -1,8 +1,13 @@
 pal				equ	0
-;FASTROM		equ	1		; set by command line
+SUPERFX3		equ 0
+	IFNE	SUPERFX3
+FASTROM		equ	1		; GSU3 ONLY
+	ELSEIF
+FASTROM		equ	0
+	ENDC
 ;HARDWARE		equ	0		; set by command line
 ;newmugshots	equ	1		; set by command line
-SUPERFX3		equ 0
+RUMBLE			equ	0
 MSU1			equ	0 		; to be set by command line once the programming for msu1 is finished
 PSYCHOTIC		equ	0
 wireframe		equ	0		; wireframe mode

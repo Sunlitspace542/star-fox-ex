@@ -36,19 +36,28 @@ copy_to_0101_l
 	plp
 	rtl
 
-
-
-
+;---------------------------------------------------------------------------
+nonmihan	equ	1	;Remove unused NMI handler (saves memory+cycles in IRQ)
 
 nmihan
 	blink	2
 	blink	2
-	jmp	.nmi	;$0108	NMI
+	IFNE	NONMIHAN
+	rti		; $0108 NMI
+	nop
+	nop
+	ELSEIF
+	brl	.nmi	;$0108	NMI
+	ENDC
 	nop		;$010b
 .irq	ai16		;$010c	irq
 	pha
 	lda.l	m_sfr
-	bmi	.qexit
+	bpl	.irqq
+.qexit	pla
+	rti
+
+.irqq
 	phb
 	disable
 	phx
@@ -63,6 +72,7 @@ nmihan
 	pha
 	plb
 	ENDC
+
 	IFNE	MSU1
 	lda msufadeflag	; check fade flag
 	beq .nofade	; if zero, don't fade
@@ -74,17 +84,20 @@ nmihan
 	sta msu_volume	; set msu-1 volume
 .nofade
 	ENDC
+
 	nastyon
 	jsl	irqcode_l
 	a8
 	inc	framec
 	lda	timeupr
-	bra	.exit
+	IFEQ	NONMIHAN
+	bra	.exit ; branch to .exit sublabel
+	ENDC	;NONMIHAN
 	longa
-.qexit	pla
-	rti
+
 .brk
 .nmi
+	IFEQ	NONMIHAN
 	ai16
 	pha
 	phb
@@ -106,6 +119,7 @@ nmihan
 	nastyon
 	a8
 	lda	rdnmir
+	ENDC	;NONMIHAN
 
 .exit	ai16
 	ply

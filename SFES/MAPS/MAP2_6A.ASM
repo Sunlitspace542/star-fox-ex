@@ -207,7 +207,7 @@ map2_6a
 	mapwait	medpspeed*15*2
 	setbgm	$12
 	IFNE	MSU1
-	mapmsuplay	enteringdangerousterritory,repeat
+	mapmsuplay	dangerous,repeat
 	ENDC
 	markboss	boss26
 	mapwait	500

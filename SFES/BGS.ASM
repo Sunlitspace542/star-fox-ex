@@ -242,7 +242,7 @@ bg_training_1	init_bg	mode2		;training
 	bg2Yscroll	-128
 	bgm	training
 	IFNE	MSU1
-	msuplay training,repeat
+	msuplay trainingmode,repeat
 	ENDC
 	space	night
 

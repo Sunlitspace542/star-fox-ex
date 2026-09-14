@@ -1,4 +1,6 @@
-1.11.03 - The MSU-1 Update (for reals this time)!:
+1.11.03 - The Final Update:
+These past 6 years were fun while they lasted. I've decided to finish up one last update so that the features I wanted are implemented. and I can finally be at peace.
+See you next game! -Sunlit
 Fixes:
 -Fixed clearing a stage on route 6 sending you to route 5 on the map
 -Fixed Pepper Skip always sending the player to stage 6-1 as the first stage of each route
@@ -11,9 +13,17 @@ Fixes:
 -Fixed players 2-5 not playing the shield hit sound if the shield power up is equipped
 -Fixed Pepper Skip causing the level skip code not to exit the stage
 -Fixed incorrectly colored face on FCTA ship model
-
-IMPORTANT NOTES:
-- If you get ANY CRASHES in the MSU-1 version, please report them ASAP to #bug-reports in the Discord server!!
+-Fixed kbase2 collision box
+-Fixed pepper skip on map 1
+-Cleaned up some textures
+-New camera and infinite boost now disabled by default
+-Skip rumble if any other peripherals are in use
+-Fix some face2 bugs with sfx priority and suchlike
+-Fixed crosshair duplication in Great Commander I
+-Disabled 60fps being blocked on certain hardware types, hardware detection is just too difficult to keep up with now
+-Restored warp out BGM in map 2 stage 1
+-Fixed zoom for several custom ships
+-Fixed unused arrow sfx interfering with music
 
 Changes:
 -Separated Super FX programming credits into their own section in the credits sequence
@@ -32,14 +42,17 @@ Changes:
 -Removed some Super FX code related to computing the distance required for LOD models as those are not used in this game
 
 Additions:
+-Game converted to Super FX 3!!
+-Added rumble support! Rumble is only available when no other accessories are enabled. Please do not use a multitap on hardware.
+-Added redone Monikruiser player ship shape by Monika
+-Mario shows up instead of Andross on the game over screen if you are playing map 2
+
+MSU-1 version changes:
+MSU-1 will likely never be released, but the programming has been completed.
 -Fully functional MSU-1 BGM support for the Star Fox (EX) Campaign!!
-	(Apply the included add-on patch to enable MSU-1 audio.)
--Official arranged MSU-1 PCM set by Random, [TBD]
--For making your own MSU-1 sets, see included tracklist spreadsheet.
 -MSU-1 credits added to credits sequence for the MSU-1 version of the game.
 -Sound Test BGM player converted to MSU-1 track test when using the MSU-1 version of the game.
   (same applies to the pause screen BGM selector)
--Mario shows up instead of Andross on the game over screen if you are playing map 2
 
 ---------
 

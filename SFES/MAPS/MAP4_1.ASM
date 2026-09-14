@@ -236,7 +236,7 @@ sphigh	equ	6000
 	ENDC
 	mapwait	medpspeed*7
 	IFNE	MSU1
-	mapmsuplay	enteringdangerousterritory,repeat
+	mapmsuplay	dangerous,repeat
 	ELSEIF
 	setbgm	5
 	ENDC

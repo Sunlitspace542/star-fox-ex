@@ -185,6 +185,10 @@ donesun
 	jmp	cont
 regbgm
 	bgm2	continue					;blah blah why are you reading my comments
+	bgm	continue
+	IFNE	MSU1
+	msuplay	continue,repeat
+	ENDC
 cont
 	lda	stopcounting
 	cmp	#11
@@ -2194,7 +2198,7 @@ a10
 a11
 	turnonoff	scopemode
 	lda	scopemode
-	beq	doneright
+	lbeq	doneright
 	stz	mousemode
 	stz	multitapmode
 	jmp	doneright
@@ -2204,6 +2208,14 @@ a12
 
 
 a13
+; block multitap on any platforms hardware can be detected as
+	lda	machinetype
+	cmp	#hardwaree
+	lbeq	doneright
+;	cmp	#mister
+;	lbeq	doneright
+	cmp	#sd2snes
+	lbeq	doneright
 	turnonoff	multitapmode
 	lda	multitapmode
 	beq	.ok
@@ -2407,7 +2419,7 @@ b101
 b111
 	turnonoff	scopemode
 	lda	scopemode
-	beq	doneleft
+	lbeq	doneleft
 	stz	mousemode
 	stz	multitapmode
 	stz	playertwocpuactivated
@@ -2421,6 +2433,14 @@ b121
 	jmp	doneleft
 
 b131
+; block multitap on any platforms hardware can be detected as
+	lda	machinetype
+	cmp	#hardwaree
+	lbeq	doneleft
+;	cmp	#mister
+;	lbeq	doneleft
+	cmp	#sd2snes
+	lbeq	doneleft
 	turnonoff	multitapmode
 	lda	multitapmode
 	beq	.ok321
@@ -4685,6 +4705,7 @@ noupp2aapo
 	lda	superfx2
 	lbeq	foxy_continue_l
 
+	IFNE	0	;disable blocking of 60fps based on machine type
 	; disables 60fps for platforms that can't handle it
 	lda	machinetype ; Can't let you have 60FPS on real hardware and certain emulators, Star Fox!
 	cmp #mister
@@ -4695,6 +4716,7 @@ noupp2aapo
 	lbeq	noright4u4
 	cmp	#sd2snes ; sd2snes/fxpak is basically hardware too
 	lbeq	noright4u4
+	ENDC
 
 	lda	ntscpalswap
 	beq	.norm1x
@@ -4762,6 +4784,7 @@ noright4u4
 	lda	superfx2
 	lbeq	foxy_continue_l
 
+	IFNE	0	;disable blocking of 60fps based on machine type
 	; disables 60fps for platforms that can't handle it (i think)
 	lda	machinetype ; Can't let you have 60FPS on real hardware and certain emulators, Star Fox!
 	cmp #mister
@@ -4772,6 +4795,7 @@ noright4u4
 	lbeq	noleft4u4
 	cmp	#sd2snes ; sd2snes/fxpak is basically hardware too
 	lbeq	noleft4u4
+	ENDC
 
 
 	lda	ntscpalswap
@@ -4977,96 +5001,7 @@ noupp2aapo12
 
 	trigse	$A0h
 	
-	lda	#2
-	sta	firerate	
-	sta	nocrosshairpls
-
-	lda	#1
-	sta	superfx2
-	sta	numplayers
-	sta	enemy_firing
-	sta	rapidfire
-	sta	doboostmeter
-	sta	newcamera
-
-	lda	#0
-	sta	nobgmode
-	sta	newgameplus
-	sta	godmode
-	sta	randomfire
-	sta	scored
-	sta	pepperskip
-	sta	endurance
-	sta	levelfeatures
-	sta	rainbowlaser
-	sta	bigheadmode
-	sta.l	m_bigheadmode
-	sta.l	m_biggerheadmode
-	sta	playertwocpuactivated
-	sta	skipscramble
-	sta.l	m_playertwoactivated
-	sta	darkmode
-	sta	mistmode
-	sta	palnumber
-	sta	secretgodmode
-	sta	strat_valid
-	sta	pweptemp
-	sta	bgmspeed
-	sta	quickstart
-	sta	curr_ship
-	sta	showcolbox
-	sta	mosaicon
-	sta	nanmode
-	sta	wiremode
-	sta	shpmode
-	sta	fpscounteron
-	sta	mousemode
-	sta	mousemodetemp
-	sta	scopemode
-	sta	nttmode
-	sta	bouncedeath
-	sta	noborders
-	sta.l	m_wobblemode
-	sta	classichp
-	sta	barrelroll
-	sta	noenginemode
-	sta	hilitecolor
-	sta	bgmsfx
-	sta	dotsstars
-	sta	craymode
-	sta	randomsound
-	sta	randombgm
-	sta	kandomode
-	sta	randompos
-	sta	viewshit
-	sta	cursedbgm
-	sta	cursedopen
-	sta	kandoallow
-	sta	nohud
-	sta	moredots
-	sta	colorwarp
-	sta	lsdmode
-	sta	colortrip
-	sta	randompalette
-	sta	allatonce
-	sta	randomobjpal
-	sta	colortripobj
-	sta	gridlines
-	sta	multitapmode
-	sta	fpsspeed
-	sta	currxhair
-	sta	currxhair2
-	sta	currxhair3
-	sta	currxhair4
-	sta	currxhair5
-	sta.l	m_wabblemode
-	sta.l	m_celmode
-	sta	curr_ship2
-	sta	curr_ship3
-	sta	curr_ship4
-	sta	curr_ship5
-	sta	ntscpalswap
-	sta	noobjmode
+	writedefaults
 	jmp	noexit2xmm4cfg
 	
 ;-------classic
@@ -7563,96 +7498,7 @@ noexit2xa111
 
 
 triggerdefaults
-	lda	#2
-	sta	firerate	
-	sta	nocrosshairpls
-
-	lda	#1
-	sta	superfx2
-	sta	numplayers
-	sta	enemy_firing
-	sta	rapidfire
-	sta	doboostmeter
-	sta	newcamera
-
-	lda	#0
-	sta	nobgmode
-	sta	newgameplus
-	sta	godmode
-	sta	randomfire
-	sta	scored
-	sta	pepperskip
-	sta	endurance
-	sta	levelfeatures
-	sta	rainbowlaser
-	sta	bigheadmode
-	sta.l	m_bigheadmode
-	sta.l	m_biggerheadmode
-	sta	playertwocpuactivated
-	sta	skipscramble
-	sta.l	m_playertwoactivated
-	sta	darkmode
-	sta	mistmode
-	sta	palnumber
-	sta	secretgodmode
-	sta	strat_valid
-	sta	pweptemp
-	sta	bgmspeed
-	sta	quickstart
-	sta	curr_ship
-	sta	showcolbox
-	sta	mosaicon
-	sta	nanmode
-	sta	wiremode
-	sta	shpmode
-	sta	fpscounteron
-	sta	mousemode
-	sta	mousemodetemp
-	sta	scopemode
-	sta	nttmode
-	sta	bouncedeath
-	sta	noborders
-	sta.l	m_wobblemode
-	sta	classichp
-	sta	barrelroll
-	sta	noenginemode
-	sta	hilitecolor
-	sta	bgmsfx
-	sta	dotsstars
-	sta	craymode
-	sta	randomsound
-	sta	randombgm
-	sta	kandomode
-	sta	randompos
-	sta	viewshit
-	sta	cursedbgm
-	sta	cursedopen
-	sta	kandoallow
-	sta	nohud
-	sta	moredots
-	sta	colorwarp
-	sta	lsdmode
-	sta	colortrip
-	sta	randompalette
-	sta	allatonce
-	sta	randomobjpal
-	sta	colortripobj
-	sta	gridlines
-	sta	multitapmode
-	sta	fpsspeed
-	sta	currxhair
-	sta	currxhair2
-	sta	currxhair3
-	sta	currxhair4
-	sta	currxhair5
-	sta.l	m_wabblemode
-	sta.l	m_celmode
-	sta	curr_ship2
-	sta	curr_ship3
-	sta	curr_ship4
-	sta	curr_ship5
-	sta	ntscpalswap
-	sta	noobjmode
+	writedefaults
 
 
 ;save

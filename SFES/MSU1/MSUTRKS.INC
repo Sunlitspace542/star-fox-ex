@@ -9,11 +9,12 @@
 	fclose	MSUTRKS.CSV
 	ENDC
 
+; -- OPENING --
 	msutrack	fitunl,0,<Entering the Pipe>,<OST>
 	msutrack	newtitle,1,<EX - Title Screen>,<OST>
 	msutrack	menu,2,<Exploratorium>,<Demo>
 	msutrack	controls,3,<Controls Select>,<Church of Kondo>
-	msutrack	training,4,<Training Mode>,<OST>
+	msutrack	trainingmode,4,<Training Mode>,<OST>
 	msutrack	map1,5,<Star Fox Map>,<Church of Kondo>
 	msutrack	map2,6,<Star Fox EX Map>,<Arranged>
 	msutrack	briefing,7,<Map Briefing Zoom>,<OST>
@@ -56,7 +57,7 @@
 	msutrack	boss7_5,35,<Brobot Attack!>,<OST>
 	msutrack	bosscomet,36,<Yoshisaur>,<Arr. Demo>
 
-; -- BONUS LEVELS --
+; -- MAP 1 SECRET LEVELS --
 	msutrack	levelaustralia,37,<Australia>,<OST>
 	msutrack	levelcomet,38,<Suisei>,<OST>
 
@@ -110,12 +111,22 @@
 	; bonus
 	msutrack	bossootd,70,<Slot Machine>,<Church of Kondo>
 
-; -- BONUS LEVELS --
+; -- MAP 1 SECRET LEVELS --
 	msutrack	levelblackhole,71,<Black Hole>,<OST Arranged>
 	msutrack	levelootd,72,<Out of this Dimension>,<OST>
-; -- MISC --
-	msutrack	enteringdangerousterritory,73,<Entering Dangerous Territory>,<Church of Kondo>
-	msutrack	creditsmap1,74,<Staff Roll>,<OST>
-	msutrack	secretactivated,75,<Secret Activated>,<OST>
 
+; -- JINGLES, FANFARES, AND SUCHLIKE --
+	msutrack	clearootd,73,<Clear (OOTD)>,<OST>		;Clear (OOTD)
+	msutrack	gameover,74,<Game Over>,<OST>			;Game Over
+	msutrack	continue,75,<Continue>,<OST>			;Continue
+	msutrack	blackholewarp,76,<Enter Black Hole>,<SPC Edited>	;Black Hole Warp (Enter Black Hole)
+	msutrack	blackholeexit,77,<Exit Black Hole>,<SPC Edited>	;Black Hole Warp Out
+	msutrack	dangerous,78,<Entering Dangerous Territory>,<Church of Kondo>
+	msutrack	creditsmap1,79,<Staff Roll>,<OST>
+	msutrack	secretactivated,80,<Secret Activated>,<OST>
+
+; -- SOUND EFFECTS --
+	msutrack	enterhyperspace1,81,<Enter Hyperspace>,<OST>	;Warp Drive Spool (Asteroid Warp)
+	msutrack	enterhyperspace2,82,<Enter Hyperspace 2>,<OST>	;Warp Drive Engage (Asteroid Warp Out)
+	msutrack	exithyperspace,83,<Exit Hyperspace>,<OST>	;Coming out of Warp Speed (Exit hyperspace)
 ; EOF

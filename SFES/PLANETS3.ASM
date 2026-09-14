@@ -45,6 +45,18 @@ planetseq3_l
 
 	a8i16
 
+	IFNE	RUMBLE
+; clear any timed rumbles that did not complete before we got here
+	stz	rumble_cmd
+; clear any sequenced rumbles as well
+	stz	rumble_index
+
+; make sure NMI gets processed before interrupts are switched off
+; so we know the timed rumble is done
+.waitforrumbletoend
+	lda	rumble_time
+	bne	.waitforrumbletoend
+	ENDC
 ;	jsr	convertroute3
 	stz	stopcounting
 

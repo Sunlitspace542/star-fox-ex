@@ -1,6 +1,11 @@
 restart1_6
 ;	mapplayermode	onplanet
-;	setvar	keeppstrat,1
+;;	setvar.b	keeppstrat,1
+	start_65816
+	lda	pshipflags3
+	ora	#psf3_keeppstrat
+	sta	pshipflags3
+	end_65816
 ;	mapwait	1000
 
 	start_65816

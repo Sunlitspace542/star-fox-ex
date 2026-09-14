@@ -30,7 +30,12 @@ level1_1
 	mapwait	1
 	meters_on	trans
 
-	setvar	keeppstrat,1
+;	setvar.b	keeppstrat,1
+	start_65816
+	lda	pshipflags3
+	ora	#psf3_keeppstrat
+	sta	pshipflags3
+	end_65816
 	mapplayermode	onplanet2
 	setbg	1_1c
 	initbg

@@ -142,9 +142,10 @@ planetdmapos2	dw	100
 	minfo
 	incfile	cont.asm
 	minfo	cont
+	IFNE	RUMBLE
+	incfile	contchk.asm
+	ENDC
 
-	incfile	bootnmi.asm
-	minfo	bootnmi
 	incfile	draw.asm
 	minfo	draw
 	incfile	fontdata.asm
@@ -155,6 +156,9 @@ planetdmapos2	dw	100
 	bank	16
 	incfile	nmi.asm
 	minfo	nmi
+
+	incfile	bootnmi.asm
+	minfo	bootnmi
 
 	incfile	bgs.asm
 	minfo	bgs

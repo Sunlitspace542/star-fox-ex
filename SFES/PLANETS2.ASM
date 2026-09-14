@@ -191,6 +191,18 @@ planetseq2_l
 
 	a8i16
 
+	IFNE	RUMBLE
+; clear any timed rumbles that did not complete before we got here
+	stz	rumble_cmd
+; clear any sequenced rumbles as well
+	stz	rumble_index
+
+; make sure NMI gets processed before interrupts are switched off
+; so we know the timed rumble is done
+.waitforrumbletoend
+	lda	rumble_time
+	bne	.waitforrumbletoend
+	ENDC
 	lda	#0
 	sta.l	msg_count12
 	sta.l	msg_count22
@@ -346,16 +358,22 @@ planetseq2_l
 	pha
 	enable
 	bgm2	newmap
-	IFNE	MSU1
-	msuplay_alt	map2,repeat
-	ENDC
 	pla
 	cmp	#14
 	beq	.blackholebgm
 	cmp	#10
 	bne	.normbgm
-.blackholebgm	startbgm	$f
+.blackholebgm
+	startbgm	$f
+	;IFNE	MSU1
+	;msuplay_alt	blackholemap,repeat
+	;bra	.donenormbgm
+	;ENDC
 .normbgm
+	IFNE	MSU1
+	msuplay_alt	map2,repeat
+	ENDC
+.donenormbgm
 
 	lda	#-1
 .nxtfad	pha
@@ -564,7 +582,7 @@ planetseq2_l
 	stz	lighty+1
 	ENDC
 
-	IFEQ 	0
+	IFEQ 	1
 	a8
 	lda	#1
 	sta	map3
@@ -748,6 +766,7 @@ planetseq2_l
 	jml	planetseq_l
 
 .nosecondplanet4
+	IFNE	0	;disabled map 3
 	testjoypad	TLEFT
 	beq	.nosecondplanet55
 	a8
@@ -760,6 +779,7 @@ planetseq2_l
 	sta	whichroute
 	jsl	initialise2_l
 	jml	planetseq3_l
+	ENDC
 
 .nosecondplanet55
 	TESTJOYPAD	START		; cheat

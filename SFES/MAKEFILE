@@ -15,9 +15,9 @@ LOPTS=-b30 -h1024 -t7d -z
 EXTEND=EXTEND
 # Extended size in Mbits, byte to pad with
 # For GSU-1/GSU-2
-EXTOPS= 16 ff
+#EXTOPS= 16 ff
 # For GSU-3
-#EXTOPS= 32 ff
+EXTOPS= 32 ff
 
 # Checksum Fixer
 CHECK=SFCHECK
@@ -50,7 +50,8 @@ DATA\2-3B.ccr DATA\B-M.ccr DATA\DEMO.ccr DATA\FS-BG3.ccr DATA\OBJ-2.ccr DATA\T-S
 DATA\2-4.ccr DATA\B.ccr DATA\DOG.ccr DATA\FXDES.ccr DATA\OBJ-3.ccr DATA\T-ST.ccr DATA\fortunan.ccr DATA\vhwymenu.ccr \
 DATA\3-2.ccr DATA\BACK1.ccr DATA\E-TEST.ccr DATA\HOLE-A.ccr DATA\RAIL.ccr DATA\TI-3.ccr DATA\gektun.ccr DATA\vhwyp.ccr \
 DATA\3-3.ccr DATA\C-M.ccr DATA\E-TEST2.ccr DATA\LSB.ccr DATA\SC.ccr DATA\TI.ccr DATA\macbeth.ccr DATA\vorclo.ccr \
-DATA\3-4.ccr DATA\CONT-2-G.ccr DATA\E.ccr DATA\M.ccr DATA\SGSX.ccr DATA\VENOMA.ccr DATA\map.ccr DATA\vordes.ccr DATA\MAR.ccr
+DATA\3-4.ccr DATA\CONT-2-G.ccr DATA\E.ccr DATA\M.ccr DATA\SGSX.ccr DATA\VENOMA.ccr DATA\map.ccr DATA\vordes.ccr DATA\MAR.ccr \
+DATA\RMBLCTRL.ccr
 
 # Crunched tilemaps
 SCRFILES= DATA\1-3-B.pcr DATA\3-3.pcr DATA\CORN.pcr DATA\FS-NI.pcr DATA\ST-P.pcr DATA\VORICE.pcr DATA\fortmenu.pcr DATA\sun.pcr \

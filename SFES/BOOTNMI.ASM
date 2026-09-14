@@ -357,6 +357,9 @@ continueboot
 	jsl	startsfx_l
 
 	jsr	initialise_ram
+	IFNE	RUMBLE
+	jsl	check_connectcont_l	; Check for illegal controllers
+	ENDC
 	
 	pla
 	sta	machinetype
@@ -831,6 +834,9 @@ restart	ai16
 	
 ;-----------------------------------
 	jsr	initialise_ram			;clear all values
+	IFNE	RUMBLE
+	jsl	check_connectcont_l	; Check for illegal controllers
+	ENDC
 ;-----------------------------------
 
 

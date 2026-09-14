@@ -63,8 +63,8 @@ initgame_strats_l
 	sta	gameflags2
 	stz	bossflags
 	stz	stratflags
-	lda	#1
-	sta	shieldon
+;	lda	#1
+;	sta	shieldon
 
 
 	lda	#40
@@ -324,7 +324,10 @@ dofireplease
 	s_weapon_rot		#0,#0
 	s_fire_weapon		x,ELASER,npfy
 ;	ENDR
-	trigse			se_laser		
+	trigse			se_laser
+	IFNE	RUMBLE
+	s_queue_rumble	1,1,1
+	ENDC
 	jmp		npfy
 
 .1
@@ -404,6 +407,9 @@ w3 ; Cross Laser
 	s_weapon_pos		#playerW_x>>weapon_scale,#playerW_y>>weapon_scale,#80
 	s_fire_weapon		x,ELASER,npfy
 	trigse			$34
+	IFNE	RUMBLE
+	s_queue_rumble	2,2,1
+	ENDC
 	jmp			npfy
 ;------------------------------------------------------------------	
 w4 ;Quintouple Laser
@@ -422,6 +428,9 @@ w4 ;Quintouple Laser
 	s_weapon_pos		#0>>weapon_scale,#playerW_y>>weapon_scale,#80
 	s_fire_weapon		x,ELASER,npfy
 	trigse			$34
+	IFNE	RUMBLE
+	s_queue_rumble	2,2,1
+	ENDC
 	jmp		npfy
 ;------------------------------------------------------------------
 w5 ;Plasma
@@ -442,7 +451,9 @@ w5 ;Plasma
 	
 	s_weapon_pos		#playerW_x>>weapon_scale,#playerW_y>>weapon_scale,#10
 	s_fire_weapon		x,HPLASMA2,npfy
-	
+	IFNE	RUMBLE
+	s_queue_rumble	3,3,3
+	ENDC
 	trigse			$36	
 	jmp		npfy
 ;------------------------------------------------------------------
@@ -464,7 +475,9 @@ w6 ;Oval Beam
 	
 	s_weapon_pos		#playerW_x>>weapon_scale,#playerW_y>>weapon_scale,#10
 	s_fire_weapon		x,RELOVALBEAM2,npfy
-	
+	IFNE	RUMBLE
+	s_queue_rumble	3,3,3
+	ENDC
 	trigse			$36
 	jmp		npfy
 ;------------------------------------------------------------------
@@ -486,7 +499,9 @@ w7 ;Ring Laser
 	
 	s_weapon_pos		#(playerW_x+5)>>weapon_scale,#playerW_y>>weapon_scale,#10
 	s_fire_weapon		x,RELRINGLASER2,npfy
-	
+	IFNE	RUMBLE
+	s_queue_rumble	3,3,3
+	ENDC
 	trigse			$36	
 	jmp		npfy
 ;------------------------------------------------------------------
@@ -570,7 +585,9 @@ dubfl
 	
 	s_weapon_pos		#playerW_x>>weapon_scale,#playerW_y>>weapon_scale,#80
 	s_fire_weapon		x,ELASER,npfy
-	
+	IFNE	RUMBLE
+	s_queue_rumble	2,2,1
+	ENDC
 	trigse			$34
 	jmp			npfy
 ;------------------------------------------------------------------
@@ -581,7 +598,9 @@ beamb
 	
 	s_weapon_pos		#playerW_x>>weapon_scale,#playerW_y>>weapon_scale,#10
 	s_fire_weapon		x,PLAYERBEAM,npfy
-	
+	IFNE	RUMBLE
+	s_queue_rumble	3,3,3
+	ENDC
 	trigse			$36
 	jmp			npfy
 ;------------------------------------------------------------------	
@@ -603,7 +622,9 @@ w12
 	
 	s_weapon_pos		#(playerW_x+100)>>weapon_scale,#playerW_y>>weapon_scale,#10
 	jsl	fire_newweapon
-	
+	IFNE	RUMBLE
+	s_queue_rumble	3,3,3
+	ENDC
 	trigse			$36	
 	jmp		npfy
 ;------------------------------------------------------------------
@@ -1214,7 +1235,7 @@ init_strats_l
 
 .ninseq
 
-	s_copy_var2alvar	W,x,al_weaponnum,weaponnumberpone
+;	s_copy_var2alvar	W,x,al_weaponnum,weaponnumberpone	; this causes the rumble protocol code/IRQ handler to crash in Australia for whatever reason
 	s_copy_var2var		B,shiptemp,curr_ship
 
 	
@@ -2406,6 +2427,30 @@ init_strats_l
 	jsl		playerstraight_strat	
 	jsl		changeviewmode_l
 .npst3
+	IFNE	RUMBLE
+;--------SAFETY CHECK FOR RUMBLE-------
+
+; if (((multitapmode || playertwoactivated || mousemode || nttmode || scopemode) == 1) && (donotrumble != 0)) {
+; donotrumble = 1;
+; } else {
+; donotrumble = 0;
+; }
+
+	lda	donotrumble
+	bne	.donevoltagecheck	; SUNLITNOTE fix so boot safety program result preserved
+	lda	multitapmode
+	ora	playertwoactivated
+	ora	mousemode
+	ora nttmode
+	ora scopemode
+	sta	donotrumble
+	beq	.safetorumble
+	bne	.donevoltagecheck
+
+.safetorumble
+	stz	donotrumble
+.donevoltagecheck
+	ENDC
 
 ;-----------NEW CROSSHAIR STUFF-----------
 
@@ -2653,6 +2698,9 @@ init_strats_l
 	s_weapon_rot		#0,#0
 	s_fire_weapon		x,QELASER,.nojpperiod
 	trigse			$34
+	IFNE	RUMBLE
+	s_queue_rumble	2,2,1
+	ENDC
 .nojpperiod
 
 ;-----------------				ntt pad hash
@@ -3908,6 +3956,11 @@ chkfastend
 	sec
 	rtl
 .knock2
+	IFNE	MSU1
+;	msufade ;(basically)
+	lda	#1
+	sta	msufadeflag
+	ENDC
 	plp
 	clc
 	rtl
@@ -5419,6 +5472,10 @@ removenuke_Istrat
 	s_set_var	B,specialdelay,#1
 	s_jmp		remove_Istrat
 
+	IFNE	RUMBLE
+bombrumbletab
+	db	$11,$11,$22,$33,$44,$55,$55,$55,$55,$55,$55,$55,$55,$55,$44,$33,$22,$11,$11,rmblend
+	ENDC
 
 nukeexp_Istrat
 	s_start_strat
@@ -5433,6 +5490,10 @@ nukeexp_Istrat
 	s_end_strat
 nukeexp_strat
 	s_start_strat
+
+	IFNE	RUMBLE
+	s_queue_rumble_table	bombrumbletab	; sequenced rumble effects have priority
+	ENDC
 
 	a16
 	lda	nogodgun

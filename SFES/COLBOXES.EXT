@@ -1,5 +1,7 @@
 	global	meteor_col
 	global	kbase2_col
+	global	kbase2_col2
+	global	kbase2_col3
 	global	bship_col
 	global	smolballz_col
 	global	corn_col

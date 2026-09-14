@@ -227,6 +227,28 @@ cutcreds
 	textpath	1000,2000,-150,3500,chuckborrisnorris,dsideslip,14,32
 	textpath	1000,2000,0150,3500,MRL314,dsideslip,14,32
 
+	IFNE	RUMBLE
+	mapwait	credwait
+	textpath	1000,2000,-600,3000,rumbleversion,dsideslip,14,32
+	textpath	1000,2000,-300,3000,programmed,dsideslip,14,32
+	textpath	1000,2000,0000,3000,by,dsideslip,14
+	textpath	1000,2000,0400,4400,kandowontu,dsideslip,14,100
+	textpath	1000,2000,0800,4400,randy,dsideslip,14,100
+	textpath	1000,2000,1200,4400,sunlit,dsideslip,14,100
+	ENDC
+
+	IFNE	SUPERFX3
+	mapwait	credwait
+	textpath	1000,2000,-300,2500,superfx3,dsideslip,14
+	textpath	1000,2000,0000,3000,designedby,dsideslip,14,32
+	textpath	1000,2000,0300,3000,randy,dsideslip,14,32
+
+	mapwait	credwait
+	textpath	1000,2000,-300,3200,fx3conversion,dsideslip,14
+	textpath	1000,2000,0000,3000,randy,dsideslip,14,32
+	textpath	1000,2000,0300,3000,sunlit,dsideslip,14,32
+	ENDC
+
 	IFNE	MSU1
 	mapwait	credwait
 	textpath	1000,2000,-200,3500,msu1programmer,dsideslip,14

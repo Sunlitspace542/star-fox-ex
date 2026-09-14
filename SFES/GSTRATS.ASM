@@ -1214,7 +1214,7 @@ init_strats_l
 
 .ninseq
 
-	s_copy_var2alvar	W,x,al_weaponnum,weaponnumberpone
+;	s_copy_var2alvar	W,x,al_weaponnum,weaponnumberpone	; this causes the rumble protocol code/IRQ handler to crash in Australia for whatever reason
 	s_copy_var2var		B,shiptemp,curr_ship
 
 	

@@ -282,6 +282,18 @@ planetseq_l
 
 	a8i16
 
+	IFNE	RUMBLE
+; clear any timed rumbles that did not complete before we got here
+	stz	rumble_cmd
+; clear any sequenced rumbles as well
+	stz	rumble_index
+
+; make sure NMI gets processed before interrupts are switched off
+; so we know the timed rumble is done
+.waitforrumbletoend
+	lda	rumble_time
+	bne	.waitforrumbletoend
+	ENDC
 	jsr	convertroute
 
 	stz	sdpck3
@@ -435,9 +447,6 @@ planetseq_l
 	pha
 	enable
 	bgm	map
-	IFNE	MSU1
-	msuplay_alt	map1,repeat
-	ENDC
 	pla
 	cmp	#14
 	beq	.blackholebgm
@@ -445,7 +454,15 @@ planetseq_l
 	bne	.normbgm
 .blackholebgm
 	startbgm	$f
+	;IFNE	MSU1
+	;msuplay_alt	blackholemap,repeat
+	;bra	.donenormbgm
+	;ENDC
 .normbgm
+	IFNE	MSU1
+	msuplay_alt	map2,repeat
+	ENDC
+.donenormbgm
 
 	lda	#-1
 .nxtfad	pha
@@ -1645,7 +1662,7 @@ planetseq_l
 	a8
 	lda	#level1_1>>16
 	sta	mapbank
-	a16
+	ai16
 	jmp	.skipit
 .1rr
 	lda	#level2_1&$7fff
@@ -1653,7 +1670,7 @@ planetseq_l
 	a8
 	lda	#level2_1>>16
 	sta	mapbank
-	a16
+	ai16
 	jmp	.skipit
 .2rr
 	lda	#level3_1&$7fff
@@ -1661,7 +1678,7 @@ planetseq_l
 	a8
 	lda	#level3_1>>16
 	sta	mapbank
-	a16
+	ai16
 	jmp	.skipit
 .3rr
 	lda	#level4_1&$7fff
@@ -1669,7 +1686,7 @@ planetseq_l
 	a8
 	lda	#level4_1>>16
 	sta	mapbank
-	a16
+	ai16
 	jmp	.skipit
 .4rr
 	lda	#level_blackhole&$7fff
@@ -1677,7 +1694,7 @@ planetseq_l
 	a8
 	lda	#level_blackhole>>16
 	sta	mapbank
-	a16
+	ai16
 	jmp	.skipit
 .5rr
 	lda	#level_special&$7fff
@@ -1685,7 +1702,7 @@ planetseq_l
 	a8
 	lda	#level_special>>16
 	sta	mapbank
-	a16
+	ai16
 	jmp	.skipit	
 .skipit
 	stz	stopcounting

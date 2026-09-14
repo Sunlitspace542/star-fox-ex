@@ -1,8 +1,15 @@
 
 	incpublics	irq.ext
 
-
-
+	IFNE	RUMBLE
+; Clocks JOYSER0 16 times for rumble
+clkjoyser016x_l
+; 8 cycles to long jump here
+	REPT	16
+	bit	JOYSER0 ;  4 cycles/instruction
+	ENDR
+	rtl ; 6 cyles to long return to nmihan
+	ENDC
 
 NOBGTRANS	=	0
 
@@ -1315,6 +1322,9 @@ irqbit3	lda	noirqbit3
 	cmp	#((2)*255)/100		;2% chance of a flash
 	bcs	.skipt
 	dmacgram	0,5*16,thundercol,32
+	IFNE	RUMBLE
+	queue_rumble	4,4,3
+	ENDC
 .skipt
 	lda	colortrip
 	bne	.nopal
@@ -1631,18 +1641,20 @@ getcont0	a8
 	lda	#0
 	xba
 	tax
+	lda	joy1l
+	and	#$F0	; mask out controller ID bits (e.g. NTT data pad)
 	jmp	(.conttab,x)
 .conttab	dw	typea&WM
 	dw	typeb&WM
 	dw	typec&WM
 	dw	typed&WM
-typea	lda	joy1l
+typea	;lda	joy1l
 	sta	contl0
 	lda	joy1h
 	sta	cont0
 	rts
 
-typeb	lda	joy1l
+typeb	;lda	joy1l
 	sta	contl0
 	lda	joy1h
 	and	#%11000000
@@ -1662,7 +1674,7 @@ typeb	lda	joy1l
 	sta	cont0
 	rts
 
-typec	lda	joy1l
+typec	;lda	joy1l
 	sta	contl0
 	lda	joy1h
 	and	#%00001100
@@ -1680,7 +1692,7 @@ typec	lda	joy1l
 	sta	cont0
 	rts
 
-typed	lda	joy1l
+typed	;lda	joy1l
 	sta	contl0
 	lda	joy1h
 	and	#%00001100

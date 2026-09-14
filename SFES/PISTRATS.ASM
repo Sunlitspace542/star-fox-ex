@@ -38,6 +38,10 @@
 
 	incpublics	pistrats.ext
 
+	IFNE	RUMBLE
+partyboostrumbletab2
+	db	$11,$11,$22,$22,$33,$33,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,rmblend
+	ENDC
 ;*****************************************************************************
 playeropening_Istrat
 	s_start_strat
@@ -95,6 +99,9 @@ playerpening_strat
 playeropeningboost_init
 	s_set_strat		x,playeropeningboost_strat
 	s_set_vartobeobj	boostobj,x
+	IFNE	RUMBLE
+	s_queue_rumble_table		partyboostrumbletab2
+	ENDC
 	boost_sprite
 	trigse			$32
 	s_and_var		B,pshipflags3,#~psf3_enginesnd
@@ -164,6 +171,9 @@ playerpening2_strat
 playeropeningboost2_init
 	s_set_strat		x,playeropeningboost2_strat
 	s_set_vartobeobj	boostobj,x
+	IFNE	RUMBLE
+	s_queue_rumble_table		partyboostrumbletab2
+	ENDC
 	boost_sprite
 	trigse			$32
 	s_and_var		B,pshipflags3,#~psf3_enginesnd
@@ -455,6 +465,9 @@ playerWarpOut_Istrat
 
 	s_make_obj		#nullshape,.badobj
 	s_set_strat		y,hyperspaceout_Istrat
+	IFNE	RUMBLE
+	s_queue_rumble_table	hyperspacerumbletab2
+	ENDC
 .badobj
 	s_set_speed		x,#120
 	s_set_var		B,player_tospeed,#120
@@ -503,6 +516,9 @@ playerWarpOut_strat
 	plx
 
 	startbgm		4
+	IFNE	RUMBLE
+	s_end_rumble_table
+	ENDC
 	s_jmp			playerinspace_strat
 
 ;*****************************************************************************

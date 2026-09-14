@@ -5829,8 +5829,21 @@ test_istrat
 	lda	targety
 	sec
 	sbc	targetx
-	cmp	#700
+	cmp	#550
 	bpl	.die
+	cmp	#-550
+	bmi	.die
+	a8
+	s_copy_alvar2var	W,y,targetx,al_worldx
+	s_copy_alvar2var	W,x,targety,al_worldx
+	a16
+	lda	targety
+	sec
+	sbc	targetx
+	cmp	#550
+	bpl	.die
+	cmp	#-550
+	bmi	.die
 	a8
 	s_set_speed		x,#127
 	s_gen_3dvecs		x,al_roty,al_rotx,al_speed,1
@@ -5853,8 +5866,22 @@ test2_istrat
 	lda	targety
 	sec
 	sbc	targetx
-	cmp	#700
+	cmp	#550
+	cmp	#550
 	bpl	.die
+	cmp	#-550
+	bmi	.die
+	a8
+	s_copy_alvar2var	W,y,targetx,al_worldx
+	s_copy_alvar2var	W,x,targety,al_worldx
+	a16
+	lda	targety
+	sec
+	sbc	targetx
+	cmp	#550
+	bpl	.die
+	cmp	#-550
+	bmi	.die
 	a8
 	s_set_speed		x,#127
 	s_gen_3dvecs		x,al_roty,al_rotx,al_speed,1
@@ -5877,8 +5904,21 @@ test3_istrat
 	lda	targety
 	sec
 	sbc	targetx
-	cmp	#700
+	cmp	#550
 	bpl	.die
+	cmp	#-550
+	bmi	.die
+	a8
+	s_copy_alvar2var	W,y,targetx,al_worldx
+	s_copy_alvar2var	W,x,targety,al_worldx
+	a16
+	lda	targety
+	sec
+	sbc	targetx
+	cmp	#550
+	bpl	.die
+	cmp	#-550
+	bmi	.die
 	a8
 	s_set_speed		x,#127
 	s_gen_3dvecs		x,al_roty,al_rotx,al_speed,1
@@ -5901,8 +5941,21 @@ test4_istrat
 	lda	targety
 	sec
 	sbc	targetx
-	cmp	#700
+	cmp	#550
 	bpl	.die
+	cmp	#-550
+	bmi	.die
+	a8
+	s_copy_alvar2var	W,y,targetx,al_worldx
+	s_copy_alvar2var	W,x,targety,al_worldx
+	a16
+	lda	targety
+	sec
+	sbc	targetx
+	cmp	#550
+	bpl	.die
+	cmp	#-550
+	bmi	.die
 	a8
 	s_set_speed		x,#127
 	s_gen_3dvecs		x,al_roty,al_rotx,al_speed,1
@@ -5925,8 +5978,21 @@ test5_istrat
 	lda	targety
 	sec
 	sbc	targetx
-	cmp	#700
+	cmp	#550
 	bpl	.die
+	cmp	#-550
+	bmi	.die
+	a8
+	s_copy_alvar2var	W,y,targetx,al_worldx
+	s_copy_alvar2var	W,x,targety,al_worldx
+	a16
+	lda	targety
+	sec
+	sbc	targetx
+	cmp	#550
+	bpl	.die
+	cmp	#-550
+	bmi	.die
 	a8
 	s_set_speed		x,#127
 	s_gen_3dvecs		x,al_roty,al_rotx,al_speed,1

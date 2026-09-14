@@ -571,6 +571,10 @@ lastb4_Istrat	; second door
 
 	s_end_strat
 ;*****************************************************************************
+	IFNE	RUMBLE
+partyboostrumbletab
+	db	$11,$11,$22,$22,$33,$33,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,rmblend
+	ENDC
 shipintro_Istrat
 	s_start_strat
 	s_set_strat	x,shipintro_strat
@@ -596,6 +600,9 @@ shipintro_strat
 	s_jmp_alvarNE		B,x,al_sbyte1,#2,.nspr
 	s_set_vartobeobj	boostobj,x
 	boost_sprite
+	IFNE	RUMBLE
+	s_queue_rumble_table		partyboostrumbletab
+	ENDC
 	trigse			$32
 .nspr
 
@@ -631,6 +638,9 @@ shipintro2_strat
 	s_jmp_alvarNE		B,x,al_sbyte1,#2,.nspr
 	s_set_vartobeobj	boostobj,x
 	boost_sprite
+	IFNE	RUMBLE
+	s_queue_rumble_table		partyboostrumbletab
+	ENDC
 	trigse			$32
 .nspr
 
@@ -790,6 +800,10 @@ playerdownintro_cont
 	s_add_playerZ	x
 	s_end_strat
 
+	IFNE	RUMBLE
+shiprumbletab
+	db	$22,$22,$33,$33,$33,$33,$22,$22,rmblend
+	ENDC
 
 ;***********************************************************************************
 playerdown2intro_Istrat
@@ -798,11 +812,16 @@ playerdown2intro_Istrat
 	s_set_alsflag	x,colldisable
 	s_set_alvar	B,x,al_rotx,#deg22
 	s_setnoremove_behind	x
+	IFNE	RUMBLE
+	s_queue_rumble_table	shiprumbletab
+	ENDC
 	s_set_strat	x,playerdown2intro_strat
 	s_copy_alvar2alvar	B,x,al_sbyte3,x,al_roty
 	s_copy_alvar2alvar	B,x,al_sbyte4,x,al_rotx
-
-	s_set_alvar		B,x,al_sbyte1,#30      
+	IFNE	RUMBLE
+	s_queue_rumble_table	shiprumbletab
+	ENDC
+	s_set_alvar		B,x,al_sbyte1,#30
 
 	s_set_speed	x,#120
 
@@ -844,7 +863,9 @@ playerdown3intro_Istrat
 	s_set_strat	x,playerdown3intro_strat
 	s_copy_alvar2alvar	B,x,al_sbyte3,x,al_roty
 	s_copy_alvar2alvar	B,x,al_sbyte4,x,al_rotx
-
+	IFNE	RUMBLE
+	s_queue_rumble_table	shiprumbletab
+	ENDC
 	s_set_alvar		B,x,al_sbyte1,#30      
 
 	s_set_speed	x,#120
@@ -908,6 +929,12 @@ playerfireintro_strat
 	s_add_playerZ		x
 	s_end_strat
 
+	IFNE	RUMBLE
+idle1rumbletab
+	db	$44,$00,$44,$00,$00,$00,$00,$00,rmblloop
+idle2rumbletab
+	db	$11,$00,$11,$00,$00,$00,$00,$00,rmblloop
+	ENDC
 
 ;***********************************************************************************
 boss7intro_Istrat
@@ -919,7 +946,9 @@ boss7intro_Istrat
 
 	s_set_vecs	x,#0,#5,#15
 	s_nodepthcue	x
-
+	IFNE	RUMBLE
+	s_queue_rumble_table	idle1rumbletab
+	ENDC
 	s_make_childobj	#deboss_0,#1,boss7intropart_Istrat,enemy1	      
 	s_nodepthcue	y
 	s_make_childobj	#deboss_2,#2,boss7intropart_Istrat,enemy1	      
@@ -1009,6 +1038,9 @@ zaco2intro_Istrat
 	s_set_strat	x,zaco2intro_strat
 	s_set_alsflag	x,colldisable
 	s_set_speed	x,#45
+	IFNE	RUMBLE
+	s_queue_rumble_table	idle2rumbletab
+	ENDC
 	s_set_alvar	B,x,al_rotx,#deg90
 	s_set_alvar	B,x,al_sbyte1,#30
 	s_set_alvar	B,x,al_sbyte2,#6	; time until end after near player.
@@ -1064,6 +1096,9 @@ zaco2intro_strat
 	s_set_objtobeplayer	y
 	s_jmp_objinfront	x,y,.nexit
 	s_decbne_alvarK		B,x,al_sbyte2,.nexit
+	IFNE	RUMBLE
+	s_end_rumble_table
+	ENDC
 	s_set_var		B,exitintro,#1
 .nexit
 

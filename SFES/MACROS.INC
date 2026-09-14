@@ -1,4 +1,97 @@
 ;------------------------------------------------------------------------
+writedefaults	MACRO
+	lda	#2
+	sta	firerate	
+	sta	nocrosshairpls
+
+	lda	#1
+	sta	superfx2
+	sta	numplayers
+	sta	enemy_firing
+	sta	rapidfire
+
+	lda	#0
+	sta	newcamera ; sorry kando it sucks -sl
+	sta	doboostmeter ; this too -sl
+	sta	nobgmode
+	sta	newgameplus
+	sta	godmode
+	sta	randomfire
+	sta	scored
+	sta	pepperskip
+	sta	endurance
+	sta	levelfeatures
+	sta	rainbowlaser
+	sta	bigheadmode
+	sta.l	m_bigheadmode
+	sta.l	m_biggerheadmode
+	sta	playertwocpuactivated
+	sta	skipscramble
+	sta.l	m_playertwoactivated
+	sta	darkmode
+	sta	mistmode
+	sta	palnumber
+	sta	secretgodmode
+	sta	strat_valid
+	sta	pweptemp
+	sta	bgmspeed
+	sta	quickstart
+	sta	curr_ship
+	sta	showcolbox
+	sta	mosaicon
+	sta	nanmode
+	sta	wiremode
+	sta	shpmode
+	sta	fpscounteron
+	sta	mousemode
+	sta	mousemodetemp
+	sta	scopemode
+	sta	nttmode
+	sta	bouncedeath
+	sta	noborders
+	sta.l	m_wobblemode
+	sta	classichp
+	sta	barrelroll
+	sta	noenginemode
+	sta	hilitecolor
+	sta	bgmsfx
+	sta	dotsstars
+	sta	craymode
+	sta	randomsound
+	sta	randombgm
+	sta	kandomode
+	sta	randompos
+	sta	viewshit
+	sta	cursedbgm
+	sta	cursedopen
+	sta	kandoallow
+	sta	nohud
+	sta	moredots
+	sta	colorwarp
+	sta	lsdmode
+	sta	colortrip
+	sta	randompalette
+	sta	allatonce
+	sta	randomobjpal
+	sta	colortripobj
+	sta	gridlines
+	sta	multitapmode
+	sta	fpsspeed
+	sta	currxhair
+	sta	currxhair2
+	sta	currxhair3
+	sta	currxhair4
+	sta	currxhair5
+	sta.l	m_wabblemode
+	sta.l	m_celmode
+	sta	curr_ship2
+	sta	curr_ship3
+	sta	curr_ship4
+	sta	curr_ship5
+	sta	ntscpalswap
+	sta	noobjmode
+	ENDM
+;------------------------------------------------------------------------
 printerror	macro	[errormsg]
 	printf	"%q%f%q (%l) %01%31Error: {errormsg}%00%n"
 	error+
@@ -6130,22 +6223,22 @@ databank	MACRO
 	ENDM
 
 ;-------------------------------------------------------------------
-sdebug	MACRO
-	IFNE	debuginfo2
-	a8
-	stz	gameover
-	ENDC
-	ENDM
-edebug	MACRO
-	IFNE	debuginfo2
-	a8
-	lda	gameover
-	cmp	#0
-	beq	.ok\@
-	blink
-.ok\@
-	ENDC
-	ENDM
+;sdebug	MACRO
+;	IFNE	debuginfo2
+;	a8
+;	stz	gameover
+;	ENDC
+;	ENDM
+;edebug	MACRO
+;	IFNE	debuginfo2
+;	a8
+;	lda	gameover
+;	cmp	#0
+;	beq	.ok\@
+;	blink
+;.ok\@
+;	ENDC
+;	ENDM
 
 ;-------------------------------------------------------------------
 incsnd	MACRO			;INCBINS A FILE AND 'SPLITS' IT!

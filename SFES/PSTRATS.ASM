@@ -3473,10 +3473,10 @@ playermove_srou
 
 	s_jmp_varAND	B,pshipflags2,#psf2_braking,.nosfxbrake
 	trigse			$33
+.nosfxbrake
 	IFNE	RUMBLE
 	s_queue_rumble	1,1,5
 	ENDC
-.nosfxbrake
 	a8
 	lda	doboostmeter
 	beq	.nobm

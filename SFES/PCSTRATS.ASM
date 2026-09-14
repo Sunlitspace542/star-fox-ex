@@ -902,6 +902,9 @@ playerwarp_strat
 	s_set_strat		y,hyperspace_Istrat
 .bad	s_set_var		W,psvar_word1,#60
 	startbgm		8
+	IFNE	MSU1
+	s_msuplay	enterhyperspace1,norepeat
+	ENDC
 	IFNE	RUMBLE
 	s_queue_rumble_table	hyperspacerumbletab
 	ENDC
@@ -924,6 +927,9 @@ playerwarp_strat
 ;--------------------------------------------------------
 playerwarp1_init
 	startbgm 		$e
+	IFNE	MSU1
+	s_msuplay	enterhyperspace2,norepeat
+	ENDC
 
 	jsl			dupplayer_l
 	s_set_alvar		B,y,al_sbyte2,#19

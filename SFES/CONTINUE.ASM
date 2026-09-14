@@ -185,6 +185,10 @@ donesun
 	jmp	cont
 regbgm
 	bgm2	continue					;blah blah why are you reading my comments
+	bgm	continue
+	IFNE	MSU1
+	msuplay	continue,repeat
+	ENDC
 cont
 	lda	stopcounting
 	cmp	#11

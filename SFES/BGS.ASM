@@ -315,7 +315,7 @@ bg_1_3i_1	init_bg	mode2			;space armada start -warpout from asteroid-
 	bg2Xscroll  125
 	bgm	13
 	IFNE	MSU1
-	msuplay	level1_3,repeat
+	msuplay	exithyperspace,repeat	; PISTRATS.ASM routine playerwarpout has the level1_3 music trigger
 	ENDC
 	space	night
 
@@ -332,7 +332,7 @@ bg_1_3i2p_1	init_bg	mode2			;space armada part 1
 	bg2Xscroll  125
 	bgm2	13b
 	IFNE	MSU1
-	msuplay	level1_3,repeat
+	msubgmrestart	level1_3,repeat
 	ENDC
 	space	night
 	
@@ -348,6 +348,9 @@ bg_1_3a_1	init_bg	mode2			;space armada part 2
 	bg2Yscroll	60
 	bg2Xscroll  125
 	bgmrestart	13b
+	IFNE	MSU1
+	msubgmrestart	level1_3,repeat
+	ENDC
 	space	night
 
 bg_1_3b_1	init_bg	mode1			;space armada tunnel
@@ -360,6 +363,9 @@ bg_1_3b_1	init_bg	mode1			;space armada tunnel
 	hofmode	tunnel3
 	shadowheight 0
 	bgmrestart	13b
+	IFNE	MSU1
+	msubgmrestart	level1_3,repeat
+	ENDC
 	tunnel	night
 
 bg_1_3c_1	init_bg	mode2			;space armada part 3
@@ -371,6 +377,9 @@ bg_1_3c_1	init_bg	mode2			;space armada part 3
 	info	von,hon,zon,space
 	pstrat	playerinspace,a,abc
 	bgmrestart	13b
+	IFNE	MSU1
+	msubgmrestart	level1_3,repeat
+	ENDC
 	hofmode	rotate
 	bg2Yscroll	60
 	bg2Xscroll  125

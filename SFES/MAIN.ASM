@@ -503,6 +503,9 @@ gameover_l
 	a8i16
 
 	bgm	gameover
+	IFNE	MSU1
+	msuplay	gameover,norepeat
+	ENDC
 	stz	defaulttrain
 	lda	#0
 	sta.l	contexit

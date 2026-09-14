@@ -474,6 +474,9 @@ bossBrobchg_Istrat
 ;	startbgm		$f1
 ;.skip
 ;	trigse		$81
+	IFNE	MSU1
+	msufade
+	ENDC
 bossBrobchg_strat	
 	s_start_strat
 
@@ -1148,6 +1151,9 @@ bossBrobsepexp_Istrat
 	s_set_alsflag	x,colldisable
 	trigse		$81
 	startbgm		$f0
+	IFNE	MSU1
+	msufade
+	ENDC
 
 bossBrobsepexp_strat
 	s_start_strat

@@ -775,6 +775,9 @@ blackholeexit_Istrat
 	s_set_alvar		B,x,al_sbyte3,#10
 	s_set_strat		x,.strat
 	startbgm	$f5
+	IFNE	MSU1
+	s_msuplay	blackholeexit,norepeat
+	ENDC
 	s_and_var	B,pshipflags3,#~psf3_enginesnd
 .strat
 	s_start_strat
@@ -992,6 +995,9 @@ theend_check_istrat
 	bne	.skip
 	s_set_strat	x,.wait
 	startbgm	6
+	IFNE	MSU1
+	s_msuplay	clearootd,repeat
+	ENDC
 .skip	s_set_var	B,numendok,#0
 	s_add_playerz	x
 	s_keeprelto_player	x

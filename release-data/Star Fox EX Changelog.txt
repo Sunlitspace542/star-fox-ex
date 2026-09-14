@@ -47,13 +47,6 @@ Additions:
 -Added redone Monikruiser player ship shape by Monika
 -Mario shows up instead of Andross on the game over screen if you are playing map 2
 
-MSU-1 version changes (not released):
--Fully functional MSU-1 BGM support for the Star Fox (EX) Campaign!!
-	(Apply the included add-on patch to enable MSU-1 audio.)
--MSU-1 credits added to credits sequence for the MSU-1 version of the game.
--Sound Test BGM player converted to MSU-1 track test when using the MSU-1 version of the game.
-  (same applies to the pause screen BGM selector)
-
 ---------
 
 1.11.02b (yet another hotfix):

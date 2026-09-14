@@ -2488,14 +2488,14 @@ bgmlisttext
 	dw	slotmachinetext&WM
 	dw	blackholebgmtext&WM
 	dw	outofthisdimensiontext&WM
+	dw	courseclearootdtext&WM
+	dw	gameovertext&WM
+	dw	continuetext&WM
+	dw	blackholebgmtext&WM
+	dw	blackholebgmtext&WM
 	dw	enteringdangerousterritorytext&WM
 	dw	mainthemetext&WM
 	dw	secretactivatedtext&WM
-	dw	msu1_notitletext&WM
-	dw	msu1_notitletext&WM
-	dw	msu1_notitletext&WM
-	dw	msu1_notitletext&WM
-	dw	msu1_notitletext&WM
 	dw	msu1_notitletext&WM
 	dw	msu1_notitletext&WM
 	dw	msu1_notitletext&WM

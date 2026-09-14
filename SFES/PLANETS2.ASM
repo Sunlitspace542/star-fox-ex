@@ -582,7 +582,7 @@ planetseq2_l
 	stz	lighty+1
 	ENDC
 
-	IFEQ 	0
+	IFEQ 	1
 	a8
 	lda	#1
 	sta	map3
@@ -766,6 +766,7 @@ planetseq2_l
 	jml	planetseq_l
 
 .nosecondplanet4
+	IFNE	0	;disabled map 3
 	testjoypad	TLEFT
 	beq	.nosecondplanet55
 	a8
@@ -778,6 +779,7 @@ planetseq2_l
 	sta	whichroute
 	jsl	initialise2_l
 	jml	planetseq3_l
+	ENDC
 
 .nosecondplanet55
 	TESTJOYPAD	START		; cheat

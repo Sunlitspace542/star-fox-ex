@@ -23,6 +23,7 @@ Fixes:
 -Disabled 60fps being blocked on certain hardware types, hardware detection is just too difficult to keep up with now
 -Restored warp out BGM in map 2 stage 1
 -Fixed zoom for several custom ships
+-Fixed unused arrow sfx interfering with music
 
 Changes:
 -Separated Super FX programming credits into their own section in the credits sequence

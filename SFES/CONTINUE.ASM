@@ -4701,6 +4701,7 @@ noupp2aapo
 	lda	superfx2
 	lbeq	foxy_continue_l
 
+	IFNE	0	;disable blocking of 60fps based on machine type
 	; disables 60fps for platforms that can't handle it
 	lda	machinetype ; Can't let you have 60FPS on real hardware and certain emulators, Star Fox!
 	cmp #mister
@@ -4711,6 +4712,7 @@ noupp2aapo
 	lbeq	noright4u4
 	cmp	#sd2snes ; sd2snes/fxpak is basically hardware too
 	lbeq	noright4u4
+	ENDC
 
 	lda	ntscpalswap
 	beq	.norm1x
@@ -4778,6 +4780,7 @@ noright4u4
 	lda	superfx2
 	lbeq	foxy_continue_l
 
+	IFNE	0	;disable blocking of 60fps based on machine type
 	; disables 60fps for platforms that can't handle it (i think)
 	lda	machinetype ; Can't let you have 60FPS on real hardware and certain emulators, Star Fox!
 	cmp #mister
@@ -4788,6 +4791,7 @@ noright4u4
 	lbeq	noleft4u4
 	cmp	#sd2snes ; sd2snes/fxpak is basically hardware too
 	lbeq	noleft4u4
+	ENDC
 
 
 	lda	ntscpalswap

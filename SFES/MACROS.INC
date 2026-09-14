@@ -9,10 +9,10 @@ writedefaults	MACRO
 	sta	numplayers
 	sta	enemy_firing
 	sta	rapidfire
+	sta	doboostmeter
 
 	lda	#0
 	sta	newcamera ; sorry kando it sucks -sl
-	sta	doboostmeter ; this too -sl
 	sta	nobgmode
 	sta	newgameplus
 	sta	godmode

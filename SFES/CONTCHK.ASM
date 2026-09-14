@@ -74,7 +74,13 @@ not_connected_port1
 ; Now check port 2 lower nibble
 	lda	y1
 	and	#%00001111
+;	IFNE	nttpad
+	cmp	#4	; allow ntt data pad through
+	beq	.pass
+	and	#%00001111	; check again because cmp clobbered flags
+;	ENDC
 	bne	chk_fail
+.pass
 
 ; Check for multitap on port 2
 	jsr	Check_Multi5_cont2

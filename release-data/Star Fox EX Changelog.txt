@@ -20,6 +20,9 @@ Fixes:
 -Skip rumble if any other peripherals are in use
 -Fix some face2 bugs with sfx priority and suchlike
 -Fixed crosshair duplication in Great Commander I
+-Disabled 60fps being blocked on certain hardware types, hardware detection is just too difficult to keep up with now
+-Restored warp out BGM in map 2 stage 1
+-Fixed zoom for several custom ships
 
 Changes:
 -Separated Super FX programming credits into their own section in the credits sequence
@@ -38,6 +41,7 @@ Changes:
 -Removed some Super FX code related to computing the distance required for LOD models as those are not used in this game
 
 Additions:
+-Game converted to Super FX 3!!
 -Added rumble support! Rumble is only available when no other accessories are enabled. Please do not use a multitap on hardware.
 -Added redone Monikruiser player ship shape by Monika
 -Mario shows up instead of Andross on the game over screen if you are playing map 2

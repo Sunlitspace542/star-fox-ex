@@ -50,14 +50,14 @@ alcon	=	1
 	zalc	tpy1,1
 	zalc	tpz,1
 	zalc	tpz1,1
-	zalc	tracept,2
+;	zalc	tracept,2	; unused zp
 	zalc	printpt,2
 	zalc	drawmap,2
 	zalc	showmap,2
-	zalc	drawsprptr,2
+;	zalc	drawsprptr,2	; unused zp
 	zalc	vmap1,2
 	zalc	vmap2,2
-	zalc	vcmap,2
+;	zalc	vcmap,2	; unused zp
 	zalc	textpt,3
 	zalc	tempaddrl,3
 
@@ -129,9 +129,9 @@ xlen	=	25*1024+350
 	alc	helpshots,1
 
 	alc	doingend,1
-	alc	spranimcnt,2
+;	alc	spranimcnt,2	; unused work ram
 	alc	crosshairon,2
-	alc	shieldon,1
+;	alc	shieldon,1	; unused work ram
 	alc	specwepcntone,2
 	alc	speccnttwo,2
 	alc	specwepcnttootemp,2
@@ -139,7 +139,7 @@ xlen	=	25*1024+350
 	alc	mespos,2
 	alc	mesendpos,2
 	alc	scramble,1
-	alc	gameover,1
+;	alc	gameover,1	; unused work ram
 	alc	stageclear,1
 
 	alc	stagecnt,2
@@ -193,11 +193,11 @@ xlen	=	25*1024+350
 	zalc	z1,2
 	zalc	shiftz,1
 	zalc	numnoclip,1
-	zalc	noclip,1
-	zalc	noclipx,1
-	zalc	linedrawvec,2
-	zalc	pauseflag,1
-	zalc	strptr,2
+;	zalc	noclip,1
+;	zalc	noclipx,1
+;	zalc	linedrawvec,2
+;	zalc	pauseflag,1
+;	zalc	strptr,2
 
 	zalc	rotx,1
 	zalc	roty,1
@@ -643,8 +643,8 @@ ptwosf2_playerHP0		equ	128
 	alc	bunny,1
 	alc	cock,1
 	alc	frog,1
-	alc	pepper,1
-	alc	andorf,1
+;	alc	pepper,1
+;	alc	andorf,1
 	alc	hdmacirclebuf1,2
 	alc	hdmacirclebuf2,2
 	alc	whichcircle,1
@@ -652,7 +652,7 @@ ptwosf2_playerHP0		equ	128
 	alc	yval,2
 	alc	gamevwpos,1
 	alc	planetdead,2
-	alc	coldataval,1
+;	alc	coldataval,1
 	alc	fadedir,1
 	alc	fade,1
 	alc	hdmabg2hofs1,2
@@ -662,7 +662,7 @@ ptwosf2_playerHP0		equ	128
 	alc	transbmp1,1
 	alc	bossmode,1
 	alc	gamemode,2
-	alc	depthnum,1
+;	alc	depthnum,1
 	alc	outvx,2
 	alc	outvy,2
 	alc	outvz,2
@@ -961,6 +961,13 @@ analoguent	equ	11	; Analogue NT
 	alc	recheck,1
 	alc	resetval,2
 
+	IFNE	RUMBLE
+; zeropage alcs for rumble
+	zalc	rumble_cmd,1	; command byte
+	zalc	rumble_time,1	; time (in frames, 0-255) to rumble
+	zalc	rumble_index,1	; index into rumble_table for sequenced rumbles (0-255)
+	zalc	donotrumble,1	; voltage safety check byte
+	ENDC
 
 ;-------------
 	
@@ -971,6 +978,9 @@ analoguent	equ	11	; Analogue NT
 	alc	palnum,2
 	alc	palcnt,2
 	alc	fadepal,1
+	IFNE	RUMBLE
+	alc	rumble_table,rmblseqlen	; cache for sequenced rumble commands (unfortunately it must be done this way)
+	ENDC
 
 ; stratrou
 
@@ -986,7 +996,7 @@ analoguent	equ	11	; Analogue NT
 	alc	levelfeatures,2
 	alc	enemy_firing,2
 	alc	currshape,2
-	alc	keeppstrat,1
+;	alc	keeppstrat,1
 
 ;	xalc	xhdma_tables,xhdma_max			;5000 bytes saved
 

@@ -1568,8 +1568,8 @@ do_arrows	a16
 	bne	.ok
 	lda	tpa
 	beq	.nos
-	a8
-	trigse	$8a
+;	a8
+;	trigse	$8a
 	a16
 .nos	lda	#0
 .ok	sta	sprframe

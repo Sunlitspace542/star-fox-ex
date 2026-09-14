@@ -745,6 +745,17 @@ msg_msu1programmer
 	mariomsg	<MSU-1 PROGRAMMER>
 msg_msu1arrangedost
 	mariomsg	<MSU-1 SOUNDTRACK>
+msg_randy
+	mariomsg	<RANDAL LINDEN>
+msg_superfx3
+	mariomsg	<SUPER FX 3>
+msg_designedby
+	mariomsg	<DESIGNED BY>
+msg_fx3conversion
+	mariomsg	<SUPER FX 3 CONVERSION>
+msg_rumbleversion
+	mariomsg	<RUMBLE SUPPORT>
+
 ;-----------------Bosses----------
 msg_starwolf
 	mariomsg	<STAR WOLF>

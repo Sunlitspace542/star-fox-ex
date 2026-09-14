@@ -2298,6 +2298,9 @@ blackhole_Istrat
 
 	s_jmp_alvarNE		B,x,al_sbyte1,#70,.nbgm
 	startbgm		$f4
+	IFNE	MSU1
+	s_msuplay	blackholewarp,norepeat
+	ENDC
 	s_and_var		B,pshipflags3,#~psf3_enginesnd
 .nbgm
 
@@ -2330,7 +2333,11 @@ blackhole_Istrat
 	s_jmp_alvarMORE		B,x,al_sbyte1,#30,.slow
 	s_jmp_ifdelay		2,.snd
 .slow	s_jmp_notdelay		3,.nsnd
-.snd	trigse			$2c
+.snd
+	IFNE	RUMBLE
+	s_queue_rumble	5,5,15
+	ENDC
+	trigse			$2c
 .nsnd
 	s_jmp_notdelay		2,.badobj
 	s_make_obj		#blackhole,.badobj
@@ -2390,6 +2397,9 @@ comet_Istrat
 
 	s_jmp_alvarNE		B,x,al_sbyte1,#70,.nbgm
 	startbgm		$f4
+	IFNE	MSU1
+	s_msuplay	blackholewarp,norepeat
+	ENDC
 	s_and_var		B,pshipflags3,#~psf3_enginesnd
 .nbgm
 

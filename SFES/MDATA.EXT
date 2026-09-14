@@ -22,6 +22,7 @@
 	global	msg_gilesgoddard,msg_patch93,msg_with_code_from
 	global	msg_HayaoYokogawa,msg_developed,msg_PHONYMIKE,msg_mrl314
 	global	msg_team1,msg_team2,msg_team3
+	global	msg_randy,msg_superfx3,msg_designedby,msg_fx3conversion,msg_rumbleversion
 	global	msg_0
 	global	msg_1
 	global	msg_2

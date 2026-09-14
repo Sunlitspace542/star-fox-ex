@@ -109,6 +109,9 @@ friendwait	=	medpspeed*30
 	setvar.n	clb2,1
 
 	start_65816
+	IFNE	RUMBLE
+	s_end_rumble_table	; kill hyperjump rumble
+	ENDC
 	stz	sectorkfade
 	lda	mousemodetemp
 	sta	mousemode

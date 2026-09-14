@@ -48,6 +48,11 @@ filelist	=	0
 
 	include	macros.inc
 
+; Rumble controller macros
+	IFNE	RUMBLE
+	include	RMBLMACS.INC
+	ENDC
+
 totaltime	=	0
 	gettime	starttime
 

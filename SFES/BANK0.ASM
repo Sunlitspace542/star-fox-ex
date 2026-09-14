@@ -111,8 +111,9 @@ abort_vn
 	db	6			; Expansion RAM Size (5 = 32kbyte, 6 = 64kbyte)
 	db	0			; Special Version
 	IFNE	RUMBLE
-	db	$'R'				; Cartridge Type (Sub-number)
+	db	'R'				; Cartridge Type (Sub-number)
 							; (52) Rumble controller support
+	ELSEIF
 	db	$0					; (0) None
 	ENDC
 
@@ -142,7 +143,7 @@ abort_vn
 					; (18) Super FX 3 + Battery (presumably?)
 					; (1A) Battery + Super FX 1 (Stunt Race FX)
 	db	$0b			; ROM Size (0A = 8mbit, 0B = 16mbit)
-	db	$06			; RAM Size (if 0, use exp RAM size above)
+	db	$00			; RAM Size (if 0, use exp RAM size above)
 	db	$01		; Destination Code (from below)
 	db	$33			; Fixed Value
 	db	$00			; Mask ROM Version

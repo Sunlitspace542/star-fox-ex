@@ -1,5 +1,5 @@
 1.11.03 - The Final Update:
-These past 6 years were fun while they lasted. I've decided to finish up one last update so that the features I wanted are implemented. and I can finally be at peace.
+These past 6 years were fun while they lasted. I've decided to finish up one last update so that the features I wanted are implemented, and I can finally be at peace.
 See you next game! -Sunlit
 Fixes:
 -Fixed clearing a stage on route 6 sending you to route 5 on the map

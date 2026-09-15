@@ -1411,7 +1411,7 @@ bg_6_2_1	init_bg	mode2sp		;Fortuna - Pebble Beach
 	set_bg
 	set_zdepthtable	normal
 	pstrat	playeronwater,b,ab
-	info	hon,von,zon,nodots
+	info	hon,von,zon,snow
 	hofmode	rotate
 	waterfade
 ;	hofmode	rotate

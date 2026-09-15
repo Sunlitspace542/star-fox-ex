@@ -132,7 +132,7 @@ abort_vn
 	ENDC
 
 	IFNE	SUPERFX3
-	db	$17			; Cartridge Type
+	db	$18			; Cartridge Type
 	ELSEIF
 	db	$15			; Cartridge Type
 	ENDC
